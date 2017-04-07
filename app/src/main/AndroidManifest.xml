@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Interlock_Relaying" />
+        <activity android:name=".Wall_Rebuilding" />
+        <activity android:name=".Step_Rebuilding"></activity>
     </application>
 
 </manifest>
