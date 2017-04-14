@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Interlock App</string>
+    <string name="this_is_the_wall_rebuilding_window">this is the wall rebuilding window</string>
+    <string name="press_to_go_to_home">press to go to home</string>
 </resources>
