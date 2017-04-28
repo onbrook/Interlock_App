@@ -1,5 +1,20 @@
 <resources>
     <string name="app_name">Interlock App</string>
-    <string name="this_is_the_wall_rebuilding_window">this is the wall rebuilding window</string>
-    <string name="press_to_go_to_home">press to go to home</string>
+    <array name="location">
+        <item>Location</item>
+        <item>Front-yard</item>
+        <item>Side-yard</item>
+        <item>back-yard</item>
+    </array>
+    <array name="accessibility">
+        <item>Accessibility</item>
+        <item>Hard to access</item>
+        <item>Easy to access</item>
+    </array>
+    <array name="maneuver">
+        <item>Room to maneuver</item>
+        <item>Little room</item>
+        <item>Some room</item>
+        <item>Lost of room</item>
+    </array>
 </resources>
