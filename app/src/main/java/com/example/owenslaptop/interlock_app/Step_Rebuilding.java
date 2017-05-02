@@ -1,5 +1,6 @@
 package com.example.owenslaptop.interlock_app;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,8 +9,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import java.lang.reflect.Array;
 
 public class Step_Rebuilding extends AppCompatActivity {
 
@@ -66,6 +65,8 @@ public class Step_Rebuilding extends AppCompatActivity {
                 String sizeVal = sizeArr[0].toString();
                 String size2Val = size2Arr[0].toString();
                 String amountShiftVal = baseShiftArr[0].toString();
+                straight = straightCB.isChecked();
+                curved = curvedCB.isChecked();
 
                 if(size.equals(sizeVal)){
                     //one of the inputs are incorrect
@@ -79,26 +80,20 @@ public class Step_Rebuilding extends AppCompatActivity {
                     //one of the inputs are incorrect
                     errorTV.setText("Please select an option from the 'Amount of base Shift' drop down");
                 }
+                else if (straight && curved) {
+                    //both are checked
+                    errorTV.setText("Both check boxes cannot be selected");
+                }
+                else if(!straight && !curved){
+                    //both are not checked
+                    errorTV.setText("Please check one of the check boxes");
+                }
                 else{
-                    //we are good to look at the check boxes
-                    //seeing if both boxes are checked
-                    straight = straightCB.isChecked();
-                    curved = curvedCB.isChecked();
-                    if(straight && curved){
-                        //both are checked
-                        errorTV.setText("Both check boxes cannot be selected");
-                    }
-                    else if(!straight && !curved){
-                        //both are not checked
-                        errorTV.setText("Please check one of the check boxes");
-                    }
-                    else{
-                        //we are good to go on to the next page
-                        errorTV.setText("");
+                    //we are good to go on to the next page
+                    errorTV.setText("");
 
-                        //moving to the next page
-
-                    }
+                    //moving to the next page
+                    startActivity(new Intent(Step_Rebuilding.this, Step_Rebuilding2.class));
                 }
             }
         });

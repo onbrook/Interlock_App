@@ -19,10 +19,11 @@
         <activity android:name=".Interlock_Relaying" />
         <activity android:name=".Wall_Rebuilding" />
         <activity android:name=".Step_Rebuilding">
-            <activity
-                android:name="Step_Rebuilding.NextActivity" >
-            </activity>
+            <activity android:name="Step_Rebuilding.NextActivity" />
         </activity>
+        <activity android:name=".Step_Rebuilding2" />
+        <activity android:name=".Step_Rebuilding3" />
+        <activity android:name=".Step_Rebuilding4"></activity>
     </application>
 
 </manifest>
