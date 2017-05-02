@@ -24,11 +24,20 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
 
         Button btn = (Button)findViewById(R.id.stepRebuildBtn);
+        Button btn2 = (Button)findViewById(R.id.wallRebuildBtn);
+
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeScreen.this, Step_Rebuilding.class));
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeScreen.this, Wall_Rebuilding.class));
             }
         });
 
