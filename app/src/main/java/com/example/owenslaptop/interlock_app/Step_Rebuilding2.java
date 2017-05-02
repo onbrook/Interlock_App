@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,8 +22,8 @@ public class Step_Rebuilding2 extends AppCompatActivity {
         final Button nextBtn = (Button) findViewById(R.id.nextBtn);
         final Spinner locationSp = (Spinner) findViewById(R.id.locationSp);
         final Spinner roomSp = (Spinner) findViewById(R.id.roomSp);
-        final CheckBox longTCB = (CheckBox) findViewById(R.id.lTCB);
-        final CheckBox skinnyGCB = (CheckBox) findViewById(R.id.sGCB);
+        final RadioButton longTRB = (RadioButton) findViewById(R.id.lTRB);
+        final RadioButton skinnyGRB = (RadioButton) findViewById(R.id.sGRB);
         final TextView errorTV = (TextView) findViewById(R.id.errorTV);
 
         //creating the arrays to hold the spinner objects
@@ -45,8 +46,8 @@ public class Step_Rebuilding2 extends AppCompatActivity {
                 String locationVal, roomVal;
 
                 //getting the input
-                longT = longTCB.isChecked();
-                skinnyG = skinnyGCB.isChecked();
+                longT = longTRB.isChecked();
+                skinnyG = skinnyGRB.isChecked();
                 locationVal = locationSp.getSelectedItem().toString();
                 roomVal = roomSp.getSelectedItem().toString();
 

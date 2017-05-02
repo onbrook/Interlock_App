@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-@drawable/right_arrow:
-    edited form:https://www.iconfinder.com/icons/1031536/arrow_arrow_right_chevron_chevronright_right_right_icon_icon#size=128
-    by: Denis Mikhutin
 @drawable/check_mark:
-    edited from:
-    by:
+    edited from: https://www.iconfinder.com/icons/1031542/check_check_circle_checkcircle_checkmark_circle_done_ok_icon#size=128
+    by: Denis Mikhutin
+@drawable/attention:
+    edited from: https://www.iconfinder.com/icons/315935/warning_icon#size=128
+    by: Yannick Lung
     -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -72,7 +72,7 @@
         android:layout_marginLeft="32dp"
         android:layout_below="@+id/glue_CheckBox"
         android:layout_marginTop="10dp"
-        android:text="Wall properly glued"/>
+        android:text="Clips in the wall"/>
 
     <CheckBox
         android:id="@+id/plants_CheckBox"
@@ -81,7 +81,7 @@
         android:layout_marginLeft="32dp"
         android:layout_below="@+id/clips_CheckBox"
         android:layout_marginTop="10dp"
-        android:text="Wall properly glued"/>
+        android:text="Plants behind the wall"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/wall_rebuilding_FAB"

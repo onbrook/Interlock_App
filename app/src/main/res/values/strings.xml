@@ -8,9 +8,9 @@
     <string name="to_job_tittle">Getting to the job</string>
     <array name="location">
         <item>Location</item>
-        <item>Front-yard</item>
-        <item>Side-yard</item>
-        <item>back-yard</item>
+        <item>Frontyard</item>
+        <item>Sideyard</item>
+        <item>backyard</item>
     </array>
     <array name="accessibility">
         <item>Accessibility</item>
@@ -21,7 +21,7 @@
         <item>Room to maneuver</item>
         <item>Little room</item>
         <item>Some room</item>
-        <item>Lost of room</item>
+        <item>Lots of room</item>
     </array>
     <array name="wall_shape">
         <item>Shape</item>
@@ -29,10 +29,11 @@
         <item>Straight</item>
     </array>
     <array name="base_shift">
-        <item>Base shift</item>
+        <item>Base shift amount</item>
         <item>A lot</item>
         <item>A moderate amount</item>
         <item>Little</item>
+        <item>None</item>
     </array>
     <string name="title_activity_step__rebuilding2">Step_Rebuilding2</string>
 </resources>

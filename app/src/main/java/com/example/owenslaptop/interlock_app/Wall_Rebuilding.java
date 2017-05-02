@@ -1,10 +1,12 @@
 package com.example.owenslaptop.interlock_app;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -38,6 +40,16 @@ public class Wall_Rebuilding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //start layout
         setUpLayout0();
+        //setup back button in title bar
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }catch (NullPointerException npex){
+            try {
+                getActionBar().setDisplayHomeAsUpEnabled(true);
+            }catch(NullPointerException ex){
+                //back button not supported
+            }
+        }
         //animations
         fabIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_in);
         fabOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_out);
@@ -57,6 +69,21 @@ public class Wall_Rebuilding extends AppCompatActivity {
                 setUpEstimation();
                 break;
         }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (currentLayoutNum){
+            case 0:
+                startActivity(new Intent(Wall_Rebuilding.this, HomeScreen.class));
+                break;
+            case 1:
+                setUpLayout0();
+                break;
+            case 2:
+                setUpLayout1();
+                break;
+        }
+        return true;
     }
 
     private void setUpLayout0(){
@@ -192,7 +219,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
     }
 
     private void setUpEstimation(){
-
+        startActivity(new Intent(Wall_Rebuilding.this, HomeScreen.class));
     }
 
     private void updateViewValidity(View view,int viewNum, View attentionTextView){

@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
     tools:context="com.example.owenslaptop.interlock_app.Step_Rebuilding">
 
     <TextView
@@ -13,8 +16,9 @@
         android:text="Step Rebuilding"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
 
     <TextView
         android:id="@+id/gettingJobTV"
@@ -25,173 +29,107 @@
         android:textStyle="bold"
         />
 
+    <TextView
+        android:id="@+id/sJHeightTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Size of Job (height):"
+        android:layout_marginTop="19dp"
+        android:layout_below="@id/gettingJobTV"
+        android:layout_marginLeft="20dp"/>
+
     <Spinner
         android:id="@+id/sizeOfJobSp"
-        android:layout_width="332dp"
-        android:layout_height="34dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Size of the job"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.214"
-        android:layout_alignLeft="@+id/sJLengthTV"
-        android:layout_alignStart="@+id/sJLengthTV"
         android:layout_below="@+id/sJHeightTV"
-        android:layout_marginTop="11dp" />
-
-    <Spinner
-        android:id="@+id/sizeOfJob2Sp"
-        android:layout_width="332dp"
-        android:layout_height="34dp"
-        android:text="Size of the job"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.344"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_below="@+id/sJHeightTV"
-        android:layout_alignLeft="@+id/sJHeightTV"
-        android:layout_alignStart="@+id/sJHeightTV" />
-
-    <Spinner
-        android:id="@+id/amountBaseShiftSp"
-        android:layout_width="332dp"
-        android:layout_height="34dp"
-        android:text="Amount of base shift"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="19dp"
-        android:layout_below="@+id/bShiftTV"
-        android:layout_above="@+id/straightCB"
-        android:layout_toRightOf="@+id/errorTV"
-        android:layout_toEndOf="@+id/errorTV" />
-
-    <CheckBox
-        android:id="@+id/straightCB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Straight"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.069"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.665"
-        android:layout_alignTop="@+id/bShiftTV"
-        android:layout_toRightOf="@+id/errorTV"
-        android:layout_below="@+id/stepsTV"
-        android:layout_toEndOf="@+id/errorTV"
-        android:layout_marginTop="76dp" />
-
-    <CheckBox
-        android:id="@+id/curvedCB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Curved"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.541"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.665"
-        android:layout_marginBottom="65dp"
-        android:layout_toLeftOf="@+id/straightCB"
-        android:layout_toStartOf="@+id/straightCB"
-        android:layout_marginRight="14dp"
-        android:layout_below="@+id/stepsTV"
-        android:layout_marginEnd="14dp" />
-
-    <TextView
-        android:id="@+id/stepsTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Are the steps..."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.064"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.581"
-        android:layout_marginBottom="11dp"
-        android:layout_below="@+id/amountBaseShiftSp"
-        android:layout_alignLeft="@+id/bShiftTV"
-        android:layout_alignStart="@+id/bShiftTV" />
-
-    <Button
-        android:id="@+id/nextBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Next >"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="14dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.971"
-        app:layout_constraintVertical_bias="0.982"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/amountBaseShiftSp"
-        android:layout_alignEnd="@+id/amountBaseShiftSp" />
-
-    <TextView
-        android:id="@+id/errorTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/straightCB"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.083"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.822" />
+        android:layout_marginTop="11dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
 
     <TextView
         android:id="@+id/sJLengthTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Size of Job (length):"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.064"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.171"
         android:layout_marginTop="24dp"
-        android:layout_alignLeft="@+id/gettingJobTV"
-        android:layout_alignStart="@+id/gettingJobTV" />
+        android:layout_below="@id/sizeOfJobSp"
+        android:layout_marginLeft="20dp"/>
+
+    <Spinner
+        android:id="@+id/sizeOfJob2Sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Size of the job"
+        android:layout_below="@+id/sJLengthTV"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="20dp"/>
+
+    <Spinner
+        android:id="@+id/amountBaseShiftSp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Amount of base shift"
+        android:layout_marginBottom="19dp"
+        android:layout_below="@+id/bShiftTV"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
 
     <TextView
-        android:id="@+id/sJHeightTV"
+        android:id="@+id/stepsTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Size of Job (height):"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.064"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.297"
-        android:layout_alignRight="@+id/sJLengthTV"
-        android:layout_alignEnd="@+id/sJLengthTV"
-        android:layout_marginTop="19dp" />
+        android:text="Are the steps..."
+        android:layout_below="@+id/amountBaseShiftSp"
+        android:layout_marginLeft="20dp" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@id/stepsTV"
+        android:layout_marginTop="10dp"
+        android:id="@+id/curvedStraightRBG">
+
+        <RadioButton
+            android:id="@+id/curvedRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Curved"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/straightRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Straight" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next >"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/errorTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_below="@id/curvedStraightRBG"/>
 
     <TextView
         android:id="@+id/bShiftTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Amount base Shifted:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.064"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.447"
-        android:layout_marginTop="125dp" />
+        android:layout_below="@id/sizeOfJob2Sp"
+        android:layout_marginLeft="20dp"/>
 </RelativeLayout>

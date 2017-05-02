@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,8 +26,8 @@ public class Step_Rebuilding extends AppCompatActivity {
 
         //setting up the GUI components
         final Button nextBtn = (Button) findViewById(R.id.nextBtn);
-        final CheckBox straightCB = (CheckBox) findViewById(R.id.straightCB);
-        final CheckBox curvedCB = (CheckBox) findViewById(R.id.curvedCB);
+        final RadioButton straightRB = (RadioButton) findViewById(R.id.straightRB);
+        final RadioButton curvedRB = (RadioButton) findViewById(R.id.curvedRB);
         final Spinner sizeJobSp = (Spinner) findViewById(R.id.sizeOfJobSp);
         final Spinner sizeJob2Sp = (Spinner) findViewById(R.id.sizeOfJob2Sp);
         final Spinner amountShiftSp = (Spinner) findViewById(R.id.amountBaseShiftSp);
@@ -65,8 +66,8 @@ public class Step_Rebuilding extends AppCompatActivity {
                 String sizeVal = sizeArr[0].toString();
                 String size2Val = size2Arr[0].toString();
                 String amountShiftVal = baseShiftArr[0].toString();
-                straight = straightCB.isChecked();
-                curved = curvedCB.isChecked();
+                straight = straightRB.isChecked();
+                curved = curvedRB.isChecked();
 
                 if(size.equals(sizeVal)){
                     //one of the inputs are incorrect
