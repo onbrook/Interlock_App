@@ -8,6 +8,6 @@ public class Interlock_Relaying extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interlock__relaying);
+        setContentView(R.layout.activity_interlock__relaying_layout);
     }
 }

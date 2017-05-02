@@ -25,6 +25,7 @@ public class HomeScreen extends AppCompatActivity {
 
         Button btn = (Button)findViewById(R.id.stepRebuildBtn);
         Button btn2 = (Button)findViewById(R.id.wallRebuildBtn);
+        Button btn3 = (Button)findViewById(R.id.relayBtn);
 
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +39,13 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeScreen.this, Wall_Rebuilding.class));
+            }
+        });
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeScreen.this, Interlock_Relaying.class));
             }
         });
 
