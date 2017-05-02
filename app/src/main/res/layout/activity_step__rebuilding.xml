@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,19 +10,9 @@
         android:id="@+id/titleTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:text="Step Rebuilding"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.039"
-        app:layout_constraintVertical_bias="0.017"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
@@ -30,37 +20,25 @@
         android:id="@+id/gettingJobTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:text=" - About the Project"
+        android:layout_below="@+id/titleTV"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.031"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        />
 
     <Spinner
         android:id="@+id/sizeOfJobSp"
         android:layout_width="332dp"
         android:layout_height="34dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="Size of the job"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.214" />
+        app:layout_constraintVertical_bias="0.214"
+        android:layout_alignLeft="@+id/sJLengthTV"
+        android:layout_alignStart="@+id/sJLengthTV"
+        android:layout_below="@+id/sJHeightTV"
+        android:layout_marginTop="11dp" />
 
     <Spinner
         android:id="@+id/sizeOfJob2Sp"
@@ -68,16 +46,13 @@
         android:layout_height="34dp"
         android:text="Size of the job"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.344"
-        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_below="@+id/sJHeightTV"
+        android:layout_alignLeft="@+id/sJHeightTV"
+        android:layout_alignStart="@+id/sJHeightTV" />
 
     <Spinner
         android:id="@+id/amountBaseShiftSp"
@@ -85,61 +60,65 @@
         android:layout_height="34dp"
         android:text="Amount of base shift"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="19dp"
+        android:layout_below="@+id/bShiftTV"
+        android:layout_above="@+id/straightCB"
+        android:layout_toRightOf="@+id/errorTV"
+        android:layout_toEndOf="@+id/errorTV" />
 
     <CheckBox
         android:id="@+id/straightCB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:text="Straight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.665" />
+        app:layout_constraintVertical_bias="0.665"
+        android:layout_alignTop="@+id/bShiftTV"
+        android:layout_toRightOf="@+id/errorTV"
+        android:layout_below="@+id/stepsTV"
+        android:layout_toEndOf="@+id/errorTV"
+        android:layout_marginTop="76dp" />
 
     <CheckBox
         android:id="@+id/curvedCB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:text="Curved"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.541"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.665" />
+        app:layout_constraintVertical_bias="0.665"
+        android:layout_marginBottom="65dp"
+        android:layout_toLeftOf="@+id/straightCB"
+        android:layout_toStartOf="@+id/straightCB"
+        android:layout_marginRight="14dp"
+        android:layout_below="@+id/stepsTV"
+        android:layout_marginEnd="14dp" />
 
     <TextView
         android:id="@+id/stepsTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:text="Are the steps..."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.581" />
+        app:layout_constraintVertical_bias="0.581"
+        android:layout_marginBottom="11dp"
+        android:layout_below="@+id/amountBaseShiftSp"
+        android:layout_alignLeft="@+id/bShiftTV"
+        android:layout_alignStart="@+id/bShiftTV" />
 
     <Button
         android:id="@+id/nextBtn"
@@ -147,15 +126,15 @@
         android:layout_height="wrap_content"
         android:text="Next >"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="14dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.971"
-        app:layout_constraintVertical_bias="0.982" />
+        app:layout_constraintVertical_bias="0.982"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/amountBaseShiftSp"
+        android:layout_alignEnd="@+id/amountBaseShiftSp" />
 
     <TextView
         android:id="@+id/errorTV"
@@ -165,6 +144,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:layout_below="@+id/straightCB"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.083"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -176,47 +156,42 @@
         android:id="@+id/sJLengthTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:text="Size of Job (length):"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.171" />
+        app:layout_constraintVertical_bias="0.171"
+        android:layout_marginTop="24dp"
+        android:layout_alignLeft="@+id/gettingJobTV"
+        android:layout_alignStart="@+id/gettingJobTV" />
 
     <TextView
         android:id="@+id/sJHeightTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:text="Size of Job (height):"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.297" />
+        app:layout_constraintVertical_bias="0.297"
+        android:layout_alignRight="@+id/sJLengthTV"
+        android:layout_alignEnd="@+id/sJLengthTV"
+        android:layout_marginTop="19dp" />
 
     <TextView
         android:id="@+id/bShiftTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:text="Amount base Shifted:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.447" />
-</android.support.constraint.ConstraintLayout>
+        app:layout_constraintVertical_bias="0.447"
+        android:layout_marginTop="125dp" />
+</RelativeLayout>
