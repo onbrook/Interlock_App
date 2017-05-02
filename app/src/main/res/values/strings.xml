@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Interlock App</string>
+    <string name="wall_rebuilding_tittle">Wall Rebuilding</string>
+    <string name="height_hint">Height (in feet)</string>
+    <string name="layout_tittle">Layout of job</string>
+    <string name="length_hint">Length (in feet)</string>
+    <string name="complications_tittle">Complications</string>
+    <string name="to_job_tittle">Getting to the job</string>
     <array name="location">
         <item>Location</item>
         <item>Front-yard</item>
@@ -16,5 +22,16 @@
         <item>Little room</item>
         <item>Some room</item>
         <item>Lost of room</item>
+    </array>
+    <array name="wall_shape">
+        <item>Shape</item>
+        <item>Curved</item>
+        <item>Straight</item>
+    </array>
+    <array name="base_shift">
+        <item>Base shift</item>
+        <item>A lot</item>
+        <item>A moderate amount</item>
+        <item>Little</item>
     </array>
 </resources>

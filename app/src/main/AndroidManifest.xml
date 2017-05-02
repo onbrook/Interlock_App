@@ -17,8 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Interlock_Relaying" />
-        <activity android:name=".Wall_Rebuilding" />
-        <activity android:name=".Step_Rebuilding"></activity>
+        <activity android:name=".Wall_Rebuilding"
+            android:label="@string/wall_rebuilding_tittle"/>
+        <activity android:name=".Step_Rebuilding"/>
     </application>
 
 </manifest>

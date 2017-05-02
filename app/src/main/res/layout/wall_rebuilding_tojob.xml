@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+@drawable/right_arrow:
+    edited form:https://www.iconfinder.com/icons/1031536/arrow_arrow_right_chevron_chevronright_right_right_icon_icon#size=128
+    by: Denis Mikhutin
+
+@drawable/attention
+    edited form: https://www.iconfinder.com/icons/315935/warning_icon#size=128
+    by: Yannick Lung-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    tools:context="com.example.owenslaptop.interlock_app.Wall_Rebuilding">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/to_job_tittle"
+        android:textStyle="bold"
+        android:drawablePadding="20dp"
+        android:id="@+id/headlineTextView"
+        android:layout_marginRight="20dp"/>
+
+    <Spinner
+        android:id="@+id/location_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="20dp"
+        android:entries="@array/location"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/headlineTextView"
+        android:layout_toLeftOf="@+id/location_attention_textView"
+        android:layout_toStartOf="@+id/location_attention_textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/attention"
+        android:id="@+id/location_attention_textView"
+        android:layout_alignTop="@+id/location_spinner"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"
+        android:layout_marginRight="20dp"/>
+
+    <Spinner
+        android:id="@+id/accessibility_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:entries="@array/accessibility"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/location_spinner"
+        android:layout_toLeftOf="@+id/location_attention_textView"
+        android:layout_toStartOf="@+id/location_attention_textView"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/attention"
+        android:id="@+id/accessibility_attention_textView"
+        android:layout_alignTop="@+id/accessibility_spinner"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"
+        android:layout_marginRight="20dp"/>
+
+    <Spinner
+        android:id="@+id/maneuver_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:entries="@array/maneuver"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/accessibility_spinner"
+        android:layout_toLeftOf="@+id/accessibility_attention_textView"
+        android:layout_toStartOf="@+id/accessibility_attention_textView"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/room_attention_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/attention"
+        android:layout_alignTop="@+id/maneuver_spinner"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"
+        android:layout_marginRight="20dp"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/wall_rebuilding_FAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/right_arrow"
+        app:backgroundTint="@color/colorRed"
+        android:onClick="fabClicked"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"/>
+
+</RelativeLayout>
