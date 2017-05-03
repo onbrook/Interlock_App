@@ -7,14 +7,14 @@
         android:id="@+id/widInput"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="69dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Width (ft)"
         android:inputType="textPersonName"
         android:textSize="14sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/lenInput"
-        android:layout_alignStart="@+id/lenInput" />
+        android:layout_below="@+id/widthTxt"
+        android:layout_alignLeft="@+id/lengthTxt"
+        android:layout_alignStart="@+id/lengthTxt" />
 
     <EditText
         android:id="@+id/lenInput"
@@ -24,7 +24,7 @@
         android:hint="Length (ft)"
         android:inputType="textPersonName"
         android:textSize="14sp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="77dp"
         android:layout_below="@+id/widInput"
         android:layout_alignLeft="@+id/ptrnTypeSpin"
         android:layout_alignStart="@+id/ptrnTypeSpin" />
@@ -33,9 +33,43 @@
         android:id="@+id/ptrnTypeSpin"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:entries="@array/pattern_type"
+        android:layout_marginTop="32dp"
         android:layout_below="@+id/lenInput"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/widthTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="94dp"
+        android:autoLink="none"
+        android:text="Size of the job (Width):"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/widInput"
+        android:layout_alignStart="@+id/widInput" />
+
+    <TextView
+        android:id="@+id/lengthTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Size of the job (Length):"
+        android:textStyle="bold"
+        android:layout_below="@+id/widInput"
+        android:layout_alignLeft="@+id/lenInput"
+        android:layout_alignStart="@+id/lenInput"
+        android:layout_marginTop="48dp" />
+
+    <TextView
+        android:id="@+id/pageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_above="@+id/widInput"
+        android:layout_alignLeft="@+id/widthTxt"
+        android:layout_alignStart="@+id/widthTxt"
+        android:text="Interlock Relaying - Layout"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

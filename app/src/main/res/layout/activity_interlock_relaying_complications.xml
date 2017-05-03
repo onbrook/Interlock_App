@@ -2,4 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/pageTitle"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:text="Interlock Relaying - Complications"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <CheckBox
+        android:id="@+id/weedCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Interlock is weedy"
+        android:layout_below="@+id/pageTitle"
+        android:layout_alignLeft="@+id/pageTitle"
+        android:layout_alignStart="@+id/pageTitle" />
+
+    <Spinner
+        android:id="@+id/sunkSpin"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/weedCheck"
+        android:layout_alignStart="@+id/weedCheck"
+        android:layout_below="@+id/weedCheck"
+        android:layout_marginTop="24dp" />
+
 </RelativeLayout>
