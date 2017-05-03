@@ -13,10 +13,8 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
-    tools:context="com.example.owenslaptop.interlock_app.HomeScreen">
+    android:padding="20dp"
+    tools:context="com.example.owenslaptop.interlock_app.Wall_Rebuilding3">
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,20 +32,7 @@
         android:entries="@array/base_shift"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/headlineTextView"
-        android:layout_toStartOf="@+id/baseShift_attention_textView"
-        android:layout_toLeftOf="@+id/baseShift_attention_textView"
-        style="@style/red_outline_spinner" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/attention"
-        android:id="@+id/baseShift_attention_textView"
-        android:layout_alignTop="@+id/baseShift_spinner"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"
-        android:visibility="invisible"/>
+        style="@style/no_outline_spinner" />
 
     <CheckBox
         android:id="@+id/roots_CheckBox"
@@ -97,9 +82,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="25dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="invisible"/>
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"/>
 
 </RelativeLayout>

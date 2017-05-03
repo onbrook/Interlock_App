@@ -26,7 +26,7 @@ class methods {
     }
 
     /*
-    this is to be handed a List of EditTexts and Spinners to check if they are valid
+    these are to be handed a List of EditTexts and Spinners to check if they are valid
      */
     static List<View> getInvalidViews(View[] views){
         List<View> invalidViews = new ArrayList<>();
@@ -42,5 +42,33 @@ class methods {
             if(isViewValid(view))
                 validViews.add(view);
         return validViews;
+    }
+
+    static boolean areViewsValid(View[] views){
+        for(View view:views)
+            if(!isViewValid(view))
+                return false;
+        return true;
+    }
+
+    static void updateViewValidity(View[] views){
+        System.out.println("updating view validity");
+        List<View> invalidViews = getInvalidViews(views);
+        List<View> validViews = getValidViews(views);
+        for(View view:invalidViews)
+            if(view instanceof EditText)
+                view.setBackgroundResource(R.drawable.red_outline_edit_text);
+            else if(view instanceof Spinner)
+                view.setBackgroundResource(R.drawable.red_outline_spinner);
+            else
+                System.err.println("ERROR: methods.updateViewValidity was called without being handed a Spinner of an EditText");
+        for(View view:validViews)
+            if(view instanceof EditText)
+                view.setBackgroundResource(R.drawable.no_outline_edit_text);
+            else if(view instanceof Spinner)
+                view.setBackgroundResource(R.drawable.no_outline_spinner);
+            else
+                System.err.println("ERROR: methods.updateViewValidity was called without being handed a Spinner of an EditText");
+
     }
 }

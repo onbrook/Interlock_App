@@ -13,9 +13,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
+    android:padding="20dp"
     tools:context="com.example.owenslaptop.interlock_app.Wall_Rebuilding">
 
     <TextView
@@ -32,24 +30,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
-        android:layout_marginRight="20dp"
         android:entries="@array/location"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/headlineTextView"
-        android:layout_toLeftOf="@+id/location_attention_textView"
-        android:layout_toStartOf="@+id/location_attention_textView"
-        style="@style/red_outline_spinner"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/attention"
-        android:id="@+id/location_attention_textView"
-        android:layout_alignTop="@+id/location_spinner"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="invisible"
-        android:layout_marginRight="20dp"/>
+        style="@style/no_outline_spinner"/>
 
     <Spinner
         android:id="@+id/accessibility_spinner"
@@ -59,20 +43,7 @@
         android:entries="@array/accessibility"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/location_spinner"
-        android:layout_toLeftOf="@+id/location_attention_textView"
-        android:layout_toStartOf="@+id/location_attention_textView"
-        android:layout_marginRight="20dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/attention"
-        android:id="@+id/accessibility_attention_textView"
-        android:layout_alignTop="@+id/accessibility_spinner"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="invisible"
-        android:layout_marginRight="20dp"/>
+        style="@style/no_outline_spinner"/>
 
     <Spinner
         android:id="@+id/maneuver_spinner"
@@ -82,20 +53,7 @@
         android:entries="@array/maneuver"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/accessibility_spinner"
-        android:layout_toLeftOf="@+id/accessibility_attention_textView"
-        android:layout_toStartOf="@+id/accessibility_attention_textView"
-        android:layout_marginRight="20dp"/>
-
-    <TextView
-        android:id="@+id/room_attention_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/attention"
-        android:layout_alignTop="@+id/maneuver_spinner"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="invisible"
-        android:layout_marginRight="20dp"/>
+        style="@style/no_outline_spinner"/>
 
 
     <android.support.design.widget.FloatingActionButton
@@ -110,9 +68,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="25dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="invisible"/>
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"/>
 
 </RelativeLayout>

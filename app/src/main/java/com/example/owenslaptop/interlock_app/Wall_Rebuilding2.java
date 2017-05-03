@@ -33,7 +33,7 @@ public class Wall_Rebuilding2 extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean isViewValid = isViewValid(heightInput);//in methods
                 //if(isViewValid){
-                    heightInput.setBackgroundResource(R.drawable.no_outline);
+                    heightInput.setBackgroundResource(R.drawable.no_outline_edit_text);
                 //}
                 return !isViewValid;//keep up keyboard
             }
@@ -61,15 +61,6 @@ public class Wall_Rebuilding2 extends AppCompatActivity {
     }
 
     public void fabClicked(View view){
-        View[] views = {heightInput, lengthInput};
-        List<View> invalidViews = getInvalidViews(views);
-        List<View> validViews = getValidViews(views);
-        if(invalidViews.isEmpty()){
-            startActivity(new Intent(Wall_Rebuilding2.this, Wall_Rebuilding3.class));
-        }else{
-            for(View invalidView:invalidViews){
-
-            }
-        }
+        startActivity(new Intent(Wall_Rebuilding2.this, Wall_Rebuilding3.class));
     }
 }

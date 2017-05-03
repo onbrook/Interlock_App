@@ -98,7 +98,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
         validViews.add(false);
         validViews.add(false);
         validViews.add(false);
-
+/*
         //spinner listeners
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -127,7 +127,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
                 updateViewValidity(accessibilitySpinner, 1, findViewById(R.id.accessibility_attention_textView));
 
             }
-        });
+        });*//*
         maneuverSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -141,7 +141,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
                 updateViewValidity(maneuverSpinner, 2, findViewById(R.id.room_attention_textView));
 
             }
-        });
+        });*/
     }
 
     private void setUpLayout1(){
@@ -201,6 +201,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
         validViews = new ArrayList<>();
         validViews.add(false);
         //item changed listener
+        /*
         baseShiftSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -213,7 +214,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
                 //will show error icon if empty
                 updateViewValidity(baseShiftSpinner, 0, findViewById(R.id.baseShift_attention_textView));
             }
-        });
+        });*/
     }
 
     private void setUpEstimation(){
