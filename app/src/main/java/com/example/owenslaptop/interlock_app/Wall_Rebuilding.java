@@ -71,6 +71,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
         }
     }
 
+    //called when the back button in the title bas is pressed
     public boolean onOptionsItemSelected(MenuItem item){
         switch (currentLayoutNum){
             case 0:
