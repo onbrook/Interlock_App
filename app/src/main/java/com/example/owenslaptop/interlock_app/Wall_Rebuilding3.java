@@ -5,14 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.example.owenslaptop.interlock_app.methods.areViewsValid;
-import static com.example.owenslaptop.interlock_app.methods.updateViewValidity;
+import static com.example.owenslaptop.interlock_app.ViewValidity.areViewsValid;
+import static com.example.owenslaptop.interlock_app.ViewValidity.updateViewValidity;
 
 
 public class Wall_Rebuilding3 extends AppCompatActivity {

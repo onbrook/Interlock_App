@@ -9,9 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.List;
-
-import static com.example.owenslaptop.interlock_app.methods.*;
+import static com.example.owenslaptop.interlock_app.ViewValidity.*;
 
 
 public class Wall_Rebuilding2 extends AppCompatActivity {
@@ -31,7 +29,7 @@ public class Wall_Rebuilding2 extends AppCompatActivity {
         heightInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean isViewValid = isViewValid(heightInput);//in methods
+                boolean isViewValid = isViewValid(heightInput);//in ViewValidity
                 //if(isViewValid){
                     heightInput.setBackgroundResource(R.drawable.no_outline_edit_text);
                 //}

@@ -7,7 +7,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
-class methods {
+class ViewValidity {
 
     /*
       this is to be used with EditTexts and Spinners to check if they are valid
@@ -20,7 +20,7 @@ class methods {
             Spinner spinner = (Spinner) view;
             return spinner.getSelectedItemPosition() != 0;
         }else{
-            System.err.println("ERROR: methods.isViewValid(View view) was called without being handed an EditText or a Spinner.");
+            System.err.println("ERROR: ViewValidity.isViewValid(View view) was called without being handed an EditText or a Spinner.");
             return false;
         }
     }
@@ -61,14 +61,14 @@ class methods {
             else if(view instanceof Spinner)
                 view.setBackgroundResource(R.drawable.red_outline_spinner);
             else
-                System.err.println("ERROR: methods.updateViewValidity was called without being handed a Spinner of an EditText");
+                System.err.println("ERROR: ViewValidity.updateViewValidity was called without being handed a Spinner of an EditText");
         for(View view:validViews)
             if(view instanceof EditText)
                 view.setBackgroundResource(R.drawable.no_outline_edit_text);
             else if(view instanceof Spinner)
                 view.setBackgroundResource(R.drawable.no_outline_spinner);
             else
-                System.err.println("ERROR: methods.updateViewValidity was called without being handed a Spinner of an EditText");
+                System.err.println("ERROR: ViewValidity.updateViewValidity was called without being handed a Spinner of an EditText");
 
     }
 }
