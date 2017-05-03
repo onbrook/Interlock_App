@@ -1,11 +1,9 @@
 package com.example.owenslaptop.interlock_app;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -13,7 +11,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +57,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
     public void fabClicked(View view){
         switch(currentLayoutNum){
             case 0:
-                setUpLayout1();
+                startActivity(new Intent(Wall_Rebuilding.this, Wall_Rebuilding2.class));
                 break;
             case 1:
                 setUpLayout2();
@@ -158,7 +155,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
         //set up validViews
         validViews = new ArrayList<>();
         validViews.add(false);
-        validViews.add(false);
+        validViews.add(false);/*
         //done button listeners
         heightInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -190,7 +187,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
                 if(errorEditText != null)
                     updateViewValidity(lengthInput, 1, errorEditText);
             }
-        });
+        });*/
     }
 
     private void setUpLayout2(){

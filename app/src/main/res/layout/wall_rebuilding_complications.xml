@@ -35,7 +35,8 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/headlineTextView"
         android:layout_toStartOf="@+id/baseShift_attention_textView"
-        android:layout_toLeftOf="@+id/baseShift_attention_textView" />
+        android:layout_toLeftOf="@+id/baseShift_attention_textView"
+        style="@style/red_outline_spinner" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,7 +46,8 @@
         android:layout_alignTop="@+id/baseShift_spinner"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:visibility="invisible"/>
 
     <CheckBox
         android:id="@+id/roots_CheckBox"

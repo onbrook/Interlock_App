@@ -25,6 +25,10 @@
         <activity android:name=".Step_Rebuilding4"></activity>
         <activity android:name=".Wall_Rebuilding"
             android:label="@string/wall_rebuilding_tittle"/>
+        <activity android:name=".Wall_Rebuilding2"
+            android:label="@string/wall_rebuilding_tittle"/>
+        <activity android:name=".Wall_Rebuilding3"
+            android:label="@string/wall_rebuilding_tittle"/>
     </application>
 
 </manifest>

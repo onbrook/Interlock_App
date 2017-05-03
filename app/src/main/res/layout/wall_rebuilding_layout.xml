@@ -13,7 +13,7 @@
     android:paddingLeft="20dp"
     android:paddingTop="20dp"
     android:paddingBottom="20dp"
-    tools:context="com.example.owenslaptop.interlock_app.HomeScreen">
+    tools:context="com.example.owenslaptop.interlock_app.Wall_Rebuilding2">
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,20 +32,9 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:layout_toLeftOf="@+id/heightInput_attention_textView"
-        android:layout_toStartOf="@+id/heightInput_attention_textView"
         android:hint="@string/height_hint"
-        android:inputType="numberDecimal" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/attention"
-        android:id="@+id/heightInput_attention_textView"
-        android:layout_alignTop="@+id/height_input"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"/>
+        android:inputType="numberDecimal"
+        style="@style/red_outline_editText" />
 
     <EditText
         android:id="@+id/length_input"
@@ -56,19 +45,7 @@
         android:layout_marginTop="10dp"
         android:inputType="numberDecimal"
         android:hint="@string/length_hint"
-        android:layout_toLeftOf="@+id/lengthInput_attention_textView"
-        android:layout_toStartOf="@+id/lengthInput_attention_textView"
         android:layout_marginRight="20dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/attention"
-        android:id="@+id/lengthInput_attention_textView"
-        android:layout_alignTop="@+id/length_input"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"/>
 
     <CheckBox
         android:id="@+id/hard_line_CheckBox"
@@ -115,7 +92,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="25dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="invisible"/>
+        android:layout_marginBottom="10dp"/>
 
 </RelativeLayout>

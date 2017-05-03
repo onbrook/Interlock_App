@@ -37,7 +37,8 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/headlineTextView"
         android:layout_toLeftOf="@+id/location_attention_textView"
-        android:layout_toStartOf="@+id/location_attention_textView" />
+        android:layout_toStartOf="@+id/location_attention_textView"
+        style="@style/red_outline_spinner"/>
 
     <TextView
         android:layout_width="wrap_content"
