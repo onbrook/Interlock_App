@@ -42,26 +42,20 @@
         android:id="@+id/locationSp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="32dp"
-        android:layout_below="@id/gettingJobTV"/>
+        android:layout_below="@+id/locationTV"
+        android:layout_toRightOf="@+id/errorTV"
+        android:layout_toEndOf="@+id/errorTV"
+        android:layout_marginTop="16dp" />
 
 
 
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_below="@id/locationSp"
-        android:layout_marginTop="10dp"
-        android:id="@+id/gateRBG">
-
-        <RadioButton
-            android:id="@+id/lTRB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Long thoroughfare"
-            android:checked="true"/>
+        android:id="@+id/gateRBG"
+        android:layout_below="@+id/lTRB"
+        android:layout_alignRight="@+id/easeTV"
+        android:layout_alignEnd="@+id/easeTV">
 
         <RadioButton
             android:id="@+id/sGRB"
@@ -75,37 +69,39 @@
         android:id="@+id/easeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="32dp"
         android:text="Ease of Access..."
-        android:layout_below="@id/gateRBG"/>
+        android:layout_below="@+id/locationSp"
+        android:layout_toRightOf="@+id/errorTV"
+        android:layout_toEndOf="@+id/errorTV" />
 
     <TextView
         android:id="@+id/locationTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="32dp"
-        android:layout_below="@id/easeTV"
-        android:text="Location:"/>
+        android:text="Location:"
+        android:layout_below="@+id/gettingJobTV"
+        android:layout_toRightOf="@+id/errorTV"
+        android:layout_toEndOf="@+id/errorTV"
+        android:layout_marginTop="22dp" />
 
     <TextView
         android:id="@+id/roomTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/locationTV"
-        android:text="Amount of Room to Maneuver:"/>
+        android:text="Amount of Room to Maneuver:"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/gateRBG"
+        android:layout_alignLeft="@+id/gateRBG"
+        android:layout_alignStart="@+id/gateRBG" />
 
     <Spinner
         android:id="@+id/roomSp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="20dp"
-        android:layout_below="@id/roomTV"/>
+        android:layout_below="@+id/roomTV"
+        android:layout_alignLeft="@+id/lTRB"
+        android:layout_alignStart="@+id/lTRB"
+        android:layout_marginTop="13dp" />
 
     <TextView
         android:id="@+id/errorTV"
@@ -114,5 +110,15 @@
         android:layout_marginLeft="32dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp"/>
+
+    <RadioButton
+        android:id="@+id/lTRB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/easeTV"
+        android:layout_toEndOf="@+id/errorTV"
+        android:layout_toRightOf="@+id/errorTV"
+        android:checked="true"
+        android:text="Long thoroughfare" />
 
 </RelativeLayout>
