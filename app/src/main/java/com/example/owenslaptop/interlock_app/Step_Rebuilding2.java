@@ -3,6 +3,7 @@ package com.example.owenslaptop.interlock_app;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,6 +18,17 @@ public class Step_Rebuilding2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step__rebuilding2);
+
+        //setup back button in title bar
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }catch (NullPointerException npex){
+            try {
+                getActionBar().setDisplayHomeAsUpEnabled(true);
+            }catch(NullPointerException ex){
+                //back button not supported
+            }
+        }
 
         //setting up the GUI componenets
         final Button nextBtn = (Button) findViewById(R.id.nextBtn);
@@ -82,5 +94,9 @@ public class Step_Rebuilding2 extends AppCompatActivity {
                 }
             }
         });
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        startActivity(new Intent(Step_Rebuilding2.this, Step_Rebuilding.class));
+        return true;
     }
 }
