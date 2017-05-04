@@ -41,4 +41,5 @@
         <item>Linear</item>
     </array>
     <string name="title_activity_step__rebuilding2">Step_Rebuilding2</string>
+    <string name="estimation_title">Estimation</string>
 </resources>

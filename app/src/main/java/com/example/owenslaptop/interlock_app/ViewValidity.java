@@ -52,23 +52,36 @@ class ViewValidity {
     }
 
     static void updateViewValidity(View[] views){
-        System.out.println("updating view validity");
         List<View> invalidViews = getInvalidViews(views);
         List<View> validViews = getValidViews(views);
         for(View view:invalidViews)
-            if(view instanceof EditText)
-                view.setBackgroundResource(R.drawable.red_outline_edit_text);
-            else if(view instanceof Spinner)
-                view.setBackgroundResource(R.drawable.red_outline_spinner);
-            else
-                System.err.println("ERROR: ViewValidity.updateViewValidity was called without being handed a Spinner of an EditText");
+            setupOutline(view);
         for(View view:validViews)
-            if(view instanceof EditText)
-                view.setBackgroundResource(R.drawable.no_outline_edit_text);
-            else if(view instanceof Spinner)
-                view.setBackgroundResource(R.drawable.no_outline_spinner);
-            else
-                System.err.println("ERROR: ViewValidity.updateViewValidity was called without being handed a Spinner of an EditText");
+            removeOutline(view);
+    }
 
+    static void updateViewValidity(View view){
+        if(isViewValid(view))
+            removeOutline(view);
+        else
+            setupOutline(view);
+    }
+
+    private static void setupOutline(View view) {
+        if(view instanceof EditText)
+            view.setBackgroundResource(R.drawable.red_outline_edit_text);
+        else if(view instanceof Spinner)
+            view.setBackgroundResource(R.drawable.red_outline_spinner);
+        else
+            System.err.println("ERROR: ViewValidity.updateViewValidity was called without being handed a Spinner of an EditText");
+    }
+
+    public static void removeOutline(View view) {
+        if(view instanceof EditText)
+            view.setBackgroundResource(R.drawable.no_outline_edit_text);
+        else if(view instanceof Spinner)
+            view.setBackgroundResource(R.drawable.no_outline_spinner);
+        else
+            System.err.println("ERROR: ViewValidity.updateViewValidity was called without being handed a Spinner of an EditText");
     }
 }

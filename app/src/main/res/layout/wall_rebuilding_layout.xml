@@ -32,7 +32,7 @@
         android:layout_marginTop="10dp"
         android:hint="@string/height_hint"
         android:inputType="numberDecimal"
-        style="@style/no_outline_edit_text" />
+        style="@style/no_outline_edit_text"/>
 
     <EditText
         android:id="@+id/length_input"
@@ -44,7 +44,7 @@
         android:inputType="numberDecimal"
         android:hint="@string/length_hint"
         android:layout_marginRight="20dp"
-        style="@style/no_outline_edit_text" />
+        style="@style/no_outline_edit_text"/>
 
     <CheckBox
         android:id="@+id/hard_line_CheckBox"
@@ -89,8 +89,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_margin="15dp"/>
 
 </RelativeLayout>

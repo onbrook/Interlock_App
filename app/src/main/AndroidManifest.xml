@@ -29,6 +29,8 @@
             android:label="@string/wall_rebuilding_tittle"/>
         <activity android:name=".Wall_Rebuilding3"
             android:label="@string/wall_rebuilding_tittle"/>
+        <activity android:name=".Wall_Rebuilding_Estimation"
+            android:label="@string/wall_rebuilding_tittle"/>
     </application>
 
 </manifest>
