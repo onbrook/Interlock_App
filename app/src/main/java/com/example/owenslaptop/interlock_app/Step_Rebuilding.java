@@ -5,12 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import static com.example.owenslaptop.interlock_app.ViewValidity.areViewsValid;
+import static com.example.owenslaptop.interlock_app.ViewValidity.updateViewValidity;
 
 public class Step_Rebuilding extends AppCompatActivity {
 
@@ -19,6 +23,11 @@ public class Step_Rebuilding extends AppCompatActivity {
     Coded by: Owen Brook
 
      */
+    //setting up the spinners and the array
+    private View[] views = new View[3];
+    private Spinner sizeJobSp;
+    private Spinner sizeJob2Sp;
+    private Spinner amountShiftSp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +37,10 @@ public class Step_Rebuilding extends AppCompatActivity {
         //setup back button in title bar
         try {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }catch (NullPointerException npex){
+        } catch (NullPointerException npex) {
             try {
                 getActionBar().setDisplayHomeAsUpEnabled(true);
-            }catch(NullPointerException ex){
+            } catch (NullPointerException ex) {
                 //back button not supported
             }
         }
@@ -40,15 +49,20 @@ public class Step_Rebuilding extends AppCompatActivity {
         final Button nextBtn = (Button) findViewById(R.id.nextBtn);
         final RadioButton straightRB = (RadioButton) findViewById(R.id.straightRB);
         final RadioButton curvedRB = (RadioButton) findViewById(R.id.curvedRB);
-        final Spinner sizeJobSp = (Spinner) findViewById(R.id.sizeOfJobSp);
-        final Spinner sizeJob2Sp = (Spinner) findViewById(R.id.sizeOfJob2Sp);
-        final Spinner amountShiftSp = (Spinner) findViewById(R.id.amountBaseShiftSp);
+        sizeJobSp = (Spinner) findViewById(R.id.sizeOfJobSp);
+        sizeJob2Sp = (Spinner) findViewById(R.id.sizeOfJob2Sp);
+        amountShiftSp = (Spinner) findViewById(R.id.amountBaseShiftSp);
         final TextView errorTV = (TextView) findViewById(R.id.errorTV);
 
         //creating the arrays to hold the spinner objects
         final String[] sizeArr = {"Size of the job (l)", "Shorter", "Average", "Longer"};
         final String[] size2Arr = {"Size of the job (h)", "Lower", "Average", "Higher", "Over 4 feet"};
         final String[] baseShiftArr = {"Amount of base shift", "None", "Lower"};
+
+        //adding the spinners to the array
+        views[0] = sizeJobSp;
+        views[1] = sizeJob2Sp;
+        views[2] = amountShiftSp;
 
         //setting the options to the spinners
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
@@ -61,61 +75,81 @@ public class Step_Rebuilding extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, baseShiftArr);
         amountShiftSp.setAdapter(adapter3);
 
+        //when the size spinner is clicked
+        sizeJobSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
+                int index = sizeJobSp.getSelectedItemPosition();
+                if (index != 0)
+                    updateViewValidity(sizeJobSp);
+            }
 
-        //setting up the button to get and check input when clicked
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //this will get and store the variables
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                int index = sizeJobSp.getSelectedItemPosition();
+                if (index != 0)
+                    updateViewValidity(sizeJobSp);
+            }
+        });
 
-                //setting up the variables for storing the input
-                boolean straight, curved;
-                String size, size2, amountShift;
+        //when the second size spinner is clicked
+        sizeJob2Sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-                //seeing if we have input from the spinners
-                size = sizeJobSp.getSelectedItem().toString();
-                size2 = sizeJob2Sp.getSelectedItem().toString();
-                amountShift = amountShiftSp.getSelectedItem().toString();
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
+                int index = sizeJob2Sp.getSelectedItemPosition();
+                if (index != 0)
+                    updateViewValidity(sizeJob2Sp);
+            }
 
-                String sizeVal = sizeArr[0].toString();
-                String size2Val = size2Arr[0].toString();
-                String amountShiftVal = baseShiftArr[0].toString();
-                straight = straightRB.isChecked();
-                curved = curvedRB.isChecked();
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                int index = sizeJob2Sp.getSelectedItemPosition();
+                if (index != 0)
+                    updateViewValidity(sizeJob2Sp);
+            }
+        });
 
-                if(size.equals(sizeVal)){
-                    //one of the inputs are incorrect
-                    errorTV.setText("Please select a option from the 'Size of the job (l)' drop down");
-                }
-                else if(size2.equals(size2Val)){
-                    //one of the inputs are incorrect
-                    errorTV.setText("Please select a option from the 'Size of the job (h)' drop down");
-                }
-                else if(amountShift.equals(amountShiftVal)){
-                    //one of the inputs are incorrect
-                    errorTV.setText("Please select an option from the 'Amount of base Shift' drop down");
-                }
-                else if (straight && curved) {
-                    //both are checked
-                    errorTV.setText("Both check boxes cannot be selected");
-                }
-                else if(!straight && !curved){
-                    //both are not checked
-                    errorTV.setText("Please check one of the check boxes");
-                }
-                else{
-                    //we are good to go on to the next page
-                    errorTV.setText("");
+        //when the amount shift is clicked
+        amountShiftSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-                    //moving to the next page
-                    startActivity(new Intent(Step_Rebuilding.this, Step_Rebuilding2.class));
-                }
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
+                int index = amountShiftSp.getSelectedItemPosition();
+                if (index != 0)
+                    updateViewValidity(amountShiftSp);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                int index = amountShiftSp.getSelectedItemPosition();
+                if (index != 0)
+                    updateViewValidity(amountShiftSp);
             }
         });
     }
 
+    //when the FAB is clicked
+    public void fabClicked(View view){
+        if(areViewsValid(views)) {
+            //create a new intent (you do not get the current one because we do not need any
+            // information from the home screen)
+            Intent intent = new Intent(getApplicationContext(), Step_Rebuilding2.class);
+            //this removes the animation
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            //extras--for passing data
+            intent.putExtra("sizeIndex", sizeJobSp.getSelectedItemPosition());
+            intent.putExtra("size2Index", sizeJob2Sp.getSelectedItemPosition());
+            intent.putExtra("shiftIndex", amountShiftSp.getSelectedItemPosition());
+            //start activity
+            startActivity(intent);
+        }else
+            updateViewValidity(views);
+    }
+
+    //called when the back button in the title bas is pressed
     public boolean onOptionsItemSelected(MenuItem item){
-        startActivity(new Intent(Step_Rebuilding.this, HomeScreen.class));
         return true;
     }
 }

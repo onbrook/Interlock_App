@@ -9,6 +9,9 @@ import android.widget.Button;
 
 public class Step_Rebuilding4 extends AppCompatActivity {
 
+    //NEED TO SETUP XML AND ADD THE OUTPUT FOR THE VARIABLE
+    //ADD FUNCTION TO ALLOW FOR TIME OUTPUT - WAIT ON WHAT TO OUTPUT?
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,16 +32,7 @@ public class Step_Rebuilding4 extends AppCompatActivity {
         final Button nextBtn = (Button) findViewById(R.id.nextBtn);
 
 
-        //setting up the button to get and check input when clicked
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //this will get and store the variables
 
-                //moving to the next page
-                startActivity(new Intent(Step_Rebuilding4.this, HomeScreen.class));
-
-            }
-        });
     }
     public boolean onOptionsItemSelected(MenuItem item){
         startActivity(new Intent(Step_Rebuilding4.this, Step_Rebuilding3.class));
