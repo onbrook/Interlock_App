@@ -67,7 +67,7 @@ class ViewValidity {
             setupOutline(view);
     }
 
-    private static void setupOutline(View view) {
+    public static void setupOutline(View view) {
         if(view instanceof EditText)
             view.setBackgroundResource(R.drawable.red_outline_edit_text);
         else if(view instanceof Spinner)

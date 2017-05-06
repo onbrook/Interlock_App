@@ -40,6 +40,25 @@
         <item>Modular</item>
         <item>Linear</item>
     </array>
+    <array name="job_shape_relay">
+        <item>Shape of the job</item>
+        <item>Rectangular</item>
+        <item>Circular</item>
+        <item>Long + thin</item>>
+        <item>Other</item>
+    </array>
+    <array name="paver_size">
+        <item>Size of pavers</item>
+        <item>Small</item>
+        <item>Big</item>
+    </array>
+    <array name="job_location">
+        <item>Job Location</item>
+        <item>Front yard</item>
+        <item>Backyard</item>
+        <item>Side</item>
+        <item>Other</item>
+    </array>
     <string name="title_activity_step__rebuilding2">Step_Rebuilding2</string>
     <string name="estimation_title">Estimation</string>
 </resources>
