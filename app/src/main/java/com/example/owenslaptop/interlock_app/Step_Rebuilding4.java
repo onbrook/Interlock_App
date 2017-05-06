@@ -10,7 +10,7 @@ import android.widget.Button;
 public class Step_Rebuilding4 extends AppCompatActivity {
 
     //NEED TO SETUP XML AND ADD THE OUTPUT FOR THE VARIABLE
-    //ADD FUNCTION TO ALLOW FOR TIME OUTPUT - WAIT ON WHAT TO OUTPUT?
+    //ADD FUNCTION TO ALLOW FOR TIME OUTPUT - WAIT ON WHAT TO OUTPUT??
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
