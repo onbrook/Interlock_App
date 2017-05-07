@@ -112,15 +112,6 @@
             android:text="Straight" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/nextBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Next >"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/wall_rebuilding_FAB"
-        android:layout_toStartOf="@+id/wall_rebuilding_FAB" />
-
     <TextView
         android:id="@+id/errorTV"
         android:layout_width="wrap_content"

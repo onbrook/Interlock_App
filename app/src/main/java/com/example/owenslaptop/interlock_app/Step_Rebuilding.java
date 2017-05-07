@@ -28,6 +28,8 @@ public class Step_Rebuilding extends AppCompatActivity {
     private Spinner sizeJobSp;
     private Spinner sizeJob2Sp;
     private Spinner amountShiftSp;
+    private RadioButton straightRB, curvedRB;
+    public static String sizeJobHSt, sizeJobLSt, baseShiftSt, stepsAreSt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +48,11 @@ public class Step_Rebuilding extends AppCompatActivity {
         }
 
         //setting up the GUI components
-        final Button nextBtn = (Button) findViewById(R.id.nextBtn);
-        final RadioButton straightRB = (RadioButton) findViewById(R.id.straightRB);
-        final RadioButton curvedRB = (RadioButton) findViewById(R.id.curvedRB);
+        straightRB = (RadioButton) findViewById(R.id.straightRB);
+        curvedRB = (RadioButton) findViewById(R.id.curvedRB);
         sizeJobSp = (Spinner) findViewById(R.id.sizeOfJobSp);
         sizeJob2Sp = (Spinner) findViewById(R.id.sizeOfJob2Sp);
         amountShiftSp = (Spinner) findViewById(R.id.amountBaseShiftSp);
-        final TextView errorTV = (TextView) findViewById(R.id.errorTV);
 
         //creating the arrays to hold the spinner objects
         final String[] sizeArr = {"Size of the job (l)", "Shorter", "Average", "Longer"};
@@ -133,6 +133,18 @@ public class Step_Rebuilding extends AppCompatActivity {
     //when the FAB is clicked
     public void fabClicked(View view){
         if(areViewsValid(views)) {
+            //getting the values
+            sizeJobHSt = sizeJobSp.getSelectedItem().toString();
+            sizeJobLSt = sizeJob2Sp.getSelectedItem().toString();
+            baseShiftSt = amountShiftSp.getSelectedItem().toString();
+            boolean curvedB =  curvedRB.isSelected();
+            if(curvedB){
+                stepsAreSt = "Curved";
+            }
+            else{
+                //must be straight
+                stepsAreSt = "Straight";
+            }
             //create a new intent (you do not get the current one because we do not need any
             // information from the home screen)
             Intent intent = new Intent(getApplicationContext(), Step_Rebuilding2.class);

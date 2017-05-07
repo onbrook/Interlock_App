@@ -23,6 +23,7 @@ public class Step_Rebuilding3 extends AppCompatActivity {
     private View[] views = new View[1];
     private Spinner stepsGluedSp;
     private RadioButton treeYRB, treeNRB, clipsYRB, clipsNRB, lineYRB, lineNRB;
+    public static String stepsGlueSt, rootsSt, clipsSt, hardLineSt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,6 @@ public class Step_Rebuilding3 extends AppCompatActivity {
         clipsNRB = (RadioButton) findViewById(R.id.cNRB);
         lineYRB = (RadioButton) findViewById(R.id.hLYRB);
         lineNRB = (RadioButton) findViewById(R.id.hLNRB);
-
 
         //creating the arrays to hold the spinner objects
         final String[] gluedArr = {"Steps Glued?", "Yes", "No", "Over-Glued"};
@@ -83,6 +83,29 @@ public class Step_Rebuilding3 extends AppCompatActivity {
     //when the FAB is clicked
     public void fabClicked(View view){
         if(areViewsValid(views)) {
+            stepsGlueSt = stepsGluedSp.getSelectedItem().toString();
+            boolean rootsB, clipsB, lineB;
+            rootsB = treeYRB.isSelected();
+            clipsB = clipsYRB.isSelected();
+            lineB = lineYRB.isSelected();
+            if(rootsB){
+                rootsSt = "Yes";
+            }
+            else{
+                rootsSt = "No";
+            }
+            if(clipsB){
+                clipsSt = "Yes";
+            }
+            else{
+                clipsSt = "No";
+            }
+            if(lineB){
+                hardLineSt = "Yes";
+            }
+            else{
+                hardLineSt = "No";
+            }
             //create a new intent (you do not get the current one because we do not need any
             // information from the home screen)
             Intent intent = new Intent(getApplicationContext(), Step_Rebuilding4.class);
@@ -92,15 +115,6 @@ public class Step_Rebuilding3 extends AppCompatActivity {
             intent.putExtra("gluedIndex", stepsGluedSp.getSelectedItemPosition());
             //start activity
             startActivity(intent);
-
-            boolean treeY, treeN, clipsY, clipsN, lineY, lineN;
-            treeY = treeYRB.isChecked();
-            treeN = treeNRB.isChecked();
-            clipsY = clipsYRB.isChecked();
-            clipsN = clipsNRB.isChecked();
-            lineY = lineYRB.isChecked();
-            lineN = lineNRB.isChecked();
-
         }else
             updateViewValidity(views);
     }

@@ -22,6 +22,8 @@ public class Step_Rebuilding2 extends AppCompatActivity {
     private View[] views = new View[2];
     private Spinner locationSp;
     private Spinner roomSp;
+    private RadioButton longTRB;
+    public static String locationSt, easeAccSt, roomManSt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +42,10 @@ public class Step_Rebuilding2 extends AppCompatActivity {
         }
 
         //setting up the GUI componenets
-        final Button nextBtn = (Button) findViewById(R.id.nextBtn);
         locationSp = (Spinner) findViewById(R.id.locationSp);
         roomSp = (Spinner) findViewById(R.id.roomSp);
-        final RadioButton longTRB = (RadioButton) findViewById(R.id.lTRB);
+        longTRB = (RadioButton) findViewById(R.id.lTRB);
         final RadioButton skinnyGRB = (RadioButton) findViewById(R.id.sGRB);
-        final TextView errorTV = (TextView) findViewById(R.id.errorTV);
 
         //creating the arrays to hold the spinner objects
         final String[] locationArr = {"Location", "Front-yard", "Back-yard"};
@@ -103,6 +103,16 @@ public class Step_Rebuilding2 extends AppCompatActivity {
     //when the FAB is clicked
     public void fabClicked(View view){
         if(areViewsValid(views)) {
+            //getting the input from the user
+            locationSt = locationSp.getSelectedItem().toString();
+            boolean easeAccB = longTRB.isSelected();
+            roomManSt = roomSp.getSelectedItem().toString();
+            if (easeAccB){
+                easeAccSt = "Long thoroughfare";
+            }
+            else{
+                easeAccSt = "Skinny gate";
+            }
             //create a new intent (you do not get the current one because we do not need any
             // information from the home screen)
             Intent intent = new Intent(getApplicationContext(), Step_Rebuilding3.class);
