@@ -3,73 +3,130 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/widInput"
+    <TextView
+        android:id="@+id/pageTitle"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Width (ft)"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        android:layout_below="@+id/widthTxt"
-        android:layout_alignLeft="@+id/lengthTxt"
-        android:layout_alignStart="@+id/lengthTxt" />
+        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="31dp"
+        android:text="Interlock Relaying"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/widthTxt"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/pageTitle"
+        android:layout_alignStart="@+id/pageTitle"
+        android:layout_below="@+id/pageTitle"
+        android:layout_marginTop="27dp"
+        android:text="Size of the job (Width):"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/lenInput"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/widthTxt"
+        android:layout_alignStart="@+id/widthTxt"
+        android:layout_below="@+id/widthTxt"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:hint="Width (ft)"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/lenTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lenInput"
+        android:layout_alignStart="@+id/lenInput"
+        android:layout_below="@+id/lenInput"
+        android:layout_marginTop="23dp"
+        android:text="Size of the job (Length):"
+        android:textAlignment="textStart"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/widInput"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lenTxt"
+        android:layout_alignStart="@+id/lenTxt"
+        android:layout_below="@+id/lenTxt"
+        android:layout_marginTop="18dp"
         android:ems="10"
         android:hint="Length (ft)"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        android:layout_marginTop="77dp"
-        android:layout_below="@+id/widInput"
-        android:layout_alignLeft="@+id/ptrnTypeSpin"
-        android:layout_alignStart="@+id/ptrnTypeSpin" />
+        android:inputType="numberDecimal" />
 
     <Spinner
         android:id="@+id/ptrnTypeSpin"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:entries="@array/pattern_type"
-        android:layout_marginTop="32dp"
-        android:layout_below="@+id/lenInput"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/widthTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="94dp"
-        android:autoLink="none"
-        android:text="Size of the job (Width):"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/widInput"
         android:layout_alignLeft="@+id/widInput"
         android:layout_alignStart="@+id/widInput" />
 
-    <TextView
-        android:id="@+id/lengthTxt"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/jobShapeSpin"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:text="Size of the job (Length):"
-        android:textStyle="bold"
-        android:layout_below="@+id/widInput"
-        android:layout_alignLeft="@+id/lenInput"
-        android:layout_alignStart="@+id/lenInput"
-        android:layout_marginTop="48dp" />
+        android:layout_alignLeft="@+id/ptrnTypeSpin"
+        android:layout_alignStart="@+id/ptrnTypeSpin"
+        android:layout_below="@+id/ptrnTypeSpin"
+        android:layout_marginTop="42dp"
+        android:entries="@array/job_shape_relay" />
 
     <TextView
-        android:id="@+id/pageTitle"
+        android:id="@+id/ptrnTxt"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_above="@+id/widInput"
-        android:layout_alignLeft="@+id/widthTxt"
-        android:layout_alignStart="@+id/widthTxt"
-        android:text="Interlock Relaying - Layout"
-        android:textSize="18sp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ptrnTypeSpin"
+        android:layout_alignStart="@+id/ptrnTypeSpin"
+        android:layout_below="@+id/widInput"
+        android:layout_marginTop="16dp"
+        android:text="Pattern Type:"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/jobShapeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/jobShapeSpin"
+        android:layout_alignStart="@+id/jobShapeSpin"
+        android:layout_below="@+id/ptrnTypeSpin"
+        android:layout_marginTop="20dp"
+        android:text="Shape of job:"
+        android:textStyle="bold" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/jobShapeSpin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/jobShapeSpin"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/right_arrow" />
+
+    <CheckBox
+        android:id="@+id/edgeCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/nextBtn"
+        android:layout_alignLeft="@+id/jobShapeSpin"
+        android:layout_alignStart="@+id/jobShapeSpin"
+        android:layout_marginBottom="7dp"
+        android:text="Is there edging?" />
 
 </RelativeLayout>
