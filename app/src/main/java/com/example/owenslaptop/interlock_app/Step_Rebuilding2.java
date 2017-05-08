@@ -47,21 +47,9 @@ public class Step_Rebuilding2 extends AppCompatActivity {
         longTRB = (RadioButton) findViewById(R.id.lTRB);
         final RadioButton skinnyGRB = (RadioButton) findViewById(R.id.sGRB);
 
-        //creating the arrays to hold the spinner objects
-        final String[] locationArr = {"Location", "Front-yard", "Back-yard"};
-        final String[] roomArr = {"Amount of room", "Average", "Less than average", "Very little"};
-
         //adding the spinners to the array
         views[0] = locationSp;
         views[1] = roomSp;
-
-        //setting the options to the spinners
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, locationArr);
-        locationSp.setAdapter(adapter1);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, roomArr);
-        roomSp.setAdapter(adapter2);
 
         //when the size spinner is clicked
         locationSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -105,7 +93,7 @@ public class Step_Rebuilding2 extends AppCompatActivity {
         if(areViewsValid(views)) {
             //getting the input from the user
             locationSt = locationSp.getSelectedItem().toString();
-            boolean easeAccB = longTRB.isSelected();
+            boolean easeAccB = longTRB.isChecked();
             roomManSt = roomSp.getSelectedItem().toString();
             if (easeAccB){
                 easeAccSt = "Long thoroughfare";

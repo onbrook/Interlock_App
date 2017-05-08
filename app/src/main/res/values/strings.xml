@@ -60,6 +60,27 @@
         <item>Side</item>
         <item>Other</item>
     </array>
+    <array name="size_job_l">
+        <item>Size of the job (l)</item>
+        <item>Shorter</item>
+        <item>Average</item>
+        <item>Longer</item>
+    </array>
+    <array name="size_job_h">
+        <item>Size of the job (h)</item>
+        <item>Lower</item>
+        <item>Average</item>
+        <item>Higher</item>
+        <item>Over 4 feet</item>
+    </array>
+    <array name="steps_glued">
+        <item>Steps Glued?</item>
+        <item>Yes</item>
+        <item>No</item>
+        <item>Over-Glued</item>
+    </array>
+
+
     <string name="title_activity_step__rebuilding2">Step_Rebuilding2</string>
     <string name="estimation_title">Estimation</string>
 </resources>

@@ -54,26 +54,10 @@ public class Step_Rebuilding extends AppCompatActivity {
         sizeJob2Sp = (Spinner) findViewById(R.id.sizeOfJob2Sp);
         amountShiftSp = (Spinner) findViewById(R.id.amountBaseShiftSp);
 
-        //creating the arrays to hold the spinner objects
-        final String[] sizeArr = {"Size of the job (l)", "Shorter", "Average", "Longer"};
-        final String[] size2Arr = {"Size of the job (h)", "Lower", "Average", "Higher", "Over 4 feet"};
-        final String[] baseShiftArr = {"Amount of base shift", "None", "Lower"};
-
         //adding the spinners to the array
         views[0] = sizeJobSp;
         views[1] = sizeJob2Sp;
         views[2] = amountShiftSp;
-
-        //setting the options to the spinners
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, sizeArr);
-        sizeJobSp.setAdapter(adapter1);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, size2Arr);
-        sizeJob2Sp.setAdapter(adapter2);
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, baseShiftArr);
-        amountShiftSp.setAdapter(adapter3);
 
         //when the size spinner is clicked
         sizeJobSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

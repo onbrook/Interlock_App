@@ -4,7 +4,7 @@
     <item><layer-list>
         <item><shape>
 
-            <stroke android:width="3dp" android:color="@color/colorRed" />
+            <stroke android:width="3dp" android:color="@color/colorAccent" />
 
             <corners android:radius="3dp" />
 
