@@ -41,7 +41,6 @@
         android:clickable="true"
         app:fabSize="normal"
         app:srcCompat="@drawable/home"
-        app:backgroundTint="@color/colorRed"
         android:onClick="fabClicked"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
