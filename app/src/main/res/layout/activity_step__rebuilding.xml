@@ -53,9 +53,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Size of Job (length):"
-        android:layout_marginTop="24dp"
-        android:layout_below="@id/sizeOfJobSp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginTop="29dp"
+        style="@style/no_outline_spinner"
+        android:layout_below="@+id/sizeOfJobSp"
+        android:layout_toRightOf="@+id/errorTV"
+        android:layout_toEndOf="@+id/errorTV" />
 
     <Spinner
         android:id="@+id/sizeOfJob2Sp"
@@ -65,7 +67,8 @@
         android:layout_below="@+id/sJLengthTV"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="24dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        style="@style/no_outline_spinner"/>
 
     <Spinner
         android:id="@+id/amountBaseShiftSp"
@@ -75,7 +78,8 @@
         android:layout_marginBottom="19dp"
         android:layout_below="@+id/bShiftTV"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        style="@style/no_outline_spinner"/>
 
     <TextView
         android:id="@+id/stepsTV"
@@ -108,16 +112,6 @@
             android:text="Straight" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/nextBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Next >"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"/>
-
     <TextView
         android:id="@+id/errorTV"
         android:layout_width="wrap_content"
@@ -132,4 +126,18 @@
         android:text="Amount base Shifted:"
         android:layout_below="@id/sizeOfJob2Sp"
         android:layout_marginLeft="20dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/stepRebuildingFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/right_arrow"
+        app:backgroundTint="@color/colorRed"
+        android:onClick="fabClicked"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"/>
 </RelativeLayout>

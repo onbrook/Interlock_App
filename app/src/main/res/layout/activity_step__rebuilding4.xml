@@ -10,55 +10,280 @@
         android:id="@+id/titleTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:text="Step Rebuilding"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.039"
         app:layout_constraintVertical_bias="0.017"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/gettingJobTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:text=" - Final Estimate"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.031"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.089"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_below="@+id/titleTV"
+        android:layout_alignRight="@+id/titleTV"
+        android:textStyle="bold"
+        android:layout_alignEnd="@+id/titleTV" />
 
-    <Button
-        android:id="@+id/nextBtn"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/stepRebuildingFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home >"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.971"
-        app:layout_constraintVertical_bias="0.982" />
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/right_arrow"
+        app:backgroundTint="@color/colorRed"
+        android:onClick="fabClicked"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"/>
+
+    <TextView
+        android:id="@+id/sizeJobHTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:text="Size of Job (H):"
+        android:layout_below="@+id/gettingJobTV"
+        android:layout_alignLeft="@+id/titleTV"
+        android:textStyle="bold"
+        android:layout_alignStart="@+id/titleTV" />
+
+    <TextView
+        android:id="@+id/SizeJobLTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sizeJobHTitleTV"
+        android:layout_alignStart="@+id/sizeJobHTitleTV"
+        android:layout_below="@+id/sizeJobHTitleTV"
+        android:layout_marginTop="12dp"
+        android:textStyle="bold"
+        android:text="Size of Job (L):" />
+
+    <TextView
+        android:id="@+id/baseShiftTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/SizeJobLTitleTV"
+        android:layout_alignStart="@+id/SizeJobLTitleTV"
+        android:layout_below="@+id/SizeJobLTitleTV"
+        android:layout_marginTop="14dp"
+        android:textStyle="bold"
+        android:text="Amount Base Shifted:" />
+
+    <TextView
+        android:id="@+id/stepsAreTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/baseShiftTitleTV"
+        android:layout_alignStart="@+id/baseShiftTitleTV"
+        android:layout_below="@+id/baseShiftTitleTV"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:text="Steps are:" />
+
+    <TextView
+        android:id="@+id/locationTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/stepsAreTV"
+        android:layout_alignStart="@+id/stepsAreTV"
+        android:layout_below="@+id/stepsAreTV"
+        android:layout_marginTop="11dp"
+        android:textStyle="bold"
+        android:text="Location:" />
+
+    <TextView
+        android:id="@+id/easeTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ease of Access:"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/locationTitleTV"
+        android:textStyle="bold"
+        android:layout_alignStart="@+id/locationTitleTV" />
+
+    <TextView
+        android:id="@+id/roomMoveTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/easeTitleTV"
+        android:layout_alignStart="@+id/easeTitleTV"
+        android:layout_below="@+id/easeTitleTV"
+        android:layout_marginTop="14dp"
+        android:textStyle="bold"
+        android:text="Room to Maneuver:" />
+
+    <TextView
+        android:id="@+id/gluedTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/roomMoveTitleTV"
+        android:layout_alignStart="@+id/roomMoveTitleTV"
+        android:layout_below="@+id/roomMoveTitleTV"
+        android:layout_marginTop="14dp"
+        android:textStyle="bold"
+        android:text="Steps Glued:" />
+
+    <TextView
+        android:id="@+id/rootsTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gluedTitleTV"
+        android:layout_alignStart="@+id/gluedTitleTV"
+        android:layout_below="@+id/gluedTitleTV"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        android:text="Tree roots:" />
+
+    <TextView
+        android:id="@+id/clipsTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/rootsTitleTV"
+        android:layout_alignStart="@+id/rootsTitleTV"
+        android:layout_below="@+id/rootsTitleTV"
+        android:layout_marginTop="13dp"
+        android:text="Are there Clips:"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/hardLineTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hard Line:"
+        android:layout_below="@+id/clipsTitleTV"
+        android:layout_alignLeft="@+id/clipsTitleTV"
+        android:layout_alignStart="@+id/clipsTitleTV"
+        android:textStyle="bold"
+        android:layout_marginTop="14dp" />
+
+    <TextView
+        android:id="@+id/timeEstTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:text="Time Estimate:"
+        android:layout_alignTop="@+id/stepRebuildingFAB"
+        android:layout_alignLeft="@+id/hardLineTitleTV"
+        android:layout_alignStart="@+id/hardLineTitleTV"
+        android:textStyle="bold"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/sizeHDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sizeJobHTitleTV"
+        android:layout_toEndOf="@+id/roomMoveTitleTV"
+        android:layout_toRightOf="@+id/roomMoveTitleTV" />
+
+    <TextView
+        android:id="@+id/sizeLDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sizeHDisplay"
+        android:layout_alignStart="@+id/sizeHDisplay"
+        android:layout_alignTop="@+id/SizeJobLTitleTV" />
+
+    <TextView
+        android:id="@+id/baseShiftDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/baseShiftTitleTV"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_toEndOf="@+id/baseShiftTitleTV"
+        android:layout_toRightOf="@+id/baseShiftTitleTV" />
+
+    <TextView
+        android:id="@+id/stepsAreDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/stepsAreTV"
+        android:layout_toEndOf="@+id/gluedTitleTV"
+        android:layout_toRightOf="@+id/gluedTitleTV" />
+
+    <TextView
+        android:id="@+id/locationDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/stepsAreDisplay"
+        android:layout_alignStart="@+id/stepsAreDisplay"
+        android:layout_alignTop="@+id/locationTitleTV" />
+
+    <TextView
+        android:id="@+id/easeAccessDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/easeTitleTV"
+        android:layout_toEndOf="@+id/sizeLDisplay"
+        android:layout_toRightOf="@+id/sizeLDisplay" />
+
+    <TextView
+        android:id="@+id/roomManDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/roomMoveTitleTV"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/stepsGluedDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/gluedTitleTV"
+        android:layout_alignBottom="@+id/gluedTitleTV"
+        android:layout_toEndOf="@+id/easeTitleTV"
+        android:layout_toRightOf="@+id/easeTitleTV" />
+
+    <TextView
+        android:id="@+id/treeRootsDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rootsTitleTV"
+        android:layout_toEndOf="@+id/stepsGluedDisplay"
+        android:layout_toRightOf="@+id/stepsGluedDisplay" />
+
+    <TextView
+        android:id="@+id/clipsDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/clipsTitleTV"
+        android:layout_toLeftOf="@+id/roomManDisplay" />
+
+    <TextView
+        android:id="@+id/hardLineDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/hardLineTitleTV"
+        android:layout_toEndOf="@+id/locationDisplay"
+        android:layout_toRightOf="@+id/locationDisplay" />
+
+    <TextView
+        android:id="@+id/finalTimeDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/timeEstTitleTV"
+        android:layout_toEndOf="@+id/gettingJobTV"
+        android:layout_toRightOf="@+id/gettingJobTV" />
 
 </RelativeLayout>

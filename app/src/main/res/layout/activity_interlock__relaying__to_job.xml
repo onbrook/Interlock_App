@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/pageTitle"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:text="Getting to job / Complications"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/easeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/pageTitle"
+        android:layout_alignStart="@+id/pageTitle"
+        android:layout_below="@+id/pageTitle"
+        android:layout_marginTop="26dp"
+        android:text="Ease of access:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/accSliderTxt"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/easeTxt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="(Very accessible)                                   (Difficult to access) "
+        android:textAllCaps="false" />
+
+    <TextView
+        android:id="@+id/locationTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/accSlider"
+        android:layout_alignStart="@+id/accSlider"
+        android:layout_below="@+id/accSlider"
+        android:layout_marginTop="31dp"
+        android:text="Job location:"
+        android:textStyle="bold" />
+
+    <SeekBar
+        android:id="@+id/accSlider"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/easeTxt"
+        android:layout_alignStart="@+id/easeTxt"
+        android:layout_below="@+id/easeTxt"
+        android:layout_marginTop="35dp"
+        android:max="10"
+        android:progress="0" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/accSlider"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/accSlider"
+        android:layout_marginBottom="27dp"
+        android:clickable="true"
+        app:elevation="0dp"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/right_arrow" />
+
+    <Spinner
+        android:id="@+id/locationSpin"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/locationTxt"
+        android:layout_alignStart="@+id/locationTxt"
+        android:layout_below="@+id/locationTxt"
+        android:layout_marginTop="9dp"
+        android:entries="@array/job_location" />
+
+    <TextView
+        android:id="@+id/roomToMoveTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/locationSpin"
+        android:layout_alignStart="@+id/locationSpin"
+        android:layout_centerVertical="true"
+        android:text="Room to move:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/roomToMoveScaleTxt"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/roomToMoveTxt"
+        android:layout_alignStart="@+id/roomToMoveTxt"
+        android:layout_below="@+id/roomToMoveTxt"
+        android:layout_marginTop="12dp"
+        android:text="(Spacious)                                                 (Tight)" />
+
+    <SeekBar
+        android:id="@+id/moveSlider"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/roomToMoveScaleTxt"
+        android:layout_alignStart="@+id/roomToMoveScaleTxt"
+        android:layout_below="@+id/roomToMoveScaleTxt"
+        android:layout_marginTop="14dp"
+        android:max="10"
+        android:progress="0" />
+
+</RelativeLayout>
