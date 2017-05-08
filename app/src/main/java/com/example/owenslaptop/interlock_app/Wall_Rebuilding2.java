@@ -95,18 +95,7 @@ public class Wall_Rebuilding2 extends AppCompatActivity {
 
     //called when the back button in the title bas is pressed
     public boolean onOptionsItemSelected(MenuItem item){
-        goBack();
+        onBackPressed();
         return true;
-    }
-
-    //for android back button (the one on the bottom of the screen)
-    public void onBackPressed(){
-        goBack();
-    }
-
-    private void goBack(){
-        Intent intent = getIntent();
-        intent.setClass(Wall_Rebuilding2.this, Wall_Rebuilding.class);
-        startActivity(intent);
     }
 }
