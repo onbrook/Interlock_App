@@ -60,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
         style="@style/no_outline_spinner"
+        android:entries="@array/steps_glued"
         android:layout_below="@+id/stepsGluedTV"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -92,6 +93,7 @@
             android:layout_alignLeft="@+id/treeRootsRG"
             android:layout_alignStart="@+id/treeRootsRG"
             android:layout_below="@+id/treeRootsRG"
+            android:checked="true"
             android:text="Yes" />
 
         <RadioButton
@@ -128,9 +130,7 @@
             android:id="@+id/cYRB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView4"
-            android:layout_alignStart="@+id/textView4"
-            android:layout_below="@+id/textView4"
+            android:checked="true"
             android:layout_marginTop="15dp"
             android:text="Yes" />
 
@@ -171,6 +171,7 @@
             android:layout_alignLeft="@+id/hardLineTV"
             android:layout_alignStart="@+id/hardLineTV"
             android:layout_below="@+id/hardLineTV"
+            android:checked="true"
             android:text="Yes" />
 
 

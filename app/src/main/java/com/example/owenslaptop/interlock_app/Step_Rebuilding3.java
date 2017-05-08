@@ -50,16 +50,8 @@ public class Step_Rebuilding3 extends AppCompatActivity {
         lineYRB = (RadioButton) findViewById(R.id.hLYRB);
         lineNRB = (RadioButton) findViewById(R.id.hLNRB);
 
-        //creating the arrays to hold the spinner objects
-        final String[] gluedArr = {"Steps Glued?", "Yes", "No", "Over-Glued"};
-
         //adding the spinners to the array
         views[0] = stepsGluedSp;
-
-        //setting the options to the spinners
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, gluedArr);
-        stepsGluedSp.setAdapter(adapter1);
 
         //when the second size spinner is clicked
         stepsGluedSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -85,9 +77,9 @@ public class Step_Rebuilding3 extends AppCompatActivity {
         if(areViewsValid(views)) {
             stepsGlueSt = stepsGluedSp.getSelectedItem().toString();
             boolean rootsB, clipsB, lineB;
-            rootsB = treeYRB.isSelected();
-            clipsB = clipsYRB.isSelected();
-            lineB = lineYRB.isSelected();
+            rootsB = treeYRB.isChecked();
+            clipsB = clipsYRB.isChecked();
+            lineB = lineYRB.isChecked();
             if(rootsB){
                 rootsSt = "Yes";
             }
