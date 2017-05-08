@@ -25,6 +25,15 @@
         android:id="@+id/headlineTextView"
         android:layout_marginRight="20dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@+id/headlineTextView"
+        android:id="@+id/location_tv"/>
+
     <Spinner
         android:id="@+id/location_spinner"
         android:layout_width="match_parent"
@@ -32,8 +41,17 @@
         android:layout_marginLeft="32dp"
         android:entries="@array/location"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/headlineTextView"
+        android:layout_below="@+id/location_tv"
         style="@style/no_outline_spinner"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accessibility"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@+id/location_spinner"
+        android:id="@+id/accessibility_tv"/>
 
     <Spinner
         android:id="@+id/accessibility_spinner"
@@ -42,8 +60,17 @@
         android:layout_marginLeft="32dp"
         android:entries="@array/accessibility"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/location_spinner"
+        android:layout_below="@+id/accessibility_tv"
         style="@style/no_outline_spinner"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Room to maneuver"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@+id/accessibility_spinner"
+        android:id="@+id/maneuver_tv"/>
 
     <Spinner
         android:id="@+id/maneuver_spinner"
@@ -52,7 +79,7 @@
         android:layout_marginLeft="32dp"
         android:entries="@array/maneuver"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/accessibility_spinner"
+        android:layout_below="@+id/maneuver_tv"
         style="@style/no_outline_spinner"/>
 
 

@@ -22,11 +22,20 @@
         android:id="@+id/headlineTextView"
         android:layout_marginRight="20dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Height (in feet)"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@+id/headlineTextView"
+        android:id="@+id/height_tv"/>
+
     <EditText
         android:id="@+id/height_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/headlineTextView"
+        android:layout_below="@+id/height_tv"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
@@ -34,11 +43,20 @@
         android:inputType="numberDecimal"
         style="@style/no_outline_edit_text"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Length (in feet)"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@+id/height_input"
+        android:id="@+id/length_tv"/>
+
     <EditText
         android:id="@+id/length_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/height_input"
+        android:layout_below="@+id/length_tv"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="10dp"
         android:inputType="numberDecimal"
@@ -46,27 +64,28 @@
         android:layout_marginRight="20dp"
         style="@style/no_outline_edit_text"/>
 
-    <CheckBox
-        android:id="@+id/hard_line_CheckBox"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Shape"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="32dp"
         android:layout_below="@+id/length_input"
-        android:layout_marginTop="10dp"
-        android:text="Hard line to work from" />
+        android:id="@+id/shape_tv"/>
 
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
-        android:layout_below="@id/hard_line_CheckBox"
-        android:layout_marginTop="10dp">
+        android:layout_below="@id/shape_tv"
+        android:layout_marginTop="10dp"
+        android:id="@+id/shape_rg">
 
         <RadioButton
             android:id="@+id/wallCurved_radioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wall curved"
+            android:text="Curved"
             android:checked="true"/>
 
         <RadioButton
@@ -74,8 +93,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Wall straight" />
+            android:text="Straight" />
     </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Other"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@+id/shape_rg"
+        android:id="@+id/other_tv"/>
+
+    <CheckBox
+        android:id="@+id/hard_line_CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@+id/other_tv"
+        android:layout_marginTop="10dp"
+        android:text="Hard line to work from" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/wall_rebuilding_FAB"

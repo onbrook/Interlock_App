@@ -24,6 +24,15 @@
         android:drawablePadding="20dp"
         android:id="@+id/headlineTextView"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount that the base has shifted"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@+id/headlineTextView"
+        android:id="@+id/baseShift_tv"/>
+
     <Spinner
         android:id="@+id/baseShift_spinner"
         android:layout_width="match_parent"
@@ -31,15 +40,24 @@
         android:layout_marginLeft="32dp"
         android:entries="@array/base_shift"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/headlineTextView"
+        android:layout_below="@+id/baseShift_tv"
         style="@style/no_outline_spinner" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Other"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@+id/baseShift_spinner"
+        android:id="@+id/other_tv"/>
 
     <CheckBox
         android:id="@+id/roots_CheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
-        android:layout_below="@+id/baseShift_spinner"
+        android:layout_below="@+id/other_tv"
         android:layout_marginTop="10dp"
         android:text="Roots moving the wall"/>
 
