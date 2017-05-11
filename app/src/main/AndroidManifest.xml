@@ -37,7 +37,11 @@
             android:label="@string/wall_rebuilding_tittle" />
         <activity android:name=".Interlock_Relaying_Complications" />
         <activity android:name=".Interlock_Relaying_ToJob" />
-        <activity android:name=".Interlock_Relaying_Estimate"></activity>
+        <activity android:name=".Interlock_Relaying_Estimate" />
+        <activity android:name=".Joint_Fill" />
+        <activity android:name=".Joint_Fill2" />
+        <activity android:name=".Joint_Fill3" />
+        <activity android:name=".Joint_Fill4"></activity>
     </application>
 
 </manifest>

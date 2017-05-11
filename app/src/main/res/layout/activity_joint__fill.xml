@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.owenslaptop.interlock_app.Joint_Fill">
+
+    <TextView
+        android:id="@+id/titleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Joint fill Replacment"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/gettingJobTV"
+        android:layout_alignStart="@+id/gettingJobTV"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/gettingJobTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" - About the Project"
+        android:textStyle="bold"
+        android:layout_below="@+id/titleTV"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="17dp" />
+
+    <TextView
+        android:id="@+id/widthTxt"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gettingJobTV"
+        android:layout_alignStart="@+id/gettingJobTV"
+        android:layout_below="@+id/gettingJobTV"
+        android:layout_marginTop="27dp"
+        android:text="Size of the job (Width):"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/lenInput"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/widthTxt"
+        android:layout_alignStart="@+id/widthTxt"
+        android:layout_below="@+id/widthTxt"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:hint="Width (ft)"
+        android:inputType="numberDecimal"
+        android:layout_alignRight="@+id/gettingJobTV"
+        android:layout_alignEnd="@+id/gettingJobTV" />
+
+    <TextView
+        android:id="@+id/lenTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lenInput"
+        android:layout_alignStart="@+id/lenInput"
+        android:layout_below="@+id/lenInput"
+        android:layout_marginTop="23dp"
+        android:text="Size of the job (Length):"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/widInput"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lenTxt"
+        android:layout_alignStart="@+id/lenTxt"
+        android:layout_below="@+id/lenTxt"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:hint="Length (ft)"
+        android:inputType="numberDecimal"
+        android:layout_alignRight="@+id/gettingJobTV"
+        android:layout_alignEnd="@+id/gettingJobTV" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/stepRebuildingFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/right_arrow"
+        android:onClick="fabClicked"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"/>
+
+    <TextView
+        android:id="@+id/sizeJointTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/widInput"
+        android:textStyle="bold"
+        android:layout_alignStart="@+id/widInput"
+        android:layout_below="@+id/widInput"
+        android:layout_marginTop="13dp"
+        android:text="Size of Joints:" />
+
+    <Spinner
+        android:id="@+id/sizeJointSp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/sizeJointTV"
+        android:layout_marginTop="19dp" />
+
+    <TextView
+        android:id="@+id/patternTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sizeJointTV"
+        android:layout_alignStart="@+id/sizeJointTV"
+        android:layout_below="@+id/sizeJointSp"
+        android:layout_marginTop="18dp"
+        android:text="Interlock Pattern:"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/patternSp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/patternTV"
+        android:layout_marginTop="17dp" />
+
+</RelativeLayout>
