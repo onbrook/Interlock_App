@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Interlock App</string>
-    <string name="wall_rebuilding_tittle">Wall Rebuilding</string>
+    <string name="wall_rebuilding_title">Wall Rebuilding</string>
     <string name="height_hint">Height</string>
-    <string name="layout_tittle">Layout of job</string>
+    <string name="layout_title">Layout of job</string>
     <string name="length_hint">Length</string>
-    <string name="complications_tittle">Complications</string>
-    <string name="to_job_tittle">Getting to the job</string>
+    <string name="complications_title">Complications</string>
+    <string name="to_job_title">Getting to the job</string>
     <array name="location">
         <item>Choose one</item>
         <item>Frontyard</item>
@@ -35,6 +35,12 @@
         <item>A moderate amount</item>
         <item>Little</item>
         <item>None</item>
+    </array>
+    <array name="stain_type">
+        <item>Stain Type</item>
+        <item>Efflorecnence</item>
+        <item>Rust</item>
+        <item>General Dirt</item>
     </array>
     <array name="pattern_type">
         <item>Pattern Type</item>
@@ -83,4 +89,7 @@
 
     <string name="title_activity_step__rebuilding2">Step_Rebuilding2</string>
     <string name="estimation_title">Estimation</string>
+    <string name="cleaning_sealing_title">Cleaning and Sealing</string>
+    <string name="dimensions_title">Dimensions (in feet)</string>
+    <string name="angle_title">Angle</string>
 </resources>

@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import static com.example.owenslaptop.interlock_app.ViewValidity.*;
 
+/*
+ *By: Peter Lewis
+ *Date: April 30, 2017
+ */
 
 public class Wall_Rebuilding2 extends AppCompatActivity {
     EditText heightInput;

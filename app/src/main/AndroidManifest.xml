@@ -25,19 +25,24 @@
         <activity android:name=".Step_Rebuilding4" />
         <activity
             android:name=".Wall_Rebuilding"
-            android:label="@string/wall_rebuilding_tittle" />
+            android:label="@string/wall_rebuilding_title" />
         <activity
             android:name=".Wall_Rebuilding2"
-            android:label="@string/wall_rebuilding_tittle" />
+            android:label="@string/wall_rebuilding_title" />
         <activity
             android:name=".Wall_Rebuilding3"
-            android:label="@string/wall_rebuilding_tittle" />
+            android:label="@string/wall_rebuilding_title" />
         <activity
             android:name=".Wall_Rebuilding_Estimation"
-            android:label="@string/wall_rebuilding_tittle" />
+            android:label="@string/wall_rebuilding_title" />
         <activity android:name=".Interlock_Relaying_Complications" />
         <activity android:name=".Interlock_Relaying_ToJob" />
-        <activity android:name=".Interlock_Relaying_Estimate"></activity>
+        <activity android:name=".Interlock_Relaying_Estimate" />
+        <activity
+            android:name=".CleaningSealing"
+            android:label="@string/cleaning_sealing_title" />
+        <activity android:name=".CleaningSealing2" />
+        <activity android:name=".CleaningSealingEstimation"></activity>
     </application>
 
 </manifest>
