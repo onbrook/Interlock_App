@@ -5,6 +5,7 @@ import android.icu.text.DecimalFormat;
 import android.icu.text.NumberFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import static com.example.owenslaptop.interlock_app.ViewValidity.areViewsValid;
+import static com.example.owenslaptop.interlock_app.ViewValidity.isViewValid;
+import static com.example.owenslaptop.interlock_app.ViewValidity.removeOutline;
 import static com.example.owenslaptop.interlock_app.ViewValidity.updateViewValidity;
 
 /*
@@ -31,6 +34,16 @@ public class CleaningSealing extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cleaning_sealing);
+        //setup back button in title bar
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }catch (NullPointerException npex){
+            try {
+                getActionBar().setDisplayHomeAsUpEnabled(true);
+            }catch(NullPointerException ex){
+                //back button not supported
+            }
+        }
         //get views
         heightEditText = (EditText) findViewById(R.id.height_input);
         lengthEditText = (EditText) findViewById(R.id.length_input);
@@ -39,7 +52,7 @@ public class CleaningSealing extends AppCompatActivity {
         //setup views[]
         views[0] = heightEditText;
         views[1] = lengthEditText;
-
+        //SeekBar listener
         angleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -62,6 +75,23 @@ public class CleaningSealing extends AppCompatActivity {
                 }
             }
         });
+        //EditText listeners
+        heightEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(isViewValid(heightEditText))
+                    removeOutline(v);
+                return !isViewValid(v);//keep up keyboard
+            }
+        });
+        lengthEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(isViewValid(heightEditText))
+                    removeOutline(v);
+                return !isViewValid(v);//keep up keyboard
+            }
+        });
     }
 
     public void fabClicked(View view){
@@ -74,7 +104,7 @@ public class CleaningSealing extends AppCompatActivity {
             //extras--for passing data
             intent.putExtra("heightDouble", Double.parseDouble(heightEditText.getText().toString()));
             intent.putExtra("lengthDouble", Double.parseDouble(lengthEditText.getText().toString()));
-            intent.putExtra("angleInt", angleSeekBar.getProgress());
+            intent.putExtra("angleDouble", Double.parseDouble(String.format("%.2f", angleSeekBar.getProgress()*1.8)));
             //start activity
             startActivity(intent);
         }else

@@ -23,7 +23,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/headlineTextView"
         android:layout_above="@+id/wall_rebuilding_FAB">
         <LinearLayout
@@ -52,7 +52,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="40dp"
                 android:entries="@array/stain_type"
-                android:id="@+id/stain_spinner"/>
+                android:id="@+id/stain_spinner"
+                style="@style/no_outline_spinner"/>
 
             <TextView
                 android:layout_width="wrap_content"

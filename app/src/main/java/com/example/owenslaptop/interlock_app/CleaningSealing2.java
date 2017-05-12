@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
@@ -32,6 +33,16 @@ public class CleaningSealing2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cleaning_sealing2);
+        //setup back button in title bar
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }catch (NullPointerException npex){
+            try {
+                getActionBar().setDisplayHomeAsUpEnabled(true);
+            }catch(NullPointerException ex){
+                //back button not supported
+            }
+        }
         //get views
         stainCheckBox = (CheckBox) findViewById(R.id.stain_checkBox);
         stainTypeSpinner = (Spinner) findViewById(R.id.stain_spinner);
@@ -124,6 +135,23 @@ public class CleaningSealing2 extends AppCompatActivity {
                     seekBar.setProgress(100);
                     otherCompTextView.setText("Lots more");
                 }
+            }
+        });
+        //Spinner listener
+        stainTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
+                int index = stainTypeSpinner.getSelectedItemPosition();
+                if(index != 0)
+                    updateViewValidity(stainTypeSpinner);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                int index = stainTypeSpinner.getSelectedItemPosition();
+                if(index != 0)
+                    updateViewValidity(stainTypeSpinner);
             }
         });
     }

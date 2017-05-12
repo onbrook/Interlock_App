@@ -33,6 +33,19 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
+        android:id="@+id/cleaning_sealing_btn"
+        android:layout_width="252dp"
+        android:layout_height="48dp"
+        android:text="Cleaning and Sealing"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="315dp"
+        android:onClick="cleaningSealingBtnClicked"/>
+
+    <Button
         android:id="@+id/stepRebuildBtn"
         android:layout_width="252dp"
         android:layout_height="48dp"
