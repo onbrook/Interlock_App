@@ -71,7 +71,7 @@
                 android:id="@+id/sizeJobWTTitleV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                ndroid:layout_alignLeft="@+id/gettingJobTV"
+                android:layout_alignLeft="@+id/gettingJobTV"
                 android:layout_alignStart="@+id/gettingJobTV"
                 android:layout_marginTop="14dp"
                 android:text="Size of the Job (w):" />
