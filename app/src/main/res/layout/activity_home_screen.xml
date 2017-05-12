@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="29dp"
         android:text="Step Rebuilding"
-        android:layout_below="@+id/Select a Category"
+        android:layout_below="@+id/select_category_tv"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -51,7 +51,7 @@
         android:layout_alignStart="@+id/relayBtn" />
 
     <TextView
-        android:id="@+id/Select a Category"
+        android:id="@+id/select_category_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

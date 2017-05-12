@@ -85,6 +85,14 @@
         <item>No</item>
         <item>Over-Glued</item>
     </array>
+    <array name="sizeJoint">
+        <item>THIS NEEDS TO BE FILLED</item>
+        <item>...</item>
+    </array>
+    <array name="pattern">
+        <item>THIS NEEDS TO BE FILLED</item>
+        <item>...</item>
+    </array>
 
 
     <string name="title_activity_step__rebuilding2">Step_Rebuilding2</string>
@@ -92,4 +100,5 @@
     <string name="cleaning_sealing_title">Cleaning and Sealing</string>
     <string name="dimensions_title">Dimensions (in feet)</string>
     <string name="angle_title">Angle</string>
+    <string name="joint_fill_title">Joint Fill Replacement</string>
 </resources>

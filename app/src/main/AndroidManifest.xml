@@ -48,6 +48,18 @@
         <activity
             android:name=".Wall_Rebuilding_Estimation"
             android:label="@string/wall_rebuilding_title" />
+        <activity
+            android:name=".Joint_Fill"
+            android:label="@string/joint_fill_title"/>
+        <activity
+            android:name=".Joint_Fill2"
+            android:label="@string/joint_fill_title"/>
+        <activity
+            android:name=".Joint_Fill3"
+            android:label="@string/joint_fill_title"/>
+        <activity
+            android:name=".Joint_Fill4"
+            android:label="@string/joint_fill_title"/>
     </application>
 
 </manifest>

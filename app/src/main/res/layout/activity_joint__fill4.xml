@@ -20,60 +20,54 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="15dp"/>
 
+    <TextView
+        android:id="@+id/titleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Joint Fill"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.039"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.017" />
+
+    <TextView
+        android:id="@+id/gettingJobTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=" - Final Estimate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.031"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.089"
+        android:textStyle="bold"
+        android:layout_below="@+id/titleTV"
+        android:layout_alignLeft="@+id/titleTV"
+        android:layout_alignStart="@+id/titleTV" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/headlineTextView"
-        android:layout_above="@+id/wall_rebuilding_FAB">
+        android:layout_below="@+id/gettingJobTV"
+        android:layout_above="@+id/stepRebuildingFAB">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/titleTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="23dp"
-                android:layout_marginStart="23dp"
-                android:layout_marginTop="24dp"
-                android:text="Joint Fill"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.039"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.017" />
-
-            <TextView
-                android:id="@+id/gettingJobTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text=" - Final Estimate"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.031"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.089"
-                android:textStyle="bold"
-                android:layout_below="@+id/titleTV"
-                android:layout_alignLeft="@+id/titleTV"
-                android:layout_alignStart="@+id/titleTV" />
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/sizeJobWTTitleV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/gettingJobTV"
-                android:layout_alignStart="@+id/gettingJobTV"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="15dp"
                 android:text="Size of the Job (w):" />
 
             <TextView
@@ -83,7 +77,7 @@
                 android:layout_alignLeft="@+id/sizeJobWTTitleV"
                 android:layout_alignStart="@+id/sizeJobWTTitleV"
                 android:layout_below="@+id/sizeJobWTTitleV"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="15dp"
                 android:text="Size of the Job (l):" />
 
             <TextView
@@ -93,7 +87,7 @@
                 android:layout_alignLeft="@+id/sizeJobLTitleTV"
                 android:layout_alignStart="@+id/sizeJobLTitleTV"
                 android:layout_below="@+id/sizeJobLTitleTV"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="15dp"
                 android:text="Size of Joints:" />
 
             <TextView
@@ -103,7 +97,7 @@
                 android:layout_alignLeft="@+id/sizeJointsTitleTV"
                 android:layout_alignStart="@+id/sizeJointsTitleTV"
                 android:layout_below="@+id/sizeJointsTitleTV"
-                android:layout_marginTop="17dp"
+                android:layout_marginTop="15dp"
                 android:text="Interlock Pattern:" />
 
             <TextView
@@ -113,7 +107,7 @@
                 android:layout_alignLeft="@+id/patternTitleTV"
                 android:layout_alignStart="@+id/patternTitleTV"
                 android:layout_below="@+id/patternTitleTV"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="15dp"
                 android:text="Job location:" />
 
             <TextView
@@ -121,7 +115,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ease of Access:"
+                android:layout_marginTop="15dp"
                 android:layout_centerVertical="true"
+                android:layout_below="@+id/locationTitleTV"
                 android:layout_alignLeft="@+id/locationTitleTV"
                 android:layout_alignStart="@+id/locationTitleTV" />
 
@@ -132,7 +128,7 @@
                 android:layout_alignLeft="@+id/easeTitleTV"
                 android:layout_alignStart="@+id/easeTitleTV"
                 android:layout_below="@+id/easeTitleTV"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="15dp"
                 android:text="Room to Maneuver:" />
 
             <TextView
@@ -142,7 +138,7 @@
                 android:layout_alignLeft="@+id/manRoomTitleTV"
                 android:layout_alignStart="@+id/manRoomTitleTV"
                 android:layout_below="@+id/manRoomTitleTV"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="15dp"
                 android:text="What's Around" />
 
             <TextView
@@ -152,7 +148,7 @@
                 android:layout_alignLeft="@+id/whatsAroundTitleTV"
                 android:layout_alignStart="@+id/whatsAroundTitleTV"
                 android:layout_below="@+id/whatsAroundTitleTV"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="15dp"
                 android:text="Weeds in the Joint:" />
 
             <TextView
@@ -162,7 +158,7 @@
                 android:layout_alignLeft="@+id/weedsJointTitleTV"
                 android:layout_alignStart="@+id/weedsJointTitleTV"
                 android:layout_below="@+id/weedsJointTitleTV"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:text="Hard Joint Fill:" />
 
             <TextView
@@ -178,6 +174,8 @@
 
             <TextView
                 android:id="@+id/sizeJobWTV"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/sizeJobWTTitleV"
@@ -186,6 +184,8 @@
 
             <TextView
                 android:id="@+id/sizeJobLTV"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -194,6 +194,8 @@
 
             <TextView
                 android:id="@+id/sizeJointsTV"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -202,6 +204,8 @@
 
             <TextView
                 android:id="@+id/patternTV"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -210,6 +214,8 @@
 
             <TextView
                 android:id="@+id/locationTV"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/locationTitleTV"
@@ -218,6 +224,8 @@
 
             <TextView
                 android:id="@+id/easeTV"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/easeTitleTV"
@@ -226,6 +234,8 @@
 
             <TextView
                 android:id="@+id/manRoomTV"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -234,6 +244,8 @@
 
             <TextView
                 android:id="@+id/whatArrTV"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -242,6 +254,8 @@
 
             <TextView
                 android:id="@+id/weedJointTV"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -250,6 +264,8 @@
 
             <TextView
                 android:id="@+id/hardJointTV"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -258,6 +274,8 @@
 
             <TextView
                 android:id="@+id/finalEstTV"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
