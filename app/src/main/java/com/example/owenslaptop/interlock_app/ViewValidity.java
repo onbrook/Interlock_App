@@ -7,6 +7,11 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ *By: Peter Lewis
+ *Date: May 5, 2017
+ */
+
 class ViewValidity {
 
     /*

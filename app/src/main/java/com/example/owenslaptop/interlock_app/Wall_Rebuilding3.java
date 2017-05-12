@@ -12,6 +12,10 @@ import android.widget.Spinner;
 import static com.example.owenslaptop.interlock_app.ViewValidity.areViewsValid;
 import static com.example.owenslaptop.interlock_app.ViewValidity.updateViewValidity;
 
+/*
+ *By: Peter Lewis
+ *Date: April 30, 2017
+ */
 
 public class Wall_Rebuilding3 extends AppCompatActivity {
     Spinner baseShiftSpinner;

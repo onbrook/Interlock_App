@@ -10,6 +10,11 @@ import android.widget.Spinner;
 
 import static com.example.owenslaptop.interlock_app.ViewValidity.*;
 
+/*
+ *By: Peter Lewis
+ *Date: April 30, 2017
+ */
+
 public class Wall_Rebuilding extends AppCompatActivity {
     // getting to the job layout Views
     private Spinner locationSpinner;
