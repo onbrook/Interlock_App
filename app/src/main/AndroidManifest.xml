@@ -19,8 +19,7 @@
         </activity>
         <activity
             android:name=".Interlock_Relaying"
-            android:label="Interlock Relaying"
-            />
+            android:label="Interlock Relaying" />
         <activity
             android:name=".Interlock_Relaying_Complications"
             android:label="Interlock Relaying"/>
@@ -29,7 +28,7 @@
             android:label="Interlock Relaying"/>
         <activity
             android:name=".Interlock_Relaying_Estimate"
-            android:label="Interlock Relaying"></activity>
+            android:label="Interlock Relaying" />
         <activity android:name=".Step_Rebuilding">
             <activity android:name="Step_Rebuilding.NextActivity" />
         </activity>

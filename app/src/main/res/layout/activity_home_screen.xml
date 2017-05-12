@@ -26,9 +26,10 @@
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:text="Joint Fill"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/wallRebuildBtn"
         android:layout_alignLeft="@+id/wallRebuildBtn"
-        android:layout_alignStart="@+id/wallRebuildBtn" />
+        android:layout_alignStart="@+id/wallRebuildBtn"
+        android:layout_marginTop="17dp" />
 
     <Button
         android:id="@+id/relayBtn"
