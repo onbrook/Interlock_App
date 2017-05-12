@@ -1,17 +1,17 @@
 package com.example.owenslaptop.interlock_app;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
 /*
  *By: Peter Lewis
- *Date: April 30, 2017
+ *Date: May 11, 2017
  */
 
-public class Wall_Rebuilding_Estimation extends AppCompatActivity {
+public class CleaningSealingEstimation extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,21 +29,10 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         }
         //get the data that was filled out in the layouts
         Bundle extras = getIntent().getExtras();
-        int locationIndex = extras.getInt("locationIndex");
-        int accessIndex = extras.getInt("accessIndex");
-        int maneuverIndex = extras.getInt("maneuverIndex");
-        double heightInput = extras.getDouble("heightInput");
-        double lengthInput = extras.getDouble("lengthInput");
-        boolean lineChecked = extras.getBoolean("lineChecked");
-        int straightCurvedNum = extras.getInt("straightCurvedNum");
-        int baseShiftIndex = extras.getInt("baseShiftIndex");
-        boolean rootsChecked = extras.getBoolean("rootsChecked");
-        boolean glueChecked = extras.getBoolean("glueChecked");
-        boolean clipsChecked = extras.getBoolean("clipsChecked");
     }
 
     public void fabClicked(View fab){
-        startActivity(new Intent(Wall_Rebuilding_Estimation.this, HomeScreen.class));
+        startActivity(new Intent(getApplicationContext(), HomeScreen.class));
     }
 
     //called when the back button in the title bas is pressed

@@ -9,16 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".HomeScreen"
-            android:label="Home"
-            >
+        <activity android:name=".HomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Interlock_Relaying" />
         <activity android:name=".Step_Rebuilding">
             <activity android:name="Step_Rebuilding.NextActivity" />
         </activity>
@@ -37,19 +35,9 @@
         <activity
             android:name=".Wall_Rebuilding_Estimation"
             android:label="@string/wall_rebuilding_tittle" />
-        <activity
-            android:name=".Interlock_Relaying"
-            android:label="Interlock Relaying"
-            />
-        <activity
-            android:name=".Interlock_Relaying_Complications"
-            android:label="Interlock Relaying"/>
-        <activity
-            android:name=".Interlock_Relaying_ToJob"
-            android:label="Interlock Relaying"/>
-        <activity
-            android:name=".Interlock_Relaying_Estimate"
-            android:label="Interlock Relaying"></activity>
+        <activity android:name=".Interlock_Relaying_Complications" />
+        <activity android:name=".Interlock_Relaying_ToJob" />
+        <activity android:name=".Interlock_Relaying_Estimate"></activity>
     </application>
 
 </manifest>

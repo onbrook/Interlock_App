@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.owenslaptop.interlock_app.Joint_Fill3">
+
+    <TextView
+        android:id="@+id/titleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Joint fill Replacement"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/gettingJobTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:text=" - Potential Issues"
+        android:textStyle="bold"
+        android:layout_below="@id/titleTV"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/stepRebuildingFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/right_arrow"
+        android:onClick="fabClicked"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"/>
+
+    <TextView
+        android:id="@+id/weedsInJointTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gettingJobTV"
+        android:layout_alignStart="@+id/gettingJobTV"
+        android:layout_below="@+id/gettingJobTV"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="22dp"
+        android:text="Weeds in the Joints?" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/weedsRB"
+        android:layout_below="@+id/weedsInJointTV"
+        android:layout_alignLeft="@+id/weedsInJointTV"
+        android:layout_alignStart="@+id/weedsInJointTV"
+        android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/weedY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:checked="true"
+            android:text="Yes" />
+
+        <RadioButton
+            android:id="@+id/weedN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/hardJointTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/weedsRB"
+        android:layout_alignStart="@+id/weedsRB"
+        android:layout_below="@+id/weedsRB"
+        android:layout_marginTop="29dp"
+        android:text="Hard Joint Fill?" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hardJointRG"
+        android:layout_below="@+id/hardJointTV"
+        android:layout_alignLeft="@+id/hardJointTV"
+        android:layout_alignStart="@+id/hardJointTV"
+        android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/jointY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:checked="true"
+            android:text="Yes" />
+
+        <RadioButton
+            android:id="@+id/jointN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No" />
+    </RadioGroup>
+
+</RelativeLayout>
