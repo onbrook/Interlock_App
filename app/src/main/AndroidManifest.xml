@@ -9,14 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeScreen">
+        <activity android:name=".HomeScreen"
+            android:label="Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Interlock_Relaying" />
+        <activity
+            android:name=".Interlock_Relaying"
+            android:label="Interlock Relaying"
+            />
+        <activity
+            android:name=".Interlock_Relaying_Complications"
+            android:label="Interlock Relaying"/>
+        <activity
+            android:name=".Interlock_Relaying_ToJob"
+            android:label="Interlock Relaying"/>
+        <activity
+            android:name=".Interlock_Relaying_Estimate"
+            android:label="Interlock Relaying"></activity>
         <activity android:name=".Step_Rebuilding">
             <activity android:name="Step_Rebuilding.NextActivity" />
         </activity>
@@ -35,19 +48,6 @@
         <activity
             android:name=".Wall_Rebuilding_Estimation"
             android:label="@string/wall_rebuilding_title" />
-        <activity android:name=".Interlock_Relaying_Complications" />
-        <activity android:name=".Interlock_Relaying_ToJob" />
-        <activity android:name=".Interlock_Relaying_Estimate" />
-        <activity android:name=".Joint_Fill" />
-        <activity android:name=".Joint_Fill2" />
-        <activity android:name=".Joint_Fill3" />
-        <activity android:name=".Joint_Fill4"></activity>
-        <activity android:name=".Interlock_Relaying_Estimate" />
-        <activity
-            android:name=".CleaningSealing"
-            android:label="@string/cleaning_sealing_title" />
-        <activity android:name=".CleaningSealing2" />
-        <activity android:name=".CleaningSealingEstimation"></activity>
     </application>
 
 </manifest>

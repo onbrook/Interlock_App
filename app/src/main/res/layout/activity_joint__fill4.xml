@@ -4,44 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context="com.example.owenslaptop.interlock_app.Joint_Fill4">
-
-    <TextView
-        android:id="@+id/titleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="23dp"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="24dp"
-        android:text="Joint Fill"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.039"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.017" />
-
-    <TextView
-        android:id="@+id/gettingJobTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text=" - Final Estimate"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.031"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089"
-        android:textStyle="bold"
-        android:layout_below="@+id/titleTV"
-        android:layout_alignLeft="@+id/titleTV"
-        android:layout_alignStart="@+id/titleTV" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/stepRebuildingFAB"
@@ -56,205 +20,250 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="15dp"/>
 
-    <TextView
-        android:id="@+id/sizeJobWTTitleV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/gettingJobTV"
-        android:layout_alignStart="@+id/gettingJobTV"
-        android:layout_below="@+id/gettingJobTV"
-        android:layout_marginTop="14dp"
-        android:text="Size of the Job (w):" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/headlineTextView"
+        android:layout_above="@+id/wall_rebuilding_FAB">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/sizeJobLTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/sizeJobWTTitleV"
-        android:layout_alignStart="@+id/sizeJobWTTitleV"
-        android:layout_below="@+id/sizeJobWTTitleV"
-        android:layout_marginTop="13dp"
-        android:text="Size of the Job (l):" />
+            <TextView
+                android:id="@+id/titleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="23dp"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="24dp"
+                android:text="Joint Fill"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.039"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.017" />
 
-    <TextView
-        android:id="@+id/sizeJointsTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/sizeJobLTitleTV"
-        android:layout_alignStart="@+id/sizeJobLTitleTV"
-        android:layout_below="@+id/sizeJobLTitleTV"
-        android:layout_marginTop="16dp"
-        android:text="Size of Joints:" />
+            <TextView
+                android:id="@+id/gettingJobTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text=" - Final Estimate"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.031"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.089"
+                android:textStyle="bold"
+                android:layout_below="@+id/titleTV"
+                android:layout_alignLeft="@+id/titleTV"
+                android:layout_alignStart="@+id/titleTV" />
 
-    <TextView
-        android:id="@+id/patternTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/sizeJointsTitleTV"
-        android:layout_alignStart="@+id/sizeJointsTitleTV"
-        android:layout_below="@+id/sizeJointsTitleTV"
-        android:layout_marginTop="17dp"
-        android:text="Interlock Pattern:" />
+            <TextView
+                android:id="@+id/sizeJobWTTitleV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/gettingJobTV"
+                android:layout_alignStart="@+id/gettingJobTV"
+                android:layout_marginTop="14dp"
+                android:text="Size of the Job (w):" />
 
-    <TextView
-        android:id="@+id/locationTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/patternTitleTV"
-        android:layout_alignStart="@+id/patternTitleTV"
-        android:layout_below="@+id/patternTitleTV"
-        android:layout_marginTop="14dp"
-        android:text="Job location:" />
+            <TextView
+                android:id="@+id/sizeJobLTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/sizeJobWTTitleV"
+                android:layout_alignStart="@+id/sizeJobWTTitleV"
+                android:layout_below="@+id/sizeJobWTTitleV"
+                android:layout_marginTop="13dp"
+                android:text="Size of the Job (l):" />
 
-    <TextView
-        android:id="@+id/easeTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ease of Access:"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/locationTitleTV"
-        android:layout_alignStart="@+id/locationTitleTV" />
+            <TextView
+                android:id="@+id/sizeJointsTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/sizeJobLTitleTV"
+                android:layout_alignStart="@+id/sizeJobLTitleTV"
+                android:layout_below="@+id/sizeJobLTitleTV"
+                android:layout_marginTop="16dp"
+                android:text="Size of Joints:" />
 
-    <TextView
-        android:id="@+id/manRoomTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/easeTitleTV"
-        android:layout_alignStart="@+id/easeTitleTV"
-        android:layout_below="@+id/easeTitleTV"
-        android:layout_marginTop="14dp"
-        android:text="Room to Maneuver:" />
+            <TextView
+                android:id="@+id/patternTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/sizeJointsTitleTV"
+                android:layout_alignStart="@+id/sizeJointsTitleTV"
+                android:layout_below="@+id/sizeJointsTitleTV"
+                android:layout_marginTop="17dp"
+                android:text="Interlock Pattern:" />
 
-    <TextView
-        android:id="@+id/whatsAroundTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/manRoomTitleTV"
-        android:layout_alignStart="@+id/manRoomTitleTV"
-        android:layout_below="@+id/manRoomTitleTV"
-        android:layout_marginTop="12dp"
-        android:text="What's Around" />
+            <TextView
+                android:id="@+id/locationTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/patternTitleTV"
+                android:layout_alignStart="@+id/patternTitleTV"
+                android:layout_below="@+id/patternTitleTV"
+                android:layout_marginTop="14dp"
+                android:text="Job location:" />
 
-    <TextView
-        android:id="@+id/weedsJointTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/whatsAroundTitleTV"
-        android:layout_alignStart="@+id/whatsAroundTitleTV"
-        android:layout_below="@+id/whatsAroundTitleTV"
-        android:layout_marginTop="11dp"
-        android:text="Weeds in the Joint:" />
+            <TextView
+                android:id="@+id/easeTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ease of Access:"
+                android:layout_centerVertical="true"
+                android:layout_alignLeft="@+id/locationTitleTV"
+                android:layout_alignStart="@+id/locationTitleTV" />
 
-    <TextView
-        android:id="@+id/hardJointTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/weedsJointTitleTV"
-        android:layout_alignStart="@+id/weedsJointTitleTV"
-        android:layout_below="@+id/weedsJointTitleTV"
-        android:layout_marginTop="10dp"
-        android:text="Hard Joint Fill:" />
+            <TextView
+                android:id="@+id/manRoomTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/easeTitleTV"
+                android:layout_alignStart="@+id/easeTitleTV"
+                android:layout_below="@+id/easeTitleTV"
+                android:layout_marginTop="14dp"
+                android:text="Room to Maneuver:" />
 
-    <TextView
-        android:id="@+id/finalEstTitleTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="Final Estimate:"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/hardJointTitleTV"
-        android:layout_alignRight="@+id/easeTitleTV"
-        android:layout_alignEnd="@+id/easeTitleTV" />
+            <TextView
+                android:id="@+id/whatsAroundTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/manRoomTitleTV"
+                android:layout_alignStart="@+id/manRoomTitleTV"
+                android:layout_below="@+id/manRoomTitleTV"
+                android:layout_marginTop="12dp"
+                android:text="What's Around" />
 
-    <TextView
-        android:id="@+id/sizeJobWTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/sizeJobWTTitleV"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_toEndOf="@+id/sizeJobWTTitleV"
-        android:layout_toRightOf="@+id/sizeJobWTTitleV" />
+            <TextView
+                android:id="@+id/weedsJointTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/whatsAroundTitleTV"
+                android:layout_alignStart="@+id/whatsAroundTitleTV"
+                android:layout_below="@+id/whatsAroundTitleTV"
+                android:layout_marginTop="11dp"
+                android:text="Weeds in the Joint:" />
 
-    <TextView
-        android:id="@+id/sizeJobLTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/sizeJobWTV"
-        android:layout_alignStart="@+id/sizeJobWTV"
-        android:layout_alignTop="@+id/sizeJobLTitleTV" />
+            <TextView
+                android:id="@+id/hardJointTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/weedsJointTitleTV"
+                android:layout_alignStart="@+id/weedsJointTitleTV"
+                android:layout_below="@+id/weedsJointTitleTV"
+                android:layout_marginTop="10dp"
+                android:text="Hard Joint Fill:" />
 
-    <TextView
-        android:id="@+id/sizeJointsTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/sizeJobLTV"
-        android:layout_alignStart="@+id/sizeJobLTV"
-        android:layout_alignTop="@+id/sizeJointsTitleTV" />
+            <TextView
+                android:id="@+id/finalEstTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Final Estimate:"
+                android:layout_marginTop="50dp"
+                android:layout_below="@+id/hardJointTitleTV"
+                android:layout_alignRight="@+id/easeTitleTV"
+                android:layout_alignEnd="@+id/easeTitleTV" />
 
-    <TextView
-        android:id="@+id/patternTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/sizeJointsTV"
-        android:layout_alignRight="@+id/sizeJointsTV"
-        android:layout_alignTop="@+id/patternTitleTV" />
+            <TextView
+                android:id="@+id/sizeJobWTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/sizeJobWTTitleV"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"/>
 
-    <TextView
-        android:id="@+id/locationTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/locationTitleTV"
-        android:layout_toRightOf="@+id/easeTV"
-        android:layout_toLeftOf="@+id/patternTV"
-        android:layout_toStartOf="@+id/patternTV" />
+            <TextView
+                android:id="@+id/sizeJobLTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/sizeJobLTitleTV" />
 
-    <TextView
-        android:id="@+id/easeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/easeTitleTV"
-        android:layout_toEndOf="@+id/sizeJobWTV"
-        android:layout_toRightOf="@+id/sizeJobWTV" />
+            <TextView
+                android:id="@+id/sizeJointsTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/sizeJointsTitleTV" />
 
-    <TextView
-        android:id="@+id/manRoomTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/easeTV"
-        android:layout_alignRight="@+id/easeTV"
-        android:layout_alignTop="@+id/manRoomTitleTV" />
+            <TextView
+                android:id="@+id/patternTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/patternTitleTV" />
 
-    <TextView
-        android:id="@+id/whatArrTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/manRoomTV"
-        android:layout_alignStart="@+id/manRoomTV"
-        android:layout_alignTop="@+id/whatsAroundTitleTV" />
+            <TextView
+                android:id="@+id/locationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/locationTitleTV"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true" />
 
-    <TextView
-        android:id="@+id/weedJointTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/whatArrTV"
-        android:layout_alignRight="@+id/whatArrTV"
-        android:layout_alignTop="@+id/weedsJointTitleTV" />
+            <TextView
+                android:id="@+id/easeTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/easeTitleTV"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"/>
 
-    <TextView
-        android:id="@+id/hardJointTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/weedJointTV"
-        android:layout_alignStart="@+id/weedJointTV"
-        android:layout_alignTop="@+id/hardJointTitleTV" />
+            <TextView
+                android:id="@+id/manRoomTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/manRoomTitleTV" />
 
-    <TextView
-        android:id="@+id/finalEstTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/hardJointTV"
-        android:layout_alignStart="@+id/hardJointTV"
-        android:layout_alignTop="@+id/finalEstTitleTV" />
+            <TextView
+                android:id="@+id/whatArrTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/whatsAroundTitleTV" />
 
+            <TextView
+                android:id="@+id/weedJointTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/weedsJointTitleTV" />
+
+            <TextView
+                android:id="@+id/hardJointTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/hardJointTitleTV" />
+
+            <TextView
+                android:id="@+id/finalEstTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/finalEstTitleTV" />
+
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

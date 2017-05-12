@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,12 +29,22 @@ public class Interlock_Relaying extends AppCompatActivity {
         int falseCheck = 0;
 
         //checking all elements
-        if(Double.parseDouble(String.valueOf((len.getText()))) == 0){
+        if(!TextUtils.isEmpty(String.valueOf(len.getText()))){
+            if(Double.parseDouble(String.valueOf((len.getText()))) == 0){
+                setupOutline(len);
+                falseCheck = 1;
+            }
+        }else if(TextUtils.isEmpty(String.valueOf(len.getText()))){
             setupOutline(len);
             falseCheck = 1;
         }
 
-        if(Double.parseDouble(String.valueOf((wid.getText()))) == 0){
+        if(!TextUtils.isEmpty(String.valueOf(wid.getText()))){
+            if(Double.parseDouble(String.valueOf(wid.getText())) == 0){
+                setupOutline(wid);
+                falseCheck = 1;
+            }
+        }else if(TextUtils.isEmpty(String.valueOf(wid.getText()))){
             setupOutline(wid);
             falseCheck = 1;
         }
