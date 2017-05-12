@@ -23,12 +23,13 @@ public class Step_Rebuilding extends AppCompatActivity {
     Coded by: Owen Brook
 
      */
+
     //setting up the spinners and the array
     private View[] views = new View[3];
     private Spinner sizeJobSp;
     private Spinner sizeJob2Sp;
     private Spinner amountShiftSp;
-    private RadioButton straightRB, curvedRB;
+    private RadioButton curvedRB;
     public static String sizeJobHSt, sizeJobLSt, baseShiftSt, stepsAreSt;
 
     @Override
@@ -48,7 +49,6 @@ public class Step_Rebuilding extends AppCompatActivity {
         }
 
         //setting up the GUI components
-        straightRB = (RadioButton) findViewById(R.id.straightRB);
         curvedRB = (RadioButton) findViewById(R.id.curvedRB);
         sizeJobSp = (Spinner) findViewById(R.id.sizeOfJobSp);
         sizeJob2Sp = (Spinner) findViewById(R.id.sizeOfJob2Sp);
