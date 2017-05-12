@@ -22,11 +22,11 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
         Button btn = (Button)findViewById(R.id.stepRebuildBtn);
         Button btn2 = (Button)findViewById(R.id.wallRebuildBtn);
         Button btn3 = (Button)findViewById(R.id.relayBtn);
         Button jointFill = (Button)findViewById(R.id.jointFillBtn);
+        Button sealClean = (Button)findViewById(R.id.cleanSealBtn);
 
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +54,13 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeScreen.this, Joint_Fill.class));
+            }
+        });
+
+        sealClean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeScreen.this, CleaningSealing.class));
             }
         });
 
