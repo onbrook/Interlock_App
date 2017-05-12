@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.owenslaptop.interlock_app.Joint_Fill2">
+
+    <TextView
+        android:id="@+id/titleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Joint fill Replacement"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/gettingJobTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:text=" - Getting to the Job"
+        android:textStyle="bold"
+        android:layout_below="@id/titleTV"/>
+
+    <Spinner
+        android:id="@+id/locationSp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/no_outline_spinner"
+        android:entries="@array/job_location"
+        android:layout_below="@+id/locationTV"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gateRBG"
+        android:layout_below="@+id/easeTV"
+        android:layout_alignLeft="@+id/roomTV"
+        android:layout_alignStart="@+id/roomTV"
+        android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/sGRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Skinny gate" />
+
+        <RadioButton
+            android:id="@+id/lTRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Long thoroughfare" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/easeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ease of Access..."
+        android:layout_below="@+id/locationSp"
+        android:layout_alignLeft="@+id/gateRBG"
+        android:layout_alignStart="@+id/gateRBG"
+        android:layout_marginTop="13dp" />
+
+    <TextView
+        android:id="@+id/locationTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location:"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/gettingJobTV"
+        android:layout_alignLeft="@+id/gettingJobTV"
+        android:layout_alignStart="@+id/gettingJobTV" />
+
+    <TextView
+        android:id="@+id/roomTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount of Room to Maneuver:"
+        android:layout_below="@+id/gateRBG"
+        android:layout_alignLeft="@+id/locationTV"
+        android:layout_alignStart="@+id/locationTV"
+        android:layout_marginTop="15dp" />
+
+    <Spinner
+        android:id="@+id/roomSp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/maneuver"
+        android:layout_marginTop="27dp"
+        style="@style/no_outline_spinner"
+        android:layout_below="@+id/roomTV"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/errorTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/stepRebuildingFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/right_arrow"
+        android:onClick="fabClicked"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"/>
+
+    <TextView
+        android:id="@+id/whatAroundTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:text="Whats around?"
+        android:layout_below="@+id/roomSp"
+        android:layout_alignRight="@+id/easeTV"
+        android:layout_alignEnd="@+id/easeTV" />
+
+    <CheckBox
+        android:id="@+id/playStrucCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/whatAroundTV"
+        android:layout_marginTop="15dp"
+        android:text="Play Structure?"
+        android:layout_alignRight="@+id/gateRBG"
+        android:layout_alignEnd="@+id/gateRBG" />
+
+    <CheckBox
+        android:id="@+id/deckCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/playStrucCB"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
+        android:layout_toEndOf="@+id/playStrucCB"
+        android:layout_toRightOf="@+id/playStrucCB"
+        android:text="Deck?" />
+
+    <CheckBox
+        android:id="@+id/poolCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pool?"
+        android:layout_alignBaseline="@+id/deckCB"
+        android:layout_alignBottom="@+id/deckCB"
+        android:layout_toRightOf="@+id/deckCB"
+        android:layout_toEndOf="@+id/deckCB"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp" />
+
+
+</RelativeLayout>
