@@ -43,47 +43,58 @@
         <item>General Dirt</item>
     </array>
     <array name="pattern_type">
-        <item>Pattern Type</item>
+        <item>Chose One</item>
         <item>Modular</item>
         <item>Linear</item>
     </array>
     <array name="job_shape_relay">
-        <item>Shape of the job</item>
+        <item>Chose One</item>
         <item>Rectangular</item>
         <item>Circular</item>
         <item>Long + thin</item>>
         <item>Other</item>
     </array>
     <array name="paver_size">
-        <item>Size of pavers</item>
+        <item>Chose One</item>
         <item>Small</item>
         <item>Big</item>
     </array>
     <array name="job_location">
-        <item>Job Location</item>
+        <item>Chose One</item>
         <item>Front yard</item>
         <item>Backyard</item>
         <item>Side</item>
         <item>Other</item>
     </array>
     <array name="size_job_l">
-        <item>Size of the job (l)</item>
+        <item>Chose One</item>
         <item>Shorter</item>
         <item>Average</item>
         <item>Longer</item>
     </array>
     <array name="size_job_h">
-        <item>Size of the job (h)</item>
+        <item>Chose One</item>
         <item>Lower</item>
         <item>Average</item>
         <item>Higher</item>
         <item>Over 4 feet</item>
     </array>
     <array name="steps_glued">
-        <item>Steps Glued?</item>
+        <item>Chose One?</item>
         <item>Yes</item>
         <item>No</item>
         <item>Over-Glued</item>
+    </array>
+    <array name="sizeJoint">
+        <item>Chose One</item>
+        <item>Larger</item>
+        <item>Average</item>
+        <item>Smaller</item>
+    </array>
+    <array name="pattern">
+        <item>Chose One</item>
+        <item>Linear</item>
+        <item>Modular</item>
     </array>
 
 
