@@ -1,6 +1,8 @@
 package com.example.owenslaptop.interlock_app;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -49,18 +51,31 @@ public class CleaningSealing2 extends AppCompatActivity {
         stainAmountSeekBar = (SeekBar) findViewById(R.id.percent_stain_seekBar);
         ageSeekBar = (SeekBar) findViewById(R.id.age_seekBar);
         otherCompSeekBar = (SeekBar) findViewById(R.id.other_comp_seekBar);
+        final TextView percentStainTitleTextView = (TextView) findViewById(R.id.stains_percent_headline_tv);
         final TextView percentStainTextView = (TextView) findViewById(R.id.percent_stain_tv);
         final TextView ageTextView = (TextView) findViewById(R.id.age_tv);
         final TextView otherCompTextView = (TextView) findViewById(R.id.other_comp_tv);
+        //get default textVew text colour
+        final ColorStateList originalTextViewColour =  percentStainTitleTextView.getTextColors();
         //disable unused views (for stains)
         stainTypeSpinner.setEnabled(false);
         stainAmountSeekBar.setEnabled(false);
+        percentStainTitleTextView.setTextColor(Color.parseColor("#bababa"));
+        percentStainTextView.setTextColor(Color.parseColor("#bababa"));
         //listener for when stainCheckBox is pressed
         stainCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 stainTypeSpinner.setEnabled(isChecked);
                 stainAmountSeekBar.setEnabled(isChecked);
+                if(!isChecked) {
+                    stainTypeSpinner.setBackgroundResource(R.drawable.no_outline_spinner);
+                    percentStainTitleTextView.setTextColor(Color.parseColor("#bababa"));
+                    percentStainTextView.setTextColor(Color.parseColor("#bababa"));
+                }else{
+                    percentStainTitleTextView.setTextColor(originalTextViewColour);
+                    percentStainTextView.setTextColor(originalTextViewColour);
+                }
             }
         });
         //listener for when seek bars are moved

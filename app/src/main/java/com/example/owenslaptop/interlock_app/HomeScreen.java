@@ -66,9 +66,4 @@ public class HomeScreen extends AppCompatActivity {
 
 
     }
-
-    public void cleaningSealingBtnClicked(View v){
-        startActivity(new Intent(HomeScreen.this, CleaningSealing.class));
-    }
-
 }

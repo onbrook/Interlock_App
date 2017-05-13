@@ -59,6 +59,15 @@
         <activity
             android:name=".Joint_Fill4"
             android:label="@string/joint_fill_title"/>
+        <activity
+            android:name=".CleaningSealing"
+            android:label="@string/joint_fill_title"/>
+        <activity
+            android:name=".CleaningSealing2"
+            android:label="@string/joint_fill_title"/>
+        <activity
+            android:name=".CleaningSealingEstimation"
+            android:label="@string/joint_fill_title"/>
     </application>
 
 </manifest>
