@@ -9,8 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeScreen"
-            android:label="Home">
+        <activity android:name=".HomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,13 +60,13 @@
             android:label="@string/joint_fill_title"/>
         <activity
             android:name=".CleaningSealing"
-            android:label="@string/joint_fill_title"/>
+            android:label="@string/cleaning_sealing_title"/>
         <activity
             android:name=".CleaningSealing2"
-            android:label="@string/joint_fill_title"/>
+            android:label="@string/cleaning_sealing_title"/>
         <activity
             android:name=".CleaningSealingEstimation"
-            android:label="@string/joint_fill_title"/>
+            android:label="@string/cleaning_sealing_title"/>
     </application>
 
 </manifest>

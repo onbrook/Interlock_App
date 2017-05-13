@@ -102,9 +102,9 @@ public class CleaningSealing extends AppCompatActivity {
             //this removes the animation
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //extras--for passing data
-            intent.putExtra("heightDouble", Double.parseDouble(heightEditText.getText().toString()));
-            intent.putExtra("lengthDouble", Double.parseDouble(lengthEditText.getText().toString()));
-            intent.putExtra("angleDouble", Double.parseDouble(String.format("%.2f", angleSeekBar.getProgress()*1.8)));
+            intent.putExtra("height_double", Double.parseDouble(heightEditText.getText().toString()));
+            intent.putExtra("length_double", Double.parseDouble(lengthEditText.getText().toString()));
+            intent.putExtra("angle_double", Double.parseDouble(String.format("%.2f", angleSeekBar.getProgress()*1.8)));
             //start activity
             startActivity(intent);
         }else
