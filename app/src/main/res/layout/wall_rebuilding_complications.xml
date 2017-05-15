@@ -23,70 +23,110 @@
         android:textStyle="bold"
         android:drawablePadding="20dp"
         android:id="@+id/headlineTextView"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Amount that the base has shifted"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="32dp"
-        android:layout_below="@+id/headlineTextView"
-        android:id="@+id/baseShift_tv"/>
-
-    <Spinner
-        android:id="@+id/baseShift_spinner"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:entries="@array/base_shift"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/baseShift_tv"
-        style="@style/no_outline_spinner" />
+        android:layout_below="@+id/headlineTextView"
+        android:id="@+id/scroll_view">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amount that the base has shifted"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:id="@+id/baseShift_tv"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Other"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="32dp"
-        android:layout_below="@+id/baseShift_spinner"
-        android:id="@+id/other_tv"/>
+            <Spinner
+                android:id="@+id/baseShift_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:entries="@array/base_shift"
+                android:layout_marginTop="10dp"
+                style="@style/no_outline_spinner" />
 
-    <CheckBox
-        android:id="@+id/roots_CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_below="@+id/other_tv"
-        android:layout_marginTop="10dp"
-        android:text="Roots moving the wall"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Roots moving the wall"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"/>
 
-    <CheckBox
-        android:id="@+id/glue_CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_below="@+id/roots_CheckBox"
-        android:layout_marginTop="10dp"
-        android:text="Wall properly glued"/>
+            <SeekBar
+                android:id="@+id/roots_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp" />
 
-    <CheckBox
-        android:id="@+id/clips_CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_below="@+id/glue_CheckBox"
-        android:layout_marginTop="10dp"
-        android:text="Clips in the wall"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="64dp"
+                android:layout_marginStart="64dp"
+                android:id="@+id/roots_tv"
+                android:text="None"/>
 
-    <CheckBox
-        android:id="@+id/plants_CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_below="@+id/clips_CheckBox"
-        android:layout_marginTop="10dp"
-        android:text="Plants behind the wall"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Plants behind the wall"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"/>
+
+            <SeekBar
+                android:id="@+id/plants_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="64dp"
+                android:layout_marginStart="64dp"
+                android:id="@+id/plants_tv"
+                android:text="None"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Other"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:id="@+id/other_tv"/>
+
+            <CheckBox
+                android:id="@+id/glue_CheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="10dp"
+                android:text="Wall properly glued"/>
+
+            <CheckBox
+                android:id="@+id/clips_CheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="10dp"
+                android:text="Clips in the wall"/>
+            </LinearLayout>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/wall_rebuilding_FAB"
