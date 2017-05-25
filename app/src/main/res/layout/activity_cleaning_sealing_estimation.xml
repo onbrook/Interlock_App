@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context="com.oep.owenslaptop.interlock_app.com.oep.interlock_app.Wall_Rebuilding_Estimation">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding_Estimation">
 
     <TextView
         android:layout_width="wrap_content"
@@ -180,7 +180,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         app:fabSize="normal"
-        app:srcCompat="@drawable/home"
+        app:srcCompat="@drawable/check_mark"
         android:onClick="fabClicked"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

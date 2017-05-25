@@ -32,13 +32,15 @@
             android:label="Interlock Relaying"/>
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying_Estimate"
-            android:label="Interlock Relaying" />
+            android:label="Interlock Relaying"
+            android:configChanges="orientation|screenSize"/>
         <activity android:name="com.oep.interlock_app.Step_Rebuilding">
             <activity android:name="Step_Rebuilding.NextActivity" />
         </activity>
         <activity android:name="com.oep.interlock_app.Step_Rebuilding2" />
         <activity android:name="com.oep.interlock_app.Step_Rebuilding3" />
-        <activity android:name="com.oep.interlock_app.Step_Rebuilding4" />
+        <activity android:name="com.oep.interlock_app.Step_Rebuilding4"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name="com.oep.interlock_app.Wall_Rebuilding"
             android:label="@string/wall_rebuilding_title" />
@@ -50,7 +52,8 @@
             android:label="@string/wall_rebuilding_title" />
         <activity
             android:name="com.oep.interlock_app.Wall_Rebuilding_Estimation"
-            android:label="@string/wall_rebuilding_title" />
+            android:label="@string/wall_rebuilding_title"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name="com.oep.interlock_app.Joint_Fill"
             android:label="@string/joint_fill_title"/>
@@ -62,7 +65,8 @@
             android:label="@string/joint_fill_title"/>
         <activity
             android:name="com.oep.interlock_app.Joint_Fill4"
-            android:label="@string/joint_fill_title"/>
+            android:label="@string/joint_fill_title"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name="com.oep.interlock_app.CleaningSealing"
             android:label="@string/cleaning_sealing_title"/>
@@ -71,8 +75,8 @@
             android:label="@string/cleaning_sealing_title"/>
         <activity
             android:name="com.oep.interlock_app.CleaningSealingEstimation"
-            android:label="@string/cleaning_sealing_title"/>
-        <activity android:name="com.oep.interlock_app.gsheet_test"/>
+            android:label="@string/cleaning_sealing_title"
+            android:configChanges="orientation|screenSize"/>
     </application>
 
 </manifest>

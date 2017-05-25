@@ -13,7 +13,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -27,7 +26,6 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.SheetsScopes;
-import com.google.api.services.sheets.v4.model.Sheet;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
@@ -43,10 +41,9 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Date: 5/21/17
  */
 
-public class EstimationSheet extends Activity
-        implements EasyPermissions.PermissionCallbacks {
-    GoogleAccountCredential googleAccountCredential;
-    ProgressDialog progressDialog;
+class EstimationSheet {
+    private GoogleAccountCredential googleAccountCredential;
+    private ProgressDialog progressDialog;
 
     private static final int REQUEST_ACCOUNT_PICKER = 1000;
     private static final int REQUEST_AUTHORIZATION = 1001;
@@ -54,54 +51,229 @@ public class EstimationSheet extends Activity
     private static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
 
     private int sheetId;
+    private String sheetName;
+    private String properSheetName;
     private Activity activity;
+    private ProcessListener currentProcessListener;
+    private boolean runningTask = false;
+    private int variableNum;
 
-    public static final int WALL_REBUILDING_ID = 0;
-    public static final int CLEANING_SEALING_ID = 1;
+    private static final int OK_ACTION = 0;
+    private static final int RETRY_ACTION = 1;
+
+    static final int WALL_REBUILDING_ID = 0;
+    static final int CLEANING_SEALING_ID = 1;
+    static final int STEP_REBUILDING_ID = 2;
+    static final int JOINT_FILL_ID = 3;
+    static final int INTERLOCK_RELAYING_ID = 4;
 
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS_READONLY };
 
     /**
      *
-     * @param sheetId The ID of the Google Sheet. Use the ID's in this file (like CLEANING_SEALING_ID)
+     * @param sheetId The ID of the Google Sheet. Use the ID's in this file (<SHEET_NAME>_ID)
      * @param activity The Activity that uses the sheet. Used for dialogs etc. You can usually use 'this'
      */
 
-    public EstimationSheet(int sheetId, Activity activity){
+    EstimationSheet(int sheetId, Activity activity){
         this.sheetId = sheetId;
         this.activity = activity;
+
+        switch (sheetId){
+            case WALL_REBUILDING_ID:
+                sheetName = "wall_rebuilding";
+                properSheetName = "Wall Rebuilding";
+                variableNum = 11;
+                break;
+            case CLEANING_SEALING_ID:
+                sheetName = "cleaning_sealing";
+                properSheetName = "Cleaning and Sealing";
+                variableNum = 7;
+                break;
+            case STEP_REBUILDING_ID:
+                sheetName = "step_rebuilding";
+                properSheetName = "Step Rebuilding";
+                //TODO change this to be the actual number of variables
+                variableNum = -1;
+                break;
+            case JOINT_FILL_ID:
+                sheetName = "joint_fill";
+                properSheetName = "Joint Fill";
+                //TODO change this to be the actual number of variables
+                variableNum = -1;
+                break;
+            case INTERLOCK_RELAYING_ID:
+                sheetName = "interlock_relaying";
+                properSheetName = "Interlock Relaying";
+                //TODO change this to be the actual number of variables
+                variableNum = -1;
+                break;
+            default:
+                throw new IllegalArgumentException("'"+sheetId+"' is an invalid sheet ID. Use one of the given IDs with 'EstimationSheet.<SHEET_NAME>_ID'.");
+        }
+
         //set up progress dialog
         progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage("Collecting data for estimation...");
-        progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
 
         // Initialize credentials and service object.
         googleAccountCredential = GoogleAccountCredential.usingOAuth2(
-                this.activity, Arrays.asList(SCOPES))
+                this.activity.getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
-    }
-
-    public void getTimeEstimation(){
-        System.out.println(getResultsFromApi());
-    }
-
-    public void addEstimation(){
-
-    }
-
-    public void removeEstimation(int estimationId){
-
     }
 
     /**
      *
+     * @param data the data to make estimation with
+     * @param estimationProcessListener ProcessListener for what to do when finished getting estimation
+     */
+    void startEstimation(final List<Object> data, final ProcessListener estimationProcessListener){
+        if(runningTask)
+            throw new IllegalStateException("Cannot be running multiple tasks at once. Please do not start this task until the previous task is done.");
+        runningTask = true;
+        try {
+            ProcessListener getDataProcessListener = new ProcessListener() {
+                @Override
+                public void whenProcessFinished(boolean success, boolean a, Object output) {
+                    //finished getting data from Sheets
+                    runningTask = false;
+                    //update progressDialog message
+                    progressDialog.setMessage("Making estimation...");
+                    boolean accurate;
+                    double estimatedTime;
+                    if(!success)
+                        //abort startEstimation; an error has occurred
+                        estimationProcessListener.whenProcessFinished(false, false, null);
+                    else{
+                        List<List<Object>> pastEstimations = (ArrayList) output;
+                        List<List<Object>> dataSets = new ArrayList<>();
+                        for(List<Object> estimation : pastEstimations){
+                            if(!estimation.get(2).equals(""))//a time has been entered
+                                dataSets.add(estimation);
+                        }
+                        if(dataSets.size() < variableNum){
+                            //use only the aria to find estimated time
+                            accurate = false;
+                            double sumAlphas = 0;
+                            int numAlphas = 0;
+                            for(List<Object> dataSet : dataSets){
+                                double actualTime = Double.parseDouble((String) dataSet.get(2));
+                                double aria = Double.parseDouble((String) dataSet.get(3));
+                                sumAlphas += actualTime/aria;
+                                numAlphas ++;
+                            }
+                            double alpha = sumAlphas/numAlphas;//average of all alphas
+                            estimatedTime = alpha*(double)data.get(0);
+                        }else{
+                            //TODO fix startEstimation() for when estimation should be accurate
+                            //use all data
+                            accurate = true;
+                            estimatedTime = 0;
+                        }
+                        estimationProcessListener.whenProcessFinished(true, accurate, estimatedTime);
+                        progressDialog.hide();
+                    }
+                }
+            };
+            currentProcessListener = getDataProcessListener;
+            startGettingData(getDataProcessListener);
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+            runningTask = false;
+        }
+    }
+
+    /**
+     * Adds an estimation to the Google Sheet.
+     * @param data The data which was collected for the estimation
+     */
+    void startAddingEstimation(List<Object> data,  final ProcessListener addingProcessListener){
+        if(runningTask)
+            throw new IllegalStateException("Cannot be running multiple tasks at once. Please do not start this task until the previous task is done.");
+        runningTask = true;
+    }
+
+    /**
+     * Removes the given estimation from the Google Sheet.
+     * @param estimationId the ID of the estimation to remove
+     */
+    void removeEstimation(int estimationId){
+
+    }
+
+    /**
+     * Sets the actual time taken for a job
      * @param estimationId Id of the estimation that is to have the time changed.
      * @param time How long the job took in hours.
      */
-    public void setEstimationTime(int estimationId, double time){
+    void setEstimationTime(int estimationId, double time){
 
+    }
+
+    private List<List<Object>> getDataFromSheet() {
+        if (! isGooglePlayServicesAvailable()){
+            acquireGooglePlayServices();
+            throw new IllegalStateException("Google Play Services is not available on this device.");
+        }
+        else if (googleAccountCredential.getSelectedAccountName() == null) {
+            System.err.println("No Google account selected.");
+            //return chooseAccount();
+        }
+        else if (! isDeviceOnline()) {
+            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to get an estimation.", RETRY_ACTION);
+            throw new IllegalStateException("No network connection available.");
+        }
+        else{
+            //setup
+            System.out.println("Getting data...");
+            HttpTransport transport = AndroidHttp.newCompatibleTransport();
+            JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+            com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(
+                    transport, jsonFactory, googleAccountCredential)
+                    .build();
+            List<List<Object>> output = new ArrayList<>();
+            //try to get data from sheet
+            try {
+                progressDialog.show();
+                String spreadsheetId = "1zOQSqnzIM7Ku_JhcgMQH4Kp_sLrZRw1SDzl2nyDEosc";
+                String range = sheetName+"!A2:Z";
+                ValueRange response = service.spreadsheets().values()
+                        .get(spreadsheetId, range)
+                        .execute();
+                output = response.getValues();
+                progressDialog.hide();
+                System.out.println("COMPLETE: the data has successfully been got");
+            } catch (Exception e) {
+                System.err.println("FAILED: the following error occurred: ");
+                e.printStackTrace();
+                progressDialog.hide();
+                if (e instanceof GooglePlayServicesAvailabilityIOException) {
+                    showGooglePlayServicesAvailabilityErrorDialog(
+                            ((GooglePlayServicesAvailabilityIOException) e)
+                                    .getConnectionStatusCode());
+                } else if (e instanceof UserRecoverableAuthIOException) {
+                    activity.startActivityForResult(
+                            ((UserRecoverableAuthIOException) e).getIntent(),
+                            REQUEST_AUTHORIZATION);
+                } else {
+                    showErrorDialog("The following error occurred while trying to get data from the "+properSheetName+" Google Sheet:\n"
+                            + e.getMessage(), OK_ACTION);
+                }
+            }
+
+            if (output == null || output.size() <= 10) {
+                showErrorDialog("There is not enough data entered into the "+ properSheetName +" Google Sheet for an accurate estimation to be made.", OK_ACTION);
+                throw new IllegalStateException("The Google Sheet '"+sheetName+"' does not have enough data on it to make an estimation.");
+            }else
+                return output;
+        }
+        return null;
+    }
+
+    private int getEstimationRowNum(int estimationId, List<List<Object>> data){
+        return -1;
     }
 
     private boolean toBoolean(String str){
@@ -113,16 +285,30 @@ public class EstimationSheet extends Activity
             throw new IllegalArgumentException("'"+str+"' cannot be converted to a boolean.");
     }
 
-    private void showErrorDialog(String error){
+    private void showErrorDialog(String error, int action){
         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
         alertDialog.setTitle("Error");
         alertDialog.setMessage(error);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+        if(action == OK_ACTION)
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+        else if(action == RETRY_ACTION) {
+            alertDialog.setCanceledOnTouchOutside(false);
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "RETRY",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            startGettingData(currentProcessListener);
+                        }
+                    });
+        }
+        else
+            throw new IllegalArgumentException("'"+action+"' is an invalid action. Please use one of the given actions which are in the format <ACTION>_ACTION.");
+
         alertDialog.show();
     }
 
@@ -133,53 +319,22 @@ public class EstimationSheet extends Activity
      * of the preconditions are not satisfied, the app will prompt the user as
      * appropriate.
      */
-    private List<List<Object>> getResultsFromApi() {
+    private void startGettingData(ProcessListener processListener) {
         if (! isGooglePlayServicesAvailable()){
             acquireGooglePlayServices();
-            return null;
+            processListener.whenProcessFinished(false, false, null);
         }
         else if (googleAccountCredential.getSelectedAccountName() == null) {
             chooseAccount();
-            getResultsFromApi();
         }
         else if (! isDeviceOnline()) {
-            showErrorDialog("No network connection available.");
-            return null;
+            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to get an estimation.", RETRY_ACTION);
         }
         else{
-            progressDialog.show();
-            HttpTransport transport = AndroidHttp.newCompatibleTransport();
-            JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-            com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(
-                    transport, jsonFactory, googleAccountCredential)
-                    .build();
-            try {
-                String spreadsheetId = "1zOQSqnzIM7Ku_JhcgMQH4Kp_sLrZRw1SDzl2nyDEosc";
-                String range = "wall_rebuilding!A2:N";
-                ValueRange response = service.spreadsheets().values()
-                        .get(spreadsheetId, range)
-                        .execute();
-                progressDialog.hide();
-                return response.getValues();
-            } catch (Exception e) {
-                progressDialog.hide();
-                if (e instanceof GooglePlayServicesAvailabilityIOException) {
-                    showGooglePlayServicesAvailabilityErrorDialog(
-                            ((GooglePlayServicesAvailabilityIOException) e)
-                                    .getConnectionStatusCode());
-                } else if (e instanceof UserRecoverableAuthIOException) {
-                    activity.startActivityForResult(
-                            ((UserRecoverableAuthIOException) e).getIntent(),
-                            gsheet_test.REQUEST_AUTHORIZATION);
-                } else {
-                    showErrorDialog("The following error occurred:\n"
-                            + e.getMessage());
-                }
-                progressDialog.hide();
-                return null;
-            }
+
+            TaskGetData taskGetData = new TaskGetData(processListener);
+            taskGetData.execute();
         }
-        return null;
     }
 
     /**
@@ -200,7 +355,7 @@ public class EstimationSheet extends Activity
                     .getString(PREF_ACCOUNT_NAME, null);
             if (accountName != null) {
                 googleAccountCredential.setSelectedAccountName(accountName);
-                getResultsFromApi();
+                startGettingData(currentProcessListener);
             } else {
                 // Start a dialog from which the user can choose an account
                 activity.startActivityForResult(
@@ -227,22 +382,20 @@ public class EstimationSheet extends Activity
      * @param data Intent (containing result data) returned by incoming
      *     activity result.
      */
-    @Override
-    protected void onActivityResult(
+    void onActivityResult(
             int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
             case REQUEST_GOOGLE_PLAY_SERVICES:
-                if (resultCode != RESULT_OK) {
+                if (resultCode != Activity.RESULT_OK) {
                     showErrorDialog(
                             "This app requires Google Play Services. Please install " +
-                                    "Google Play Services on your device and relaunch this app.");
+                                    "Google Play Services on your device and relaunch this app.", OK_ACTION);
                 } else {
-                    getResultsFromApi();
+                    startGettingData(currentProcessListener);
                 }
                 break;
             case REQUEST_ACCOUNT_PICKER:
-                if (resultCode == RESULT_OK && data != null &&
+                if (resultCode == Activity.RESULT_OK && data != null &&
                         data.getExtras() != null) {
                     String accountName =
                             data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
@@ -253,57 +406,16 @@ public class EstimationSheet extends Activity
                         editor.putString(PREF_ACCOUNT_NAME, accountName);
                         editor.apply();
                         googleAccountCredential.setSelectedAccountName(accountName);
-                        getResultsFromApi();
+                        startGettingData(currentProcessListener);
                     }
                 }
                 break;
             case REQUEST_AUTHORIZATION:
-                if (resultCode == RESULT_OK) {
-                    getResultsFromApi();
+                if (resultCode == Activity.RESULT_OK) {
+                    startGettingData(currentProcessListener);
                 }
                 break;
         }
-    }
-
-    /**
-     * Respond to requests for permissions at runtime for API 23 and above.
-     * @param requestCode The request code passed in
-     *     requestPermissions(android.app.Activity, String, int, String[])
-     * @param permissions The requested permissions. Never null.
-     * @param grantResults The grant results for the corresponding permissions
-     *     which is either PERMISSION_GRANTED or PERMISSION_DENIED. Never null.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(
-                requestCode, permissions, grantResults, activity);
-    }
-
-    /**
-     * Callback for when a permission is granted using the EasyPermissions
-     * library.
-     * @param requestCode The request code associated with the requested
-     *         permission
-     * @param list The requested permission list. Never null.
-     */
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> list) {
-        // Do nothing.
-    }
-
-    /**
-     * Callback for when a permission is denied using the EasyPermissions
-     * library.
-     * @param requestCode The request code associated with the requested
-     *         permission
-     * @param list The requested permission list. Never null.
-     */
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> list) {
-        // Do nothing.
     }
 
     /**
@@ -350,7 +462,7 @@ public class EstimationSheet extends Activity
      * @param connectionStatusCode code describing the presence (or lack of)
      *     Google Play Services on this device.
      */
-    void showGooglePlayServicesAvailabilityErrorDialog(
+    private void showGooglePlayServicesAvailabilityErrorDialog(
             final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         Dialog dialog = apiAvailability.getErrorDialog(
@@ -364,15 +476,18 @@ public class EstimationSheet extends Activity
      * An asynchronous task that handles the Google Sheets API call.
      * Placing the API calls in their own task ensures the UI stays responsive.
      */
-    private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
-        private com.google.api.services.sheets.v4.Sheets mService = null;
-        private Exception mLastError = null;
+    private class TaskGetData extends AsyncTask<Void, Void, List<List<Object>>> {
 
-        MakeRequestTask(GoogleAccountCredential credential) {
+        private com.google.api.services.sheets.v4.Sheets service = null;
+        private Exception lastError = null;
+        private ProcessListener processListener = null;
+
+        TaskGetData(ProcessListener processListener) {
+            this.processListener = processListener;
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-            mService = new com.google.api.services.sheets.v4.Sheets.Builder(
-                    transport, jsonFactory, credential)
+            service = new com.google.api.services.sheets.v4.Sheets.Builder(
+                    transport, jsonFactory, googleAccountCredential)
                     .build();
         }
 
@@ -381,11 +496,11 @@ public class EstimationSheet extends Activity
          * @param params no parameters needed for this task.
          */
         @Override
-        protected List<String> doInBackground(Void... params) {
+        protected List<List<Object>> doInBackground(Void... params) {
             try {
                 return getDataFromApi();
             } catch (Exception e) {
-                mLastError = e;
+                lastError = e;
                 cancel(true);
                 return null;
             }
@@ -395,31 +510,14 @@ public class EstimationSheet extends Activity
          * Fetch a list of names and majors of students in a sample spreadsheet:
          * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
          * @return List of names and majors
-         * @throws IOException
          */
-        private List<String> getDataFromApi() throws IOException {
+        private List<List<Object>> getDataFromApi() throws IOException {
             String spreadsheetId = "1zOQSqnzIM7Ku_JhcgMQH4Kp_sLrZRw1SDzl2nyDEosc";
-            String range = "wall_rebuilding!A2:N";
-            List<String> results = new ArrayList<String>();
-            ValueRange response = this.mService.spreadsheets().values()
+            String range = sheetName+"!A2:N";
+            ValueRange response = this.service.spreadsheets().values()
                     .get(spreadsheetId, range)
                     .execute();
-            List<Sheet> sheets = this.mService.spreadsheets().get(spreadsheetId).setIncludeGridData (true)
-                    .execute().getSheets();
-            Sheet cleaningSealingSheet = sheets.get(0);
-            Sheet wallRebuildingSheet = sheets.get(1);
-            List<List<Object>> values = response.getValues();
-            if (values != null) {
-                int index = 0;
-                for (List row : values) {
-                    String rowStr = "";
-                    for (Object item : values.get(index))
-                        rowStr += item.toString()+", ";
-                    results.add(rowStr);
-                    index++;
-                }
-            }
-            return results;
+            return response.getValues();
         }
 
 
@@ -430,36 +528,43 @@ public class EstimationSheet extends Activity
         }
 
         @Override
-        protected void onPostExecute(List<String> output) {
-            progressDialog.hide();
-            if (output == null || output.size() == 0)
-                showErrorDialog("There is no data entered into the Google Sheets yet. To make an estimation," +
-                    " this app requires there to be some data entered.");
-            else {
-                output.add(0, "Data retrieved using the Google Sheets API:");
-                //mOutputText.setText(TextUtils.join("\n", output));
-            }
+        protected void onPostExecute(List<List<Object>> output) {
+            if (output == null || output.size() < 1) {
+                showErrorDialog("There has not been any estimations made for this job yet.", OK_ACTION);
+                processListener.whenProcessFinished(false, false, null);
+            }else
+                processListener.whenProcessFinished(true, true, output);
         }
 
         @Override
         protected void onCancelled() {
-            progressDialog.hide();
-            if (mLastError != null) {
-                if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
+            if (lastError != null) {
+                if (lastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
-                            ((GooglePlayServicesAvailabilityIOException) mLastError)
+                            ((GooglePlayServicesAvailabilityIOException) lastError)
                                     .getConnectionStatusCode());
-                } else if (mLastError instanceof UserRecoverableAuthIOException) {
+                } else if (lastError instanceof UserRecoverableAuthIOException) {
                     activity.startActivityForResult(
-                            ((UserRecoverableAuthIOException) mLastError).getIntent(),
-                            gsheet_test.REQUEST_AUTHORIZATION);
+                            ((UserRecoverableAuthIOException) lastError).getIntent(),
+                            REQUEST_AUTHORIZATION);
                 } else {
-                    showErrorDialog("The following error occurred:\n"
-                            + mLastError.getMessage());
+                    showErrorDialog("The following error occurred while trying to get data from the "+properSheetName+" Google Sheet:\n"
+                            + lastError.getMessage(), OK_ACTION);
                 }
             } else {
                 Toast.makeText(activity, "Request cancelled.", Toast.LENGTH_SHORT).show();
             }
+            processListener.whenProcessFinished(false, false, null);
         }
     }
+}
+
+interface ProcessListener {
+    /**
+     * Called when the currently running process if finished.
+     * @param success whether the process was successful or not.
+     * @param accurate whether the output is very accurate (used for startEstimation).
+     * @param output the results of the process.
+     */
+    void whenProcessFinished(boolean success, boolean accurate, Object output);
 }

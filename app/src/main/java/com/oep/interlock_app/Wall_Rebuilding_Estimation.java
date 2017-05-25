@@ -1,13 +1,21 @@
 package com.oep.interlock_app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oep.owenslaptop.interlock_app.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /*
  *By: Peter Lewis
@@ -15,7 +23,7 @@ import com.oep.owenslaptop.interlock_app.R;
  */
 
 public class Wall_Rebuilding_Estimation extends AppCompatActivity {
-
+    EstimationSheet wallRebuildingSheet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +50,7 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         TextView glueOut = (TextView) findViewById(R.id.glue_out);
         TextView clipsOut = (TextView) findViewById(R.id.clips_out);
         TextView plantsOut = (TextView) findViewById(R.id.plants_out);
-        TextView finalEstimate = (TextView) findViewById(R.id.final_out);
+        final TextView finalEstimate = (TextView) findViewById(R.id.final_out);
         //get the data that was filled out in the layouts
         Bundle extras = getIntent().getExtras();
         int locationIndex = extras.getInt("locationIndex");
@@ -57,6 +65,20 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         int plantsNum = extras.getInt("plantsNum");
         boolean glueChecked = extras.getBoolean("glueChecked");
         boolean clipsChecked = extras.getBoolean("clipsChecked");
+        //add data to the data list
+        //NOTE: the list must be in the same order as the data in the Google Sheet
+        List<Object> data = new ArrayList<>();
+        data.add(heightInput*lengthInput);
+        data.add(accessIndex);
+        data.add(maneuverIndex);
+        data.add(locationIndex);
+        data.add(straightCurvedNum);
+        data.add(lineChecked);
+        data.add(baseShiftIndex);
+        data.add(rootsNum);
+        data.add(plantsNum);
+        data.add(glueChecked);
+        data.add(clipsChecked);
         //put data into the TextViews
         switch (locationIndex){
             case 1:
@@ -154,9 +176,36 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
             clipsOut.setText("Yes");
         else
             clipsOut.setText("No");
-        finalEstimate.setText("Final Estimate:\n      0 hours and 0 minuets");
-        EstimationSheet wallRebuildingSheet = new EstimationSheet(EstimationSheet.WALL_REBUILDING_ID, this);
-        wallRebuildingSheet.getTimeEstimation();
+
+        final Activity activity = this;
+        wallRebuildingSheet = new EstimationSheet(EstimationSheet.WALL_REBUILDING_ID, this);
+        wallRebuildingSheet.startEstimation(data, new ProcessListener() {
+            @Override
+            public void whenProcessFinished(boolean success, boolean accurate, Object output) {
+                double totalHours = (double) output;
+                int hours = (int) totalHours;
+                int minute = (int) ((totalHours - hours)*60);
+                if(minute <= 7)
+                    minute = 0;
+                else if(minute <= 22)
+                    minute = 15;
+                else if(minute <=37)
+                    minute = 30;
+                else if(minute <= 52)
+                    minute = 45;
+                else {
+                    minute = 0;
+                    hours++;
+                }
+                if (accurate) {
+                    finalEstimate.setText("Final Estimate: " + hours + " hours and " + minute + " minutes.");
+                } else {
+                    Toast.makeText(activity, "Attention: this estimation is likely not very accurate.", Toast.LENGTH_LONG).show();
+                    finalEstimate.setText("Final Estimate: " + hours + " hours.");
+                }
+            }
+        });
+
     }
 
     public void fabClicked(View fab){
@@ -167,5 +216,20 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         onBackPressed();
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        wallRebuildingSheet.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(
+                requestCode, permissions, grantResults, wallRebuildingSheet);
     }
 }

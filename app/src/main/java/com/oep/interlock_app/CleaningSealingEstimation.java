@@ -102,7 +102,7 @@ public class CleaningSealingEstimation extends AppCompatActivity {
     }
 
     public void fabClicked(View fab){
-        startActivity(new Intent(getApplicationContext(), gsheet_test.class));
+        startActivity(new Intent(getApplicationContext(), HomeScreen.class));
     }
 
     //called when the back button in the title bas is pressed
