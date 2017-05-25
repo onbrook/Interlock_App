@@ -7,7 +7,7 @@
     android:paddingTop="20dp"
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
-    tools:context="com.example.owenslaptop.interlock_app.Step_Rebuilding2">
+    tools:context="com.oep.owenslaptop.interlock_app.com.oep.interlock_app.Step_Rebuilding2">
 
     <TextView
         android:id="@+id/titleTV"

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.owenslaptop.interlock_app">
+    package="com.oep.owenslaptop.interlock_app">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
 
     <application
         android:allowBackup="true"
@@ -9,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeScreen">
+        <activity android:name="com.oep.interlock_app.HomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,56 +22,57 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Interlock_Relaying"
+            android:name="com.oep.interlock_app.Interlock_Relaying"
             android:label="Interlock Relaying" />
         <activity
-            android:name=".Interlock_Relaying_Complications"
+            android:name="com.oep.interlock_app.Interlock_Relaying_Complications"
             android:label="Interlock Relaying"/>
         <activity
-            android:name=".Interlock_Relaying_ToJob"
+            android:name="com.oep.interlock_app.Interlock_Relaying_ToJob"
             android:label="Interlock Relaying"/>
         <activity
-            android:name=".Interlock_Relaying_Estimate"
+            android:name="com.oep.interlock_app.Interlock_Relaying_Estimate"
             android:label="Interlock Relaying" />
-        <activity android:name=".Step_Rebuilding">
+        <activity android:name="com.oep.interlock_app.Step_Rebuilding">
             <activity android:name="Step_Rebuilding.NextActivity" />
         </activity>
-        <activity android:name=".Step_Rebuilding2" />
-        <activity android:name=".Step_Rebuilding3" />
-        <activity android:name=".Step_Rebuilding4" />
+        <activity android:name="com.oep.interlock_app.Step_Rebuilding2" />
+        <activity android:name="com.oep.interlock_app.Step_Rebuilding3" />
+        <activity android:name="com.oep.interlock_app.Step_Rebuilding4" />
         <activity
-            android:name=".Wall_Rebuilding"
+            android:name="com.oep.interlock_app.Wall_Rebuilding"
             android:label="@string/wall_rebuilding_title" />
         <activity
-            android:name=".Wall_Rebuilding2"
+            android:name="com.oep.interlock_app.Wall_Rebuilding2"
             android:label="@string/wall_rebuilding_title" />
         <activity
-            android:name=".Wall_Rebuilding3"
+            android:name="com.oep.interlock_app.Wall_Rebuilding3"
             android:label="@string/wall_rebuilding_title" />
         <activity
-            android:name=".Wall_Rebuilding_Estimation"
+            android:name="com.oep.interlock_app.Wall_Rebuilding_Estimation"
             android:label="@string/wall_rebuilding_title" />
         <activity
-            android:name=".Joint_Fill"
+            android:name="com.oep.interlock_app.Joint_Fill"
             android:label="@string/joint_fill_title"/>
         <activity
-            android:name=".Joint_Fill2"
+            android:name="com.oep.interlock_app.Joint_Fill2"
             android:label="@string/joint_fill_title"/>
         <activity
-            android:name=".Joint_Fill3"
+            android:name="com.oep.interlock_app.Joint_Fill3"
             android:label="@string/joint_fill_title"/>
         <activity
-            android:name=".Joint_Fill4"
+            android:name="com.oep.interlock_app.Joint_Fill4"
             android:label="@string/joint_fill_title"/>
         <activity
-            android:name=".CleaningSealing"
+            android:name="com.oep.interlock_app.CleaningSealing"
             android:label="@string/cleaning_sealing_title"/>
         <activity
-            android:name=".CleaningSealing2"
+            android:name="com.oep.interlock_app.CleaningSealing2"
             android:label="@string/cleaning_sealing_title"/>
         <activity
-            android:name=".CleaningSealingEstimation"
+            android:name="com.oep.interlock_app.CleaningSealingEstimation"
             android:label="@string/cleaning_sealing_title"/>
+        <activity android:name="com.oep.interlock_app.gsheet_test"/>
     </application>
 
 </manifest>

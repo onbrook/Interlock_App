@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context="com.example.owenslaptop.interlock_app.Wall_Rebuilding_Estimation">
+    tools:context="com.oep.owenslaptop.interlock_app.com.oep.interlock_app.Wall_Rebuilding_Estimation">
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,17 +22,226 @@
         android:id="@+id/headlineTextView"
         android:layout_marginRight="20dp"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headlineTextView"
+        android:layout_above="@+id/home_FAB"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:id="@+id/scroll_view">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/location_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location:" />
+
+            <TextView
+                android:id="@+id/accessibility_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/location_title"
+                android:layout_marginTop="15dp"
+                android:text="Accessibility:" />
+
+            <TextView
+                android:id="@+id/room_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/accessibility_title"
+                android:layout_marginTop="15dp"
+                android:text="Room to maneuver:" />
+
+            <TextView
+                android:id="@+id/dimensions_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/room_title"
+                android:layout_marginTop="15dp"
+                android:text="Dimensions:" />
+
+            <TextView
+                android:id="@+id/shape_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shape:"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/dimensions_title"/>
+
+            <TextView
+                android:id="@+id/hard_line_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shape_title"
+                android:layout_marginTop="15dp"
+                android:text="Hard line to work from:" />
+
+            <TextView
+                android:id="@+id/base_shift_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/hard_line_title"
+                android:layout_marginTop="15dp"
+                android:text="Base shift:" />
+
+            <TextView
+                android:id="@+id/roots_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/base_shift_title"
+                android:layout_marginTop="15dp"
+                android:text="Roots moving wall:" />
+
+            <TextView
+                android:id="@+id/glue_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/roots_title"
+                android:layout_marginTop="15dp"
+                android:text="Properly glued:" />
+
+            <TextView
+                android:id="@+id/clips_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/glue_title"
+                android:layout_marginTop="15dp"
+                android:text="Clips in wall:" />
+
+            <TextView
+                android:id="@+id/plants_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/clips_title"
+                android:layout_marginTop="15dp"
+                android:text="Plants behind wall:" />
+
+            <TextView
+                android:id="@+id/location_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/location_title"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"/>
+
+            <TextView
+                android:id="@+id/accessibility_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/accessibility_title" />
+
+            <TextView
+                android:id="@+id/room_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/room_title" />
+
+            <TextView
+                android:id="@+id/dimensions_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/dimensions_title" />
+
+            <TextView
+                android:id="@+id/shape_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/shape_title"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true" />
+
+            <TextView
+                android:id="@+id/hard_line_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/hard_line_title"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"/>
+
+            <TextView
+                android:id="@+id/base_shift_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/base_shift_title" />
+
+            <TextView
+                android:id="@+id/roots_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/roots_title" />
+
+            <TextView
+                android:id="@+id/glue_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/glue_title" />
+
+            <TextView
+                android:id="@+id/clips_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/clips_title" />
+
+            <TextView
+                android:id="@+id/plants_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/plants_title" />
+
+        </RelativeLayout>
+    </ScrollView>
+
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/final_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/height_input"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
-        android:text="This project is expected to take 0 hours." />
+        android:textStyle="bold"
+        android:text="Final Estimate:"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/scroll_view"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/home_FAB"
