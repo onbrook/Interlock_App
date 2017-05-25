@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.oep.owenslaptop.interlock_app.R;
 
@@ -15,13 +18,14 @@ import static com.oep.interlock_app.ViewValidity.updateViewValidity;
 
 public class Step_Rebuilding3 extends AppCompatActivity {
 
-    //NEED TO FIND REASON WHY THAT THE BUTTONS ARE NOT DEFAULT SELECTED
 
     //setting up the spinners and the array
     private View[] views = new View[1];
     private Spinner stepsGluedSp;
-    private RadioButton treeYRB, treeNRB, clipsYRB, clipsNRB, lineYRB, lineNRB;
+    private TextView rootsDisTV;
     public static String stepsGlueSt, rootsSt, clipsSt, hardLineSt;
+    private SeekBar rootsSB;
+    private CheckBox hardLineCB, clipsCB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +45,42 @@ public class Step_Rebuilding3 extends AppCompatActivity {
 
         //setting up the GUI componenets
         stepsGluedSp = (Spinner) findViewById(R.id.stepsGluedSp);
-        treeYRB = (RadioButton) findViewById(R.id.tRYRB);
-        treeNRB = (RadioButton) findViewById(R.id.tRNRB);
-        clipsYRB = (RadioButton) findViewById(R.id.cYRB);
-        clipsNRB = (RadioButton) findViewById(R.id.cNRB);
-        lineYRB = (RadioButton) findViewById(R.id.hLYRB);
-        lineNRB = (RadioButton) findViewById(R.id.hLNRB);
+        rootsDisTV = (TextView) findViewById(R.id.rootsValueDisplayTV);
+        rootsSB = (SeekBar) findViewById(R.id.treeRootsSB);
+        hardLineCB = (CheckBox) findViewById(R.id.hardLineCB);
+        clipsCB = (CheckBox) findViewById(R.id.clipsCB);
+
 
         //adding the spinners to the array
         views[0] = stepsGluedSp;
+
+        rootsSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(progress==0){
+                    //no roots
+                    rootsDisTV.setText("None");
+                    rootsSt = "None";
+                }
+                else if(progress==1){
+                    //
+                    rootsDisTV.setText("Average");
+                    rootsSt = "Average";
+                }
+                else{
+                    //must be the last one
+                    rootsDisTV.setText("A lot");
+                    rootsSt = "A lot";
+                }
+            }
+        });
 
         //when the second size spinner is clicked
         stepsGluedSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -74,28 +105,19 @@ public class Step_Rebuilding3 extends AppCompatActivity {
     public void fabClicked(View view){
         if(ViewValidity.areViewsValid(views)) {
             stepsGlueSt = stepsGluedSp.getSelectedItem().toString();
-            boolean rootsB, clipsB, lineB;
-            rootsB = treeYRB.isChecked();
-            clipsB = clipsYRB.isChecked();
-            lineB = lineYRB.isChecked();
-            if(rootsB){
-                rootsSt = "Yes";
-            }
-            else{
-                rootsSt = "No";
-            }
-            if(clipsB){
+            if(clipsCB.isChecked()){
                 clipsSt = "Yes";
             }
             else{
                 clipsSt = "No";
             }
-            if(lineB){
+            if(hardLineCB.isChecked()){
                 hardLineSt = "Yes";
             }
             else{
                 hardLineSt = "No";
             }
+
             //create a new intent (you do not get the current one because we do not need any
             // information from the home screen)
             Intent intent = new Intent(getApplicationContext(), Step_Rebuilding4.class);
