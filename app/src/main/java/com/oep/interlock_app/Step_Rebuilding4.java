@@ -61,8 +61,9 @@ public class Step_Rebuilding4 extends AppCompatActivity {
         hardLineDisplay.setText(Step_Rebuilding3.hardLineSt);
         finalTimeDisplay.setText("??");
     }
+    //called when the back button in the title ba is pressed
     public boolean onOptionsItemSelected(MenuItem item){
-        startActivity(new Intent(Step_Rebuilding4.this, Step_Rebuilding3.class));
+        onBackPressed();
         return true;
     }
     //when the FAB is clicked

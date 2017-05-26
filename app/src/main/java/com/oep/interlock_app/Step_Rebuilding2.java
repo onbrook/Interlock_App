@@ -162,8 +162,9 @@ public class Step_Rebuilding2 extends AppCompatActivity {
             ViewValidity.updateViewValidity(views);
     }
 
+    //called when the back button in the title ba is pressed
     public boolean onOptionsItemSelected(MenuItem item){
-        startActivity(new Intent(Step_Rebuilding2.this, Step_Rebuilding.class));
+        onBackPressed();
         return true;
     }
 }

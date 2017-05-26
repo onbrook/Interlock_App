@@ -69,8 +69,9 @@ public class Joint_Fill3 extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //called when the back button in the title bas is pressed
+    //called when the back button in the title ba is pressed
     public boolean onOptionsItemSelected(MenuItem item){
+        onBackPressed();
         return true;
     }
 }
