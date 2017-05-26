@@ -91,7 +91,7 @@
 
     <SeekBar
         android:id="@+id/treeRootsSB"
-        style="@style/no_outline_spinner"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/treeRootsTV"

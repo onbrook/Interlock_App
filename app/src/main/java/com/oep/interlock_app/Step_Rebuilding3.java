@@ -50,6 +50,9 @@ public class Step_Rebuilding3 extends AppCompatActivity {
         hardLineCB = (CheckBox) findViewById(R.id.hardLineCB);
         clipsCB = (CheckBox) findViewById(R.id.clipsCB);
 
+        //setting the default values as output
+        rootsDisTV.setText("Average");
+
 
         //adding the spinners to the array
         views[0] = stepsGluedSp;

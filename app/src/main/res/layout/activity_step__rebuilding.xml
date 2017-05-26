@@ -38,67 +38,34 @@
         android:layout_below="@id/gettingJobTV"
         android:layout_marginLeft="20dp"/>
 
-    <Spinner
-        android:id="@+id/sizeOfJobSp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Size of the job"
-        android:layout_below="@+id/sJHeightTV"
-        android:layout_marginTop="11dp"
-        android:layout_marginLeft="20dp"
-        style="@style/no_outline_spinner"
-        android:entries="@array/size_job_h"
-        android:layout_marginRight="20dp"/>
-
     <TextView
         android:id="@+id/sJLengthTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Size of Job (length):"
         android:layout_marginTop="29dp"
-        android:layout_below="@+id/sizeOfJobSp"
+        android:layout_below="@+id/height_input"
         android:layout_toRightOf="@+id/errorTV"
         android:layout_toEndOf="@+id/errorTV" />
-
-    <Spinner
-        android:id="@+id/sizeOfJob2Sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Size of the job"
-        android:layout_below="@+id/sJLengthTV"
-        android:layout_marginLeft="20dp"
-        android:entries="@array/size_job_l"
-        android:layout_marginBottom="24dp"
-        android:layout_marginRight="20dp"
-        style="@style/no_outline_spinner"/>
-
-    <Spinner
-        android:id="@+id/amountBaseShiftSp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Amount of base shift"
-        android:entries="@array/base_shift"
-        android:layout_marginBottom="19dp"
-        android:layout_below="@+id/bShiftTV"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        style="@style/no_outline_spinner"/>
 
     <TextView
         android:id="@+id/stepsTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Are the steps..."
-        android:layout_below="@+id/amountBaseShiftSp"
-        android:layout_marginLeft="20dp" />
+        android:layout_above="@+id/curvedStraightRBG"
+        android:layout_toRightOf="@+id/errorTV"
+        android:layout_toEndOf="@+id/errorTV"
+        android:layout_marginBottom="11dp" />
 
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_below="@id/stepsTV"
-        android:layout_marginTop="10dp"
-        android:id="@+id/curvedStraightRBG">
+        android:id="@+id/curvedStraightRBG"
+        android:layout_alignBottom="@+id/stepRebuildingFAB"
+        android:layout_alignRight="@+id/stepsTV"
+        android:layout_alignEnd="@+id/stepsTV"
+        android:layout_marginBottom="34dp">
 
         <RadioButton
             android:id="@+id/curvedRB"
@@ -127,8 +94,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Amount base Shifted:"
-        android:layout_below="@id/sizeOfJob2Sp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/sJHeightTV"
+        android:layout_alignStart="@+id/sJHeightTV" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/stepRebuildingFAB"
@@ -142,4 +110,49 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="15dp"/>
+
+    <SeekBar
+        android:id="@+id/baseShiftSB"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bShiftTV"
+        android:layout_alignStart="@+id/bShiftTV"
+        android:layout_below="@+id/bShiftTV"
+        android:layout_marginTop="22dp"
+        android:max="4"
+        android:progress="2" />
+
+    <TextView
+        android:id="@+id/baseShiftDisplayTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/baseShiftSB"
+        android:layout_alignStart="@+id/baseShiftSB"
+        android:layout_below="@+id/baseShiftSB"
+        android:layout_marginTop="18dp" />
+
+        <EditText
+        android:id="@+id/height_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sJHeightTV"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/height_hint"
+        android:inputType="numberDecimal"
+        style="@style/no_outline_edit_text"/>
+
+    <EditText
+        android:id="@+id/length_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sJLengthTV"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/height_hint"
+        android:inputType="numberDecimal"
+        style="@style/no_outline_edit_text"/>
 </RelativeLayout>
