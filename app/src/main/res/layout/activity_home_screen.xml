@@ -13,11 +13,14 @@
         android:text="Title Here" />
 
     <Button
-        android:id="@+id/estimatePageBtn"
+        android:id="@+id/estimationBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="190dp"
-        android:text="Estimate Page" />
+        android:layout_alignEnd="@+id/mainTitle"
+        android:layout_alignRight="@+id/mainTitle"
+        android:layout_below="@+id/mainTitle"
+        android:layout_marginTop="55dp"
+        android:text="Button" />
+
+
 </RelativeLayout>

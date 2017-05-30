@@ -16,8 +16,6 @@ public class EstimationPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estimation_page);
 
-        setContentView(R.layout.activity_home_screen);
-        setTitle("Home");
         Button stepBtn = (Button)findViewById(R.id.stepRebuildBtn);
         Button wallBtn = (Button)findViewById(R.id.wallRebuildBtn);
         Button relayBtn = (Button)findViewById(R.id.relayBtn);
