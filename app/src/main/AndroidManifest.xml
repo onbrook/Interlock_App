@@ -78,6 +78,12 @@
             android:name="com.oep.interlock_app.CleaningSealingEstimation"
             android:label="@string/cleaning_sealing_title"
             android:configChanges="orientation|screenSize"/>
+        <activity android:name="com.oep.interlock_app.SetUserTypeActivity"
+            android:label="Setup Interlock App"/>
+        <activity android:name="com.oep.interlock_app.AddDatabasePermissionsActivity"
+            android:label="Database Access"/>
+        <activity android:name="com.oep.interlock_app.EnterDatabaseIdActivity"
+            android:label="Setup Interlock App"/>
     </application>
 
 </manifest>

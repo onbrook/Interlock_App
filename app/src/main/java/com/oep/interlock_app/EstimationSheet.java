@@ -85,6 +85,8 @@ class EstimationSheet {
     private int currentProcess = NO_PROCESS;
     private int currentHeldProcess = NO_PROCESS;
 
+    static final String DATABASE_TITLE = "Interlock App Database";
+
     static final String DATABASE_ID_FILE_NAME = "database_id";
     static final String USER_TYPE_FILE_NAME = "user_type";
 
@@ -116,6 +118,12 @@ class EstimationSheet {
     static final int JOINT_FILL_ID = 3;
     static final int INTERLOCK_RELAYING_ID = 4;
 
+    private static final String WALL_REBUILDING_SHEET_NAME = "wall_rebuilding";
+    private static final String CLEANING_SEALING_SHEET_NAME = "cleaning_sealing";
+    private static final String STEP_REBUILDING_SHEET_NAME = "step_rebuilding";
+    private static final String JOINT_FILL_SHEET_NAME = "joint_fill";
+    private static final String INTERLOCK_RELAYING_SHEET_NAME = "interlock_relaying";
+
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS, DriveScopes.DRIVE_FILE};
 
@@ -136,29 +144,29 @@ class EstimationSheet {
                 variableNum = -1;
                 break;
             case WALL_REBUILDING_ID:
-                sheetName = "wall_rebuilding";
+                sheetName = WALL_REBUILDING_SHEET_NAME;
                 properSheetName = "Wall Rebuilding";
                 variableNum = 11;
                 break;
             case CLEANING_SEALING_ID:
-                sheetName = "cleaning_sealing";
+                sheetName = CLEANING_SEALING_SHEET_NAME;
                 properSheetName = "Cleaning and Sealing";
                 variableNum = 7;
                 break;
             case STEP_REBUILDING_ID:
-                sheetName = "step_rebuilding";
+                sheetName = STEP_REBUILDING_SHEET_NAME;
                 properSheetName = "Step Rebuilding";
                 //TODO change this to be the actual number of variables
                 variableNum = -1;
                 break;
             case JOINT_FILL_ID:
-                sheetName = "joint_fill";
+                sheetName = JOINT_FILL_SHEET_NAME;
                 properSheetName = "Joint Fill";
                 //TODO change this to be the actual number of variables
                 variableNum = -1;
                 break;
             case INTERLOCK_RELAYING_ID:
-                sheetName = "interlock_relaying";
+                sheetName = INTERLOCK_RELAYING_SHEET_NAME;
                 properSheetName = "Interlock Relaying";
                 //TODO change this to be the actual number of variables
                 variableNum = -1;
@@ -301,6 +309,7 @@ class EstimationSheet {
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
         currentProcess = CHECK_DATABASE_ID_VALIDITY_PROCESS;
         currentListener = listener;
+        currentDatabaseId = databaseId;
         if (! isGooglePlayServicesAvailable()){
             acquireGooglePlayServices();
             listener.whenFinished(false, null);
@@ -520,17 +529,17 @@ class EstimationSheet {
 
     boolean isUserOwner(){
         String userType = getUserType();
-        if(userType.equals(USER_TYPE_OWNER))
+        if (userType == null || userType.equals(""))
+            throw new NullPointerException("There is either no user type file, or there is no data in it.");
+        else if(userType.equals(USER_TYPE_OWNER))
             return true;
         else if (userType.equals(USER_TYPE_EMPLOYEE))
             return false;
-        else if (userType == null || userType.equals(""))
-            throw new IllegalStateException("There is either no user type file, or there is no data in it.");
         else
-            throw new IllegalStateException("The data '"+userType+"'  which is in the user type file is not valid.");
+            throw new NullPointerException("The data '"+userType+"'  which is in the user type file is not valid.");
     }
 
-    void saveUserType(String userType){
+    void setUserType(String userType){
         if(!(userType.equals(USER_TYPE_OWNER) || userType.equals(USER_TYPE_EMPLOYEE)))
             throw new IllegalArgumentException("Cannot save userType '"+userType+"'. Invalid userType.");
         else{
@@ -894,38 +903,38 @@ class EstimationSheet {
             List<Sheet> sheets = new ArrayList<>();
             // Wall rebuilding
             SheetProperties wallRebuildingProperties = new SheetProperties();
-            wallRebuildingProperties.setTitle("wall_rebuilding");
+            wallRebuildingProperties.setTitle(WALL_REBUILDING_SHEET_NAME);
             Sheet wallRebuildingSheet = new Sheet();
             wallRebuildingSheet.setProperties(wallRebuildingProperties);
             sheets.add(wallRebuildingSheet);
             // Cleaning sealing
             SheetProperties cleaningSealingProperties = new SheetProperties();
-            cleaningSealingProperties.setTitle("cleaning_sealing");
+            cleaningSealingProperties.setTitle(CLEANING_SEALING_SHEET_NAME);
             Sheet cleaningSealingSheet = new Sheet();
             cleaningSealingSheet.setProperties(cleaningSealingProperties);
             sheets.add(cleaningSealingSheet);
             // Step rebuilding
             SheetProperties stepRebuildingProperties = new SheetProperties();
-            stepRebuildingProperties.setTitle("step_rebuilding");
+            stepRebuildingProperties.setTitle(STEP_REBUILDING_SHEET_NAME);
             Sheet stepRuibuildingSheet = new Sheet();
             stepRuibuildingSheet.setProperties(stepRebuildingProperties);
             sheets.add(stepRuibuildingSheet);
             // Joint fill
             SheetProperties jointFillProperties = new SheetProperties();
-            jointFillProperties.setTitle("joint_fill");
+            jointFillProperties.setTitle(JOINT_FILL_SHEET_NAME);
             Sheet jointFillSheet = new Sheet();
             jointFillSheet.setProperties(jointFillProperties);
             sheets.add(jointFillSheet);
             // Interlock relaying
             SheetProperties interlockRelayingProperties = new SheetProperties();
-            interlockRelayingProperties.setTitle("interlock_relaying");
+            interlockRelayingProperties.setTitle(INTERLOCK_RELAYING_SHEET_NAME);
             Sheet interlockRelayingSheet = new Sheet();
             interlockRelayingSheet.setProperties(interlockRelayingProperties);
             sheets.add(interlockRelayingSheet);
 
             // Setup properties
             SpreadsheetProperties spreadsheetProperties = new SpreadsheetProperties();
-            spreadsheetProperties.setTitle("Interlock App Database");
+            spreadsheetProperties.setTitle(DATABASE_TITLE);
 
             // Setup request body
             Spreadsheet requestBody = new Spreadsheet();
@@ -1006,36 +1015,38 @@ class EstimationSheet {
          */
         @Override
         protected Void doInBackground(Void... params) {
-            try {
-                setPermissions();
-            } catch (Exception e) {
-                lastError = e;
-                cancel(true);
-            }
+            setPermissions();
             return null;
         }
 
 
-        private void setPermissions() throws IOException {
+        private void setPermissions() {
             String fileId = getDatabaseId();
             for(String email : emails) {
-                Permission permission = new Permission();
-                permission.setType("user");
-                permission.setRole("writer");
-                permission.setEmailAddress(email);
-                // Email notification message
-                String emailMessage =
-                        "Dear Interlock App user,\n" +
-                        "you have been given access to an Interlock App database from " +
-                        googleAccountCredential.getSelectedAccountName() + ". Please do not " +
-                        "edit the database manually, as this could cause problems. To set up the " +
-                        "database with your Interlock App, open the application and enter the " +
-                        "identification number\n" +
-                        getDatabaseId() + "\n" +
-                        "where requested.";
-                driveService.permissions().create(fileId, permission).setSendNotificationEmail(true)
-                        .setEmailMessage(emailMessage).execute();
+                try {
+                    Permission permission = new Permission();
+                    permission.setType("user");
+                    permission.setRole("writer");
+                    permission.setEmailAddress(email);
+                    // Email notification message
+                    String emailMessage =
+                            "Dear Interlock App user,\n" +
+                                    "you have been given access to an Interlock App database from " +
+                                    googleAccountCredential.getSelectedAccountName() + ". Please do not " +
+                                    "edit the database manually, as this could cause problems. To set up the " +
+                                    "database with your Interlock App, open the application and enter the " +
+                                    "identification number\n" +
+                                    getDatabaseId() + "\n" +
+                                    "where requested.";
+                    driveService.permissions().create(fileId, permission).setSendNotificationEmail(true)
+                            .setEmailMessage(emailMessage).execute();
+                } catch (IOException e){
+                    lastError = e;
+                }
             }
+
+            if(lastError != null)
+                cancel(true);
         }
 
 
@@ -1231,6 +1242,7 @@ class EstimationSheet {
         private String databaseId;
         private Exception lastError = null;
         com.google.api.services.drive.Drive driveService = null;
+        com.google.api.services.sheets.v4.Sheets sheetsService;
 
         TaskCheckDatabaseIdValidity(String databaseId, CheckDatabaseIdValidityListener listener) {
             this.databaseId = databaseId;
@@ -1238,6 +1250,9 @@ class EstimationSheet {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             driveService = new com.google.api.services.drive.Drive.Builder(
+                    transport, jsonFactory, googleAccountCredential)
+                    .build();
+            sheetsService = new com.google.api.services.sheets.v4.Sheets.Builder(
                     transport, jsonFactory, googleAccountCredential)
                     .build();
         }
@@ -1260,8 +1275,52 @@ class EstimationSheet {
 
 
         private Boolean checkValidity() throws IOException{
-            File file = driveService.files().get(databaseId).execute();
-            return file.getCapabilities().getCanEdit();
+
+            Spreadsheet spreadsheet = sheetsService.spreadsheets().get(databaseId).execute();
+            boolean valid = true;
+            if(!spreadsheet.getProperties().getTitle().equals(DATABASE_TITLE))
+                valid = false;
+
+            List<Sheet> sheets = spreadsheet.getSheets();
+            if(sheets.size() != 5)
+                valid = false;
+
+            for(Sheet sheet : sheets) {
+                String sheetTitle = sheet.getProperties().getTitle();
+                if(!(sheetTitle.equals(WALL_REBUILDING_SHEET_NAME)
+                        || sheetTitle.equals(CLEANING_SEALING_SHEET_NAME)
+                        || sheetTitle.equals(STEP_REBUILDING_SHEET_NAME)
+                        || sheetTitle.equals(JOINT_FILL_SHEET_NAME)
+                        || sheetTitle.equals(INTERLOCK_RELAYING_SHEET_NAME)))
+                    valid = false;
+            }
+            try {
+                // Try doing something to check if user has edit access
+                driveService.files().get(databaseId).execute().setName(DATABASE_TITLE);
+            } catch (Exception e){
+                valid = false;
+            }
+
+            if(valid)
+                setUserType(USER_TYPE_OWNER);
+
+            // If it gets here without throwing an exception, the ID is good
+            return valid;
+/*
+            File file = driveService.files().get(databaseId).execute().getHasAugmentedPermissions();
+            Boolean ownedByMe = file.getOwnedByMe();
+            if (ownedByMe == null)
+                // File not found - do not have access
+                return false;
+            else if (ownedByMe) {
+                // User owns file
+                setUserType(USER_TYPE_OWNER); // Salnn email: smckenzie@virtuallearningapps.ca
+                return true;
+            } else {
+                // Have access but do not own
+                setUserType(USER_TYPE_EMPLOYEE);
+                return true;
+            }*/
         }
 
 

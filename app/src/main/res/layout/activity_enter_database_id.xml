@@ -24,7 +24,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please ask your employer to give you access to the database. Once this is done, you will be sent an email with the database identification number which needs to be entered below."
+        android:text="Please ask your employer to give you access to the database. Once this is done, you will be sent an email with the database identification number which needs to be entered below. Or, if you already have a database of your own, you can enter that ID below."
         android:layout_marginTop="10dp"
         android:layout_marginLeft="32dp"
         android:layout_below="@+id/headlineTextView"
@@ -37,7 +37,8 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="20dp"
         android:id="@+id/edit_text"
-        android:hint="Database ID"/>
+        android:hint="Database ID"
+        android:inputType="text"/>
 
 
     <android.support.design.widget.FloatingActionButton

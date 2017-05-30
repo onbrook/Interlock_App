@@ -31,7 +31,7 @@ public class SetUserTypeActivity extends AppCompatActivity {
             @Override
             public void onClick (View view){
                 if(ownerRadioButton.isChecked()) {
-                    estimationSheet.saveUserType(EstimationSheet.USER_TYPE_OWNER);
+                    estimationSheet.setUserType(EstimationSheet.USER_TYPE_OWNER);
                     estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
                         @Override
                         public void whenFinished(boolean success) {
@@ -56,8 +56,7 @@ public class SetUserTypeActivity extends AppCompatActivity {
                             }
                         }
                     });
-                }else { // Employee radio button is checked
-                    estimationSheet.saveUserType(EstimationSheet.USER_TYPE_EMPLOYEE);
+                }else { // Use an existing one is selected
                     startActivity(new Intent(getApplicationContext(), EnterDatabaseIdActivity.class));
                 }
             }

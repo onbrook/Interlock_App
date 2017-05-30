@@ -47,6 +47,10 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                                 showDialog("Invalid ID", "The database ID which was entered you do not have access to.");
                             else { // ID is correct
                                 saveId(input);
+                                if(estimationSheet.isUserOwner())
+                                    startActivity(new Intent(getApplicationContext(), AddDatabasePermissionsActivity.class));
+                                else
+                                    startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                             }
                         }
                     });
@@ -75,6 +79,7 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+        alertDialog.show();
     }
 
     @Override

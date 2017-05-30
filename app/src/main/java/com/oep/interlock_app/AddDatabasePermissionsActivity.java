@@ -45,7 +45,10 @@ public class AddDatabasePermissionsActivity extends AppCompatActivity {
             @Override
             public void onClick (View view){
                 String email = emailEditText.getText().toString();
-                if (email.toLowerCase().contains("@gmail.")) {
+                if (email.equals("")) {
+                    Toast.makeText(AddDatabasePermissionsActivity.this, "Please use Gmail accounts.", Toast.LENGTH_SHORT)
+                            .show();
+                } else {
 
                     emails.add(email);
 
@@ -56,15 +59,19 @@ public class AddDatabasePermissionsActivity extends AppCompatActivity {
                     outputTextView.setText(emailsStr);
                     emailEditText.setText("");
 
-                }else
-                    Toast.makeText(AddDatabasePermissionsActivity.this, "Please use Gmail accounts.", Toast.LENGTH_SHORT)
-                            .show();
+                }
             }
         });
 
         okFab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick (View view){
+                //add email to List of emails
+                String email = emailEditText.getText().toString();
+                if(!email.equals(""))
+                    emails.add(email);
+
+                // Process emails
                 if(emails.size() == 0){
                     startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                 } else
@@ -92,7 +99,7 @@ public class AddDatabasePermissionsActivity extends AppCompatActivity {
                                 alertDialog.setTitle("Error");
                                 alertDialog.setMessage("An error has occurred when trying to give the" +
                                         " requested Google Accounts access to the database. This could" +
-                                        " have been caused from the emails which where entered being" +
+                                        " have been caused from some of the emails which where entered being" +
                                         " non-existent");
 
                                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
@@ -109,6 +116,10 @@ public class AddDatabasePermissionsActivity extends AppCompatActivity {
                     });
             }
         });
+
+    }
+
+    private void appendEmail(String email, List<String> emails){
 
     }
 
