@@ -21,7 +21,15 @@ public class EstimationPage extends AppCompatActivity {
         Button relayBtn = (Button)findViewById(R.id.relayBtn);
         Button jointBtn = (Button)findViewById(R.id.jointFillBtn);
         Button sealBtn = (Button)findViewById(R.id.cleanSealBtn);
+        Button homeBtn = (Button) findViewById(R.id.homeScreenBtn);
 
+
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EstimationPage.this, HomeScreen.class));
+            }
+        });
 
         stepBtn.setOnClickListener(new View.OnClickListener() {
             @Override
