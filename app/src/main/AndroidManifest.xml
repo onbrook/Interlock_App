@@ -78,6 +78,10 @@
             android:name="com.oep.interlock_app.CleaningSealingEstimation"
             android:label="@string/cleaning_sealing_title"
             android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name="com.oep.interlock_app.EstimationPage"
+            android:label="Estimation Page"/>
+
     </application>
 
 </manifest>
