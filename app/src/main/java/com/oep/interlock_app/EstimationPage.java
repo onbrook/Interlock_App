@@ -16,14 +16,20 @@ public class EstimationPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estimation_page);
 
-        setContentView(R.layout.activity_home_screen);
-        setTitle("Home");
         Button stepBtn = (Button)findViewById(R.id.stepRebuildBtn);
         Button wallBtn = (Button)findViewById(R.id.wallRebuildBtn);
         Button relayBtn = (Button)findViewById(R.id.relayBtn);
         Button jointBtn = (Button)findViewById(R.id.jointFillBtn);
         Button sealBtn = (Button)findViewById(R.id.cleanSealBtn);
+        Button homeBtn = (Button) findViewById(R.id.homeScreenBtn);
 
+
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EstimationPage.this, HomeScreen.class));
+            }
+        });
 
         stepBtn.setOnClickListener(new View.OnClickListener() {
             @Override

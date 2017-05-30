@@ -104,4 +104,6 @@
     <string name="dimensions_title">Dimensions (in feet)</string>
     <string name="angle_title">Angle</string>
     <string name="joint_fill_title">Joint Fill Replacement</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

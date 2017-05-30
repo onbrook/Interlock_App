@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -53,27 +52,28 @@
             android:label="@string/wall_rebuilding_title" />
         <activity
             android:name="com.oep.interlock_app.Wall_Rebuilding_Estimation"
-            android:label="@string/wall_rebuilding_title"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:label="@string/wall_rebuilding_title" />
         <activity
             android:name="com.oep.interlock_app.Joint_Fill"
-            android:label="@string/joint_fill_title"/>
+            android:label="@string/joint_fill_title" />
         <activity
             android:name="com.oep.interlock_app.Joint_Fill2"
-            android:label="@string/joint_fill_title"/>
+            android:label="@string/joint_fill_title" />
         <activity
             android:name="com.oep.interlock_app.Joint_Fill3"
-            android:label="@string/joint_fill_title"/>
+            android:label="@string/joint_fill_title" />
         <activity
             android:name="com.oep.interlock_app.Joint_Fill4"
-            android:label="@string/joint_fill_title"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:label="@string/joint_fill_title" />
         <activity
             android:name="com.oep.interlock_app.CleaningSealing"
-            android:label="@string/cleaning_sealing_title"/>
+            android:label="@string/cleaning_sealing_title" />
         <activity
             android:name="com.oep.interlock_app.CleaningSealing2"
-            android:label="@string/cleaning_sealing_title"/>
+            android:label="@string/cleaning_sealing_title"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name="com.oep.interlock_app.CleaningSealingEstimation"
             android:label="@string/cleaning_sealing_title"
@@ -84,6 +84,17 @@
             android:label="Database Access"/>
         <activity android:name="com.oep.interlock_app.EnterDatabaseIdActivity"
             android:label="Setup Interlock App"/>
+        <activity
+            android:name="com.oep.interlock_app.EstimationPage"
+            android:label="Estimation Page" />
+        <activity
+            android:name="com.oep.interlock_app.AboutPage"
+            android:label="About Page" />
+        <activity
+            android:name="com.oep.interlock_app.HelpPage"
+            android:label="Help Page" />
+        <activity android:name="com.oep.interlock_app.DatabaseEntry" />
+        <activity android:name="com.oep.interlock_app.DatabaseRemoval"></activity>
     </application>
 
 </manifest>
