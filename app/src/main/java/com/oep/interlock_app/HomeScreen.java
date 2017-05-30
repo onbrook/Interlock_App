@@ -23,6 +23,22 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+/*
+        //check if the user is new and if so, go to correct activity
+        EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
+        if(!estimationSheet.doesUserHaveRole())
+            startActivity(new Intent(getApplicationContext(), SetUserTypeActivity.class));
+        else if (!estimationSheet.isDatabaseIdSaved())
+            if(estimationSheet.isUserOwner())
+                estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
+                    @Override
+                    public void whenFinished(boolean success) {
+
+                    }
+                });
+            else
+                startActivity(new Intent(getApplicationContext(), EnterDatabaseIdActivity.class));*/
+
         setContentView(R.layout.activity_home_screen);
         setTitle("Home");
         Button stepBtn = (Button)findViewById(R.id.stepRebuildBtn);

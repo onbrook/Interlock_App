@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-@drawable/home:
-    edited form https://www.iconfinder.com/icons/185038/home_house_streamline_icon#size=128
-    by: Webalys
+@drawable/check_mark:
+    edited from: https://www.iconfinder.com/icons/1031542/check_check_circle_checkcircle_checkmark_circle_done_ok_icon#size=128
+    by: Denis Mikhutin
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"

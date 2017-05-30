@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+@drawable/check_mark:
+    edited from: https://www.iconfinder.com/icons/1031542/check_check_circle_checkcircle_checkmark_circle_done_ok_icon#size=128
+    by: Denis Mikhutin-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Database ID"
+        android:textStyle="bold"
+        android:drawablePadding="20dp"
+        android:id="@+id/headlineTextView"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please ask your employer to give you access to the database. Once this is done, you will be sent an email with the database identification number which needs to be entered below."
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="32dp"
+        android:layout_below="@+id/headlineTextView"
+        android:id="@+id/help_tv"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/help_tv"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/edit_text"
+        android:hint="Database ID"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/ok_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/check_mark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"/>
+
+</RelativeLayout>

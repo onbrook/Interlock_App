@@ -1,9 +1,11 @@
 package com.oep.interlock_app;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +26,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class Wall_Rebuilding_Estimation extends AppCompatActivity {
     EstimationSheet wallRebuildingSheet;
+    List<Object> data = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +70,6 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         boolean clipsChecked = extras.getBoolean("clipsChecked");
         //add data to the data list
         //NOTE: the list must be in the same order as the data in the Google Sheet
-        List<Object> data = new ArrayList<>();
         data.add(heightInput*lengthInput);
         data.add(accessIndex);
         data.add(maneuverIndex);
@@ -179,37 +181,50 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
 
         final Activity activity = this;
         wallRebuildingSheet = new EstimationSheet(EstimationSheet.WALL_REBUILDING_ID, this);
-        wallRebuildingSheet.startEstimation(data, new ProcessListener() {
+        System.out.println("Estimation starting...");
+        wallRebuildingSheet.startEstimation(data, new EstimateListener() {
             @Override
-            public void whenProcessFinished(boolean success, boolean accurate, Object output) {
-                double totalHours = (double) output;
-                int hours = (int) totalHours;
-                int minute = (int) ((totalHours - hours)*60);
-                if(minute <= 7)
-                    minute = 0;
-                else if(minute <= 22)
-                    minute = 15;
-                else if(minute <=37)
-                    minute = 30;
-                else if(minute <= 52)
-                    minute = 45;
-                else {
-                    minute = 0;
-                    hours++;
-                }
-                if (accurate) {
-                    finalEstimate.setText("Final Estimate: " + hours + " hours and " + minute + " minutes.");
-                } else {
-                    Toast.makeText(activity, "Attention: this estimation is likely not very accurate.", Toast.LENGTH_LONG).show();
-                    finalEstimate.setText("Final Estimate: " + hours + " hours.");
+            public void whenFinished(boolean success, boolean accurate, Double totalHours) {
+                if(success) {
+                    int hours = totalHours.intValue();
+                    int minute = doubleToInt((totalHours - hours) * 60);
+                    if (accurate) {
+                        if (minute <= 7)
+                            minute = 0;
+                        else if (minute <= 22)
+                            minute = 15;
+                        else if (minute <= 37)
+                            minute = 30;
+                        else if (minute <= 52)
+                            minute = 45;
+                        else {
+                            minute = 0;
+                            hours++;
+                        }
+                        finalEstimate.setText("Final Estimate: " + hours + " hours and " + minute + " minutes.");
+                    } else {
+                        if (minute >= 30)
+                            hours++;
+                        Toast.makeText(activity, "Attention: this estimation is likely not very accurate.", Toast.LENGTH_LONG).show();
+                        finalEstimate.setText("Final Estimate: " + hours + " hours.");
+                    }
                 }
             }
         });
 
     }
 
+    private int doubleToInt(Double d){
+        return d.intValue();
+    }
+
     public void fabClicked(View fab){
-        startActivity(new Intent(Wall_Rebuilding_Estimation.this, HomeScreen.class));
+        wallRebuildingSheet.startAddingEstimation(data, new AddEstimationListener() {
+            @Override
+            public void whenFinished(boolean success) {
+                startActivity(new Intent(Wall_Rebuilding_Estimation.this, HomeScreen.class));
+            }
+        });
     }
 
     //called when the back button in the title bas is pressed
