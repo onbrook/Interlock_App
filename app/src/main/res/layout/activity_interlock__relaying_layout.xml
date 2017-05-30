@@ -11,7 +11,6 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="31dp"
         android:text="Interlock Relaying"
-        android:textAlignment="textStart"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
@@ -30,7 +29,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/lenInput"
+        android:id="@+id/widtInput"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/widthTxt"
@@ -45,16 +44,15 @@
         android:id="@+id/lenTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lenInput"
-        android:layout_alignStart="@+id/lenInput"
-        android:layout_below="@+id/lenInput"
+        android:layout_alignLeft="@+id/widtInput"
+        android:layout_alignStart="@+id/widtInput"
+        android:layout_below="@+id/widtInput"
         android:layout_marginTop="23dp"
         android:text="Size of the job (Length):"
-        android:textAlignment="textStart"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/widInput"
+        android:id="@+id/lenInput"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/lenTxt"
@@ -71,9 +69,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:entries="@array/pattern_type"
-        android:layout_below="@+id/widInput"
-        android:layout_alignLeft="@+id/widInput"
-        android:layout_alignStart="@+id/widInput" />
+        android:layout_below="@+id/lenInput"
+        android:layout_alignLeft="@+id/lenInput"
+        android:layout_alignStart="@+id/lenInput" />
 
     <Spinner
         android:id="@+id/jobShapeSpin"
@@ -91,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/ptrnTypeSpin"
         android:layout_alignStart="@+id/ptrnTypeSpin"
-        android:layout_below="@+id/widInput"
+        android:layout_below="@+id/lenInput"
         android:layout_marginTop="16dp"
         android:text="Pattern Type:"
         android:textStyle="bold" />

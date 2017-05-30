@@ -40,73 +40,57 @@
         android:layout_margin="15dp"/>
 
     <TextView
-        android:id="@+id/weedsInJointTV"
+        android:id="@+id/arethereTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="Are there:"
+        android:layout_below="@+id/gettingJobTV"
         android:layout_alignLeft="@+id/gettingJobTV"
         android:layout_alignStart="@+id/gettingJobTV"
-        android:layout_below="@+id/gettingJobTV"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="22dp"
-        android:text="Weeds in the Joints?" />
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp" />
 
-    <RadioGroup
+
+    <CheckBox
+        android:id="@+id/weedsCB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/weedsRB"
-        android:layout_below="@+id/weedsInJointTV"
-        android:layout_alignLeft="@+id/weedsInJointTV"
-        android:layout_alignStart="@+id/weedsInJointTV"
-        android:layout_marginTop="16dp">
-
-        <RadioButton
-            android:id="@+id/weedY"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:checked="true"
-            android:text="Yes" />
-
-        <RadioButton
-            android:id="@+id/weedN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No" />
-    </RadioGroup>
+        android:text="Weeds in the Interlock?"
+        android:layout_below="@+id/arethereTV"
+        android:layout_alignRight="@+id/titleTV"
+        android:layout_alignEnd="@+id/titleTV"
+        android:layout_marginTop="19dp" />
 
     <TextView
-        android:id="@+id/hardJointTV"
+        android:id="@+id/jointFillTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/weedsRB"
-        android:layout_alignStart="@+id/weedsRB"
-        android:layout_below="@+id/weedsRB"
-        android:layout_marginTop="29dp"
-        android:text="Hard Joint Fill?" />
+        android:layout_marginTop="39dp"
+        android:text="Joint Fill"
+        android:layout_below="@+id/weedsCB"
+        android:layout_alignLeft="@+id/arethereTV"
+        android:layout_alignStart="@+id/arethereTV" />
 
-    <RadioGroup
+    <SeekBar
+        android:id="@+id/jointFillSB"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:max="4"
+        android:progress="2"
+        android:layout_below="@+id/jointFillTV"
+        android:layout_alignLeft="@+id/jointFillTV"
+        android:layout_alignStart="@+id/jointFillTV" />
+
+    <TextView
+        android:id="@+id/jointFDisplayTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/hardJointRG"
-        android:layout_below="@+id/hardJointTV"
-        android:layout_alignLeft="@+id/hardJointTV"
-        android:layout_alignStart="@+id/hardJointTV"
-        android:layout_marginTop="16dp">
-
-        <RadioButton
-            android:id="@+id/jointY"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:checked="true"
-            android:text="Yes" />
-
-        <RadioButton
-            android:id="@+id/jointN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No" />
-    </RadioGroup>
+        android:layout_alignLeft="@+id/jointFillSB"
+        android:layout_alignStart="@+id/jointFillSB"
+        android:layout_below="@+id/jointFillSB"
+        android:layout_marginTop="25dp" />
 
 </RelativeLayout>

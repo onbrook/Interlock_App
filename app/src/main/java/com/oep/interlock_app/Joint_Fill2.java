@@ -7,8 +7,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
-import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.oep.owenslaptop.interlock_app.R;
 
@@ -23,12 +24,14 @@ public class Joint_Fill2 extends AppCompatActivity {
      */
 
     //setting up the spinners and the array
-    private View[] views = new View[2];
+    private View[] views = new View[1];
     private CheckBox playCB, deckCB, poolCB;
-    private Spinner locationSp, roomManSp;
-    private RadioButton skinnyGRB, longThroRB;
     public static String locationSt, roomManSt, easeSt, whatArrSt;
+    private Spinner locationSp;
     public static boolean playB, deckB, poolB;
+    private SeekBar roomMarSB, easeAccSB;
+    private TextView roomManDisplayTV, easeDisplayTV;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +53,90 @@ public class Joint_Fill2 extends AppCompatActivity {
         playCB = (CheckBox) findViewById(R.id.playStrucCB);
         deckCB = (CheckBox) findViewById(R.id.deckCB);
         poolCB = (CheckBox) findViewById(R.id.poolCB);
-        skinnyGRB = (RadioButton) findViewById(R.id.sGRB);
-        longThroRB = (RadioButton) findViewById(R.id.lTRB);
+        roomMarSB = (SeekBar) findViewById(R.id.roomManSB);
+        easeAccSB = (SeekBar) findViewById(R.id.easeSB);
+        easeDisplayTV = (TextView) findViewById(R.id.easeDisplayTV);
+        roomManDisplayTV = (TextView) findViewById(R.id.roomDisplayTV);
         locationSp = (Spinner) findViewById(R.id.locationSp);
-        roomManSp = (Spinner) findViewById(R.id.roomSp);
 
-        //adding the spinners to the array
         views[0] = locationSp;
-        views[1] = roomManSp;
+
+
+        //setting the default values
+        easeDisplayTV.setText("Average");
+        easeSt = "Average";
+        roomManDisplayTV.setText("Average");
+        roomManSt = "Average";
+
+
+
+        //ease of access
+        easeAccSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress == 0) {
+                    //no roots
+                    easeDisplayTV.setText("Easy to Access");
+                    easeSt = "Easy to Access";
+                }
+                else if (progress == 1) {
+                    //
+                    easeDisplayTV.setText("Average");
+                    easeSt = "Average";
+                }
+                else {
+                    //must be the last one
+                    easeDisplayTV.setText("Hard to Access");
+                    easeSt = "Hard to Access";
+                }
+            }
+        });
+
+        //room to man seekbar
+        roomMarSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress == 0) {
+                    //no roots
+                    roomManDisplayTV.setText("Almost no Room");
+                    roomManSt = "Almost no Room";
+                }
+                else if (progress == 1) {
+                    //
+                    roomManDisplayTV.setText("Bit Tight");
+                    roomManSt = "Bit Tight";
+                }
+                else if (progress == 2) {
+                    //
+                    roomManDisplayTV.setText("Average");
+                    roomManSt = "Average";
+                }
+                else if (progress == 3) {
+                    //
+                    roomManDisplayTV.setText("Good amount");
+                    roomManSt = "Good amount";
+                }
+                else {
+                    //must be the last one
+                    roomManDisplayTV.setText("Lots of Space");
+                    roomManSt = "Lots of Space";
+                }
+            }
+        });
 
         //when the size spinner is clicked
         locationSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -77,23 +156,6 @@ public class Joint_Fill2 extends AppCompatActivity {
             }
         });
 
-        //when the second size spinner is clicked
-        roomManSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
-                int index = roomManSp.getSelectedItemPosition();
-                if (index != 0)
-                    ViewValidity.updateViewValidity(roomManSp);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                int index = roomManSp.getSelectedItemPosition();
-                if (index != 0)
-                    ViewValidity.updateViewValidity(roomManSp);
-            }
-        });
     }
 
     //when the FAB is clicked
@@ -101,18 +163,10 @@ public class Joint_Fill2 extends AppCompatActivity {
         if(ViewValidity.areViewsValid(views)) {
             //getting the values
             whatArrSt = "";
-            boolean skinnyGate = skinnyGRB.isSelected();
             playB = playCB.isChecked();
             deckB = deckCB.isChecked();
             poolB = poolCB.isChecked();
-            roomManSt = roomManSp.getSelectedItem().toString();
             locationSt = locationSp.getSelectedItem().toString();
-            if(skinnyGate){
-                easeSt = "Skinny Gate";
-            }
-            else{
-                easeSt = "Long Thoroughfare";
-            }
             //seeing what buttons are checked
             if(playB && deckB && poolB){
                 //all three are checked
@@ -148,13 +202,14 @@ public class Joint_Fill2 extends AppCompatActivity {
                     }
                 }
             }
+            //getting the input from the user
+            locationSt = locationSp.getSelectedItem().toString();
             //create a new intent (you do not get the current one because we do not need any
             // information from the home screen)
             Intent intent = new Intent(getApplicationContext(), Joint_Fill3.class);
             //this removes the animation
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //extras--for passing data
-            intent.putExtra("roomIndex", roomManSp.getSelectedItemPosition());
             intent.putExtra("locationIndex", locationSp.getSelectedItemPosition());
             //start activity
             startActivity(intent);

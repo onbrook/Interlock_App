@@ -43,7 +43,6 @@ public class Step_Rebuilding2 extends AppCompatActivity {
 
         //setting up the GUI componenets
         locationSp = (Spinner) findViewById(R.id.locationSp);
-        longTRB = (RadioButton) findViewById(R.id.lTRB);
         roomMarSB = (SeekBar) findViewById(R.id.roomManSB);
         easeAccSB = (SeekBar) findViewById(R.id.easeSB);
         easeDisplayTV = (TextView) findViewById(R.id.easeDisplayTV);

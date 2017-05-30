@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.oep.interlock_app.EstimationPage">
+
+    <Button
+        android:id="@+id/stepRebuildBtn"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:text="Step Rebuilding"
+        android:layout_below="@+id/select_category_tv"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/wallRebuildBtn"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:text="Wall Rebuilding"
+        android:layout_below="@+id/stepRebuildBtn"
+        android:layout_alignLeft="@+id/stepRebuildBtn"
+        android:layout_alignStart="@+id/stepRebuildBtn" />
+
+    <Button
+        android:id="@+id/jointFillBtn"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:text="Joint Fill"
+        android:layout_below="@+id/wallRebuildBtn"
+        android:layout_alignLeft="@+id/wallRebuildBtn"
+        android:layout_alignStart="@+id/wallRebuildBtn"
+        android:layout_marginTop="17dp" />
+
+    <Button
+        android:id="@+id/relayBtn"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Interlock Relaying"
+        android:layout_below="@+id/jointFillBtn"
+        android:layout_alignLeft="@+id/jointFillBtn"
+        android:layout_alignStart="@+id/jointFillBtn" />
+
+    <Button
+        android:id="@+id/cleanSealBtn"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="Cleaning and Sealing"
+        android:layout_below="@+id/relayBtn"
+        android:layout_alignLeft="@+id/relayBtn"
+        android:layout_alignStart="@+id/relayBtn" />
+
+    <TextView
+        android:id="@+id/select_category_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
+        android:text="select a job "
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

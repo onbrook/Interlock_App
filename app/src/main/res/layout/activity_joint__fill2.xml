@@ -25,6 +25,16 @@
         android:textStyle="bold"
         android:layout_below="@id/titleTV"/>
 
+    <TextView
+        android:id="@+id/easeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ease of Access..."
+        android:layout_below="@+id/locationSp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="19dp" />
+
     <Spinner
         android:id="@+id/locationSp"
         android:layout_width="match_parent"
@@ -34,40 +44,6 @@
         android:layout_below="@+id/locationTV"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/gateRBG"
-        android:layout_below="@+id/easeTV"
-        android:layout_alignLeft="@+id/roomTV"
-        android:layout_alignStart="@+id/roomTV"
-        android:layout_marginTop="16dp">
-
-        <RadioButton
-            android:id="@+id/sGRB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:checked="true"
-            android:text="Skinny gate" />
-
-        <RadioButton
-            android:id="@+id/lTRB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Long thoroughfare" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/easeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ease of Access..."
-        android:layout_below="@+id/locationSp"
-        android:layout_alignLeft="@+id/gateRBG"
-        android:layout_alignStart="@+id/gateRBG"
-        android:layout_marginTop="13dp" />
 
     <TextView
         android:id="@+id/locationTV"
@@ -79,34 +55,56 @@
         android:layout_alignLeft="@+id/gettingJobTV"
         android:layout_alignStart="@+id/gettingJobTV" />
 
-    <TextView
-        android:id="@+id/roomTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Amount of Room to Maneuver:"
-        android:layout_below="@+id/gateRBG"
-        android:layout_alignLeft="@+id/locationTV"
-        android:layout_alignStart="@+id/locationTV"
-        android:layout_marginTop="15dp" />
-
-    <Spinner
-        android:id="@+id/roomSp"
+    <SeekBar
+        android:id="@+id/easeSB"
         android:layout_width="match_parent"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_height="wrap_content"
-        android:entries="@array/maneuver"
-        android:layout_marginTop="27dp"
-        style="@style/no_outline_spinner"
-        android:layout_below="@+id/roomTV"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/easeTV"
+        android:layout_marginTop="17dp"
+        android:max="2"
+        android:progress="1" />
 
     <TextView
-        android:id="@+id/errorTV"
+        android:id="@+id/easeDisplayTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"/>
+        android:layout_below="@+id/easeSB"
+        android:layout_marginTop="17dp"
+        />
+
+    <TextView
+        android:id="@+id/roomManTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/easeDisplayTV"
+        android:layout_marginTop="22dp"
+        android:text="Room to Maneuver " />
+
+    <SeekBar
+        android:id="@+id/roomManSB"
+        android:layout_width="match_parent"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/easeSB"
+        android:layout_alignRight="@+id/easeSB"
+        android:layout_below="@+id/roomManTV"
+        android:layout_marginTop="22dp"
+        android:max="4"
+        android:progress="2" />
+
+    <TextView
+        android:id="@+id/roomDisplayTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/roomManSB"
+        android:layout_marginTop="21dp"
+        android:layout_toEndOf="@+id/easeDisplayTV"
+        android:layout_toRightOf="@+id/easeDisplayTV" />
+
+
 
 
     <android.support.design.widget.FloatingActionButton
@@ -128,7 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
         android:text="Whats around?"
-        android:layout_below="@+id/roomSp"
+        android:layout_below="@+id/roomDisplayTV"
         android:layout_alignRight="@+id/easeTV"
         android:layout_alignEnd="@+id/easeTV" />
 
@@ -138,9 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/whatAroundTV"
         android:layout_marginTop="15dp"
-        android:text="Play Structure?"
-        android:layout_alignRight="@+id/gateRBG"
-        android:layout_alignEnd="@+id/gateRBG" />
+        android:text="Play Structure?"/>
 
     <CheckBox
         android:id="@+id/deckCB"
