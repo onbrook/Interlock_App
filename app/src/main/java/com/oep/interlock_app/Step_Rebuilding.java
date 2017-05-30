@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.oep.owenslaptop.interlock_app.R;
 
@@ -23,12 +26,12 @@ public class Step_Rebuilding extends AppCompatActivity {
      */
 
     //setting up the spinners and the array
-    private View[] views = new View[3];
-    private Spinner sizeJobSp;
-    private Spinner sizeJob2Sp;
-    private Spinner amountShiftSp;
+    private View[] views = new View[2];
     private RadioButton curvedRB;
     public static String sizeJobHSt, sizeJobLSt, baseShiftSt, stepsAreSt;
+    private EditText jobHeight, jobLength;
+    private SeekBar baseShift;
+    private TextView baseShiftDisTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,66 +51,53 @@ public class Step_Rebuilding extends AppCompatActivity {
 
         //setting up the GUI components
         curvedRB = (RadioButton) findViewById(R.id.curvedRB);
-        sizeJobSp = (Spinner) findViewById(R.id.sizeOfJobSp);
-        sizeJob2Sp = (Spinner) findViewById(R.id.sizeOfJob2Sp);
-        amountShiftSp = (Spinner) findViewById(R.id.amountBaseShiftSp);
+        baseShift = (SeekBar) findViewById(R.id.baseShiftSB);
+        jobHeight = (EditText) findViewById(R.id.height_input);
+        jobLength = (EditText) findViewById(R.id.length_input);
+        baseShiftDisTV = (TextView) findViewById(R.id.baseShiftDisplayTV);
 
         //adding the spinners to the array
-        views[0] = sizeJobSp;
-        views[1] = sizeJob2Sp;
-        views[2] = amountShiftSp;
+        views[0] = jobHeight;
+        views[1] = jobLength;
 
-        //when the size spinner is clicked
-        sizeJobSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        baseShiftDisTV.setText("Average");
 
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
-                int index = sizeJobSp.getSelectedItemPosition();
-                if (index != 0)
-                    updateViewValidity(sizeJobSp);
-            }
+        //ease of access
+        baseShift.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                int index = sizeJobSp.getSelectedItemPosition();
-                if (index != 0)
-                    updateViewValidity(sizeJobSp);
-            }
-        });
-
-        //when the second size spinner is clicked
-        sizeJob2Sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onStopTrackingTouch(SeekBar seekBar) {/* do nothing*/}
 
             @Override
-            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
-                int index = sizeJob2Sp.getSelectedItemPosition();
-                if (index != 0)
-                    updateViewValidity(sizeJob2Sp);
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {/* do nothing*/}
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                int index = sizeJob2Sp.getSelectedItemPosition();
-                if (index != 0)
-                    updateViewValidity(sizeJob2Sp);
-            }
-        });
-
-        //when the amount shift is clicked
-        amountShiftSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
-                int index = amountShiftSp.getSelectedItemPosition();
-                if (index != 0)
-                    updateViewValidity(amountShiftSp);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                int index = amountShiftSp.getSelectedItemPosition();
-                if (index != 0)
-                    updateViewValidity(amountShiftSp);
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(progress==0){
+                    //no roots
+                    baseShiftDisTV.setText("None");
+                    baseShiftSt = "None";
+                }
+                else if(progress==1){
+                    //
+                    baseShiftDisTV.setText("Slight Bit");
+                    baseShiftSt = "Slight Bit";
+                }
+                else if(progress==2){
+                    //
+                    baseShiftDisTV.setText("Average");
+                    baseShiftSt = "Average";
+                }
+                else if(progress==3){
+                    //
+                    baseShiftDisTV.setText("Quite a Bit");
+                    baseShiftSt = "Quite a Bit";
+                }
+                else{
+                    //must be the last one
+                    baseShiftDisTV.setText("A Lot");
+                    baseShiftSt = "A Lot";
+                }
             }
         });
     }
@@ -116,9 +106,9 @@ public class Step_Rebuilding extends AppCompatActivity {
     public void fabClicked(View view){
         if(areViewsValid(views)) {
             //getting the values
-            sizeJobHSt = sizeJobSp.getSelectedItem().toString();
-            sizeJobLSt = sizeJob2Sp.getSelectedItem().toString();
-            baseShiftSt = amountShiftSp.getSelectedItem().toString();
+            sizeJobHSt = jobHeight.getText().toString();
+            sizeJobLSt = jobLength.getText().toString();
+
             boolean curvedB =  curvedRB.isSelected();
             if(curvedB){
                 stepsAreSt = "Curved";
@@ -133,17 +123,15 @@ public class Step_Rebuilding extends AppCompatActivity {
             //this removes the animation
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //extras--for passing data
-            intent.putExtra("sizeIndex", sizeJobSp.getSelectedItemPosition());
-            intent.putExtra("size2Index", sizeJob2Sp.getSelectedItemPosition());
-            intent.putExtra("shiftIndex", amountShiftSp.getSelectedItemPosition());
             //start activity
             startActivity(intent);
         }else
             updateViewValidity(views);
     }
 
-    //called when the back button in the title bas is pressed
+    //called when the back button in the title ba is pressed
     public boolean onOptionsItemSelected(MenuItem item){
+        onBackPressed();
         return true;
     }
 }

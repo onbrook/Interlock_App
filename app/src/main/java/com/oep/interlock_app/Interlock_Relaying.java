@@ -70,8 +70,8 @@ public class Interlock_Relaying extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interlock__relaying_layout);
-        final EditText length = (EditText)findViewById(R.id.lenInput);
-        final EditText width = (EditText)findViewById(R.id.widInput);
+        final EditText length = (EditText)findViewById(R.id.widtInput);
+        final EditText width = (EditText)findViewById(R.id.lenInput);
         final Spinner patternTypeSpin = (Spinner)findViewById(R.id.ptrnTypeSpin);
         final FloatingActionButton nextBtn = (FloatingActionButton)findViewById(R.id.nextBtn);
         final Spinner jobShape = (Spinner)findViewById(R.id.jobShapeSpin);

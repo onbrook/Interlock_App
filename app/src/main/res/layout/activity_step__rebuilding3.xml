@@ -72,119 +72,9 @@
         android:text="Tree roots moving steps?"
         android:layout_below="@+id/stepsGluedSp"
         android:layout_alignLeft="@+id/stepsGluedTV"
-        android:layout_alignStart="@+id/stepsGluedTV" />
+        android:layout_alignStart="@+id/stepsGluedTV"
+        android:layout_marginTop="22dp" />
 
-
-
-    <RadioGroup
-        android:id="@+id/treeRootsRG"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/treeRootsTV"
-        android:layout_alignStart="@+id/treeRootsTV"
-        android:layout_below="@+id/treeRootsTV"
-        android:layout_marginTop="13dp"
-        android:text="RadioButton" >
-
-        <RadioButton
-            android:id="@+id/tRYRB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/treeRootsRG"
-            android:layout_alignStart="@+id/treeRootsRG"
-            android:layout_below="@+id/treeRootsRG"
-            android:checked="true"
-            android:text="Yes" />
-
-        <RadioButton
-            android:id="@+id/tRNRB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/titleTV"
-            android:layout_alignRight="@+id/titleTV"
-            android:layout_below="@+id/treeRootsRG"
-            android:layout_marginTop="10dp"
-            android:text="No" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/clipsTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/treeRootsRG"
-        android:layout_alignStart="@+id/treeRootsRG"
-        android:layout_below="@+id/treeRootsRG"
-        android:layout_marginTop="17dp"
-        android:text="Are there clips?" />
-
-    <RadioGroup
-        android:id="@+id/clipsRG"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="RadioButton"
-        android:layout_below="@+id/clipsTV"
-        android:layout_alignLeft="@+id/clipsTV"
-        android:layout_alignStart="@+id/clipsTV">
-
-        <RadioButton
-            android:id="@+id/cYRB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:layout_marginTop="15dp"
-            android:text="Yes" />
-
-        <RadioButton
-            android:id="@+id/cNRB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/cYRB"
-            android:layout_alignStart="@+id/cYRB"
-            android:layout_below="@+id/cYRB"
-            android:layout_marginTop="11dp"
-            android:text="No" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/hardLineTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/clipsRG"
-        android:layout_alignStart="@+id/clipsRG"
-        android:layout_below="@+id/clipsRG"
-        android:layout_marginTop="14dp"
-        android:text="Hard Line?" />
-
-    <RadioGroup
-        android:id="@+id/hardLineRG"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="RadioButton"
-        android:layout_below="@+id/hardLineTV"
-        android:layout_alignLeft="@+id/hardLineTV"
-        android:layout_alignStart="@+id/hardLineTV">
-
-        <RadioButton
-            android:id="@+id/hLYRB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/hardLineTV"
-            android:layout_alignStart="@+id/hardLineTV"
-            android:layout_below="@+id/hardLineTV"
-            android:checked="true"
-            android:text="Yes" />
-
-
-        <RadioButton
-            android:id="@+id/hLNRB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/hLYRB"
-            android:layout_alignStart="@+id/hLYRB"
-            android:layout_below="@+id/hLYRB"
-            android:text="No" />
-
-    </RadioGroup>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/stepRebuildingFAB"
@@ -199,6 +89,58 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="15dp"/>
 
+    <SeekBar
+        android:id="@+id/treeRootsSB"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/treeRootsTV"
+        android:layout_alignStart="@+id/treeRootsTV"
+        android:layout_below="@+id/treeRootsTV"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="24dp"
+        android:max="2"
+        android:progress="1" />
+
+    <TextView
+        android:id="@+id/rootsValueDisplayTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/treeRootsSB"
+        android:layout_alignStart="@+id/treeRootsSB"
+        android:layout_below="@+id/treeRootsSB"
+        android:layout_marginTop="11dp" />
+
+    <TextView
+        android:id="@+id/clipsLineTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Are there?"
+        android:layout_below="@+id/rootsValueDisplayTV"
+        android:layout_alignLeft="@+id/treeRootsTV"
+        android:layout_alignStart="@+id/treeRootsTV"
+        android:layout_marginTop="34dp" />
+
+    <CheckBox
+        android:id="@+id/clipsCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Clips?"
+        android:layout_below="@+id/clipsLineTV"
+        android:layout_alignLeft="@+id/clipsLineTV"
+        android:layout_alignStart="@+id/clipsLineTV" />
+
+    <CheckBox
+        android:id="@+id/hardLineCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Hard Line?"
+        android:layout_below="@+id/clipsCB"
+        android:layout_alignLeft="@+id/clipsCB"
+        android:layout_alignStart="@+id/clipsCB" />
 
 
 </RelativeLayout>

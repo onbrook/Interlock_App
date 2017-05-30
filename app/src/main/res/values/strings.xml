@@ -86,12 +86,15 @@
         <item>Over-Glued</item>
     </array>
     <array name="sizeJoint">
-        <item>THIS NEEDS TO BE FILLED</item>
-        <item>...</item>
+        <item>Choose one</item>
+        <item>Large</item>
+        <item>Average</item>
+        <item>Small</item>
     </array>
     <array name="pattern">
-        <item>THIS NEEDS TO BE FILLED</item>
-        <item>...</item>
+        <item>Choose one</item>
+        <item>Linear</item>
+        <item>Modular</item>
     </array>
 
 

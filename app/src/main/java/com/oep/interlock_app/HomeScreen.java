@@ -47,8 +47,12 @@ public class HomeScreen extends AppCompatActivity {
         Button jointBtn = (Button)findViewById(R.id.jointFillBtn);
         Button sealBtn = (Button)findViewById(R.id.cleanSealBtn);
 
+        //setting up the buttons
+        Button estimateBtn = (Button)findViewById(R.id.estimatePageBtn);
 
-        stepBtn.setOnClickListener(new View.OnClickListener() {
+
+        //moving to the estimate page
+        estimateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeScreen.this, Step_Rebuilding.class));

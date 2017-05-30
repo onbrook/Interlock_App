@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,10 +28,12 @@ public class Joint_Fill extends AppCompatActivity {
      */
 
     //setting up the spinners and the array
-    private View[] views = new View[4];
+    private View[] views = new View[3];
     private EditText lenInputET, widInputET;
-    private Spinner sizeJointSp, patternSp;
+    private Spinner patternSp;
     public static String lenInputSt, widInputSt, sizeJointSt, patternSt;
+    private TextView sizeDisplayTV;
+    private SeekBar sizeSB;
 
 
     @Override
@@ -50,16 +53,20 @@ public class Joint_Fill extends AppCompatActivity {
         }
 
         //setting up the GUI components
-        lenInputET = (EditText) findViewById(R.id.lenInput);
-        widInputET = (EditText) findViewById(R.id.widInput);
-        sizeJointSp = (Spinner) findViewById(R.id.sizeJointSp);
+        lenInputET = (EditText) findViewById(R.id.widtInput);
+        widInputET = (EditText) findViewById(R.id.lenInput);
         patternSp = (Spinner) findViewById(R.id.patternSp);
+        sizeDisplayTV = (TextView) findViewById(R.id.sizeDisplayTV);
+        sizeSB = (SeekBar) findViewById(R.id.sizeJointsSB);
 
         //adding the spinners to the array
-        views[0] = sizeJointSp;
+        views[0] = widInputET;
         views[1] = patternSp;
         views[2] = lenInputET;
-        views[3] = widInputET;
+
+        //setting the default value
+        sizeDisplayTV.setText("Average");
+        sizeJointSt = "Average";
 
         //EditText listeners
         lenInputET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -89,23 +96,6 @@ public class Joint_Fill extends AppCompatActivity {
             }
         });
 
-        //when the size spinner is clicked
-        sizeJointSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
-                int index = sizeJointSp.getSelectedItemPosition();
-                if (index != 0)
-                    updateViewValidity(sizeJointSp);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                int index = sizeJointSp.getSelectedItemPosition();
-                if (index != 0)
-                    updateViewValidity(sizeJointSp);
-            }
-        });
 
         //when the second size spinner is clicked
         patternSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -124,7 +114,47 @@ public class Joint_Fill extends AppCompatActivity {
                     updateViewValidity(patternSp);
             }
         });
+
+        sizeSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(progress==0){
+                    //no roots
+                    sizeDisplayTV.setText("Very Small");
+                    sizeJointSt = "Very Small";
+                }
+                else if(progress==1){
+                    //
+                    sizeDisplayTV.setText("Small");
+                    sizeJointSt = "Small";
+                }
+                else if(progress==2){
+                    //
+                    sizeDisplayTV.setText("Average");
+                    sizeJointSt = "Average";
+                }
+                else if(progress==3){
+                    //
+                    sizeDisplayTV.setText("Large");
+                    sizeJointSt = "Large";
+                }
+                else{
+                    //must be the last one
+                    sizeDisplayTV.setText("Very Large");
+                    sizeJointSt = "Very Large";
+                }
+            }
+        });
     }
+
+
 
     //when the FAB is clicked
     public void fabClicked(View view){
@@ -132,7 +162,6 @@ public class Joint_Fill extends AppCompatActivity {
             //getting the values
             widInputSt = widInputET.getText().toString();
             lenInputSt = lenInputET.getText().toString();
-            sizeJointSt = sizeJointSp.getSelectedItem().toString();
             patternSt = patternSp.getSelectedItem().toString();
             //create a new intent (you do not get the current one because we do not need any
             // information from the home screen)
@@ -141,15 +170,15 @@ public class Joint_Fill extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //extras--for passing data
             intent.putExtra("pattenIndex", patternSp.getSelectedItemPosition());
-            intent.putExtra("jointIndex", sizeJointSp.getSelectedItemPosition());
             //start activity
             startActivity(intent);
         }else
             updateViewValidity(views);
     }
 
-    //called when the back button in the title bas is pressed
+    //called when the back button in the title ba is pressed
     public boolean onOptionsItemSelected(MenuItem item){
+        onBackPressed();
         return true;
     }
 
