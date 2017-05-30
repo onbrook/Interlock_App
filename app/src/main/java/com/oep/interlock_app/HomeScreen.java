@@ -57,6 +57,17 @@ public class HomeScreen extends AppCompatActivity {
 
         //setting up the buttons
         Button estimateBtn = (Button)findViewById(R.id.estimatePageBtn);
+
+        //moving to the estimate page
+        estimateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeScreen.this, EstimationPage.class));
+            }
+        });
+
+
+        //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
@@ -67,14 +78,6 @@ public class HomeScreen extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        //moving to the estimate page
-        estimateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeScreen.this, EstimationPage.class));
-            }
-        });
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
