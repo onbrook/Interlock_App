@@ -18,21 +18,22 @@
         android:id="@+id/easeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/pageTitle"
-        android:layout_alignStart="@+id/pageTitle"
-        android:layout_below="@+id/pageTitle"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="15dp"
         android:text="Ease of access:"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/pageTitle"
+        android:layout_alignLeft="@+id/pageTitle"
+        android:layout_alignStart="@+id/pageTitle" />
 
     <TextView
-        android:id="@+id/accSliderTxt"
-        android:layout_width="350dp"
+        android:id="@+id/accDisplay"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/easeTxt"
+        android:layout_alignStart="@+id/easeTxt"
         android:layout_below="@+id/easeTxt"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
-        android:text="(Very accessible)                                   (Difficult to access) "
+        android:layout_marginTop="45dp"
+        android:text="Very accessible"
         android:textAllCaps="false" />
 
     <TextView
@@ -51,12 +52,12 @@
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/easeTxt"
-        android:layout_alignStart="@+id/easeTxt"
-        android:layout_below="@+id/easeTxt"
-        android:layout_marginTop="35dp"
-        android:max="10"
-        android:progress="0" />
+        android:max="3"
+        android:progress="0"
+        android:layout_marginBottom="21dp"
+        android:layout_alignBottom="@+id/accDisplay"
+        android:layout_alignLeft="@+id/accDisplay"
+        android:layout_alignStart="@+id/accDisplay" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/nextBtn"
@@ -75,11 +76,11 @@
         android:id="@+id/locationSpin"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/locationTxt"
-        android:layout_alignStart="@+id/locationTxt"
-        android:layout_below="@+id/locationTxt"
         android:layout_marginTop="9dp"
-        android:entries="@array/job_location" />
+        android:entries="@array/job_location"
+        android:layout_below="@+id/locationTxt"
+        android:layout_alignLeft="@+id/locationTxt"
+        android:layout_alignStart="@+id/locationTxt" />
 
     <TextView
         android:id="@+id/roomToMoveTxt"
@@ -92,25 +93,24 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/roomToMoveScaleTxt"
+        android:id="@+id/moveDisplay"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/roomToMoveTxt"
-        android:layout_alignStart="@+id/roomToMoveTxt"
-        android:layout_below="@+id/roomToMoveTxt"
-        android:layout_marginTop="12dp"
-        android:text="(Spacious)                                                 (Tight)" />
+        android:layout_alignLeft="@+id/moveSlider"
+        android:layout_alignStart="@+id/moveSlider"
+        android:layout_below="@+id/moveSlider"
+        android:text="Lots of room to move" />
 
     <SeekBar
         android:id="@+id/moveSlider"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/roomToMoveScaleTxt"
-        android:layout_alignStart="@+id/roomToMoveScaleTxt"
-        android:layout_below="@+id/roomToMoveScaleTxt"
-        android:layout_marginTop="14dp"
-        android:max="10"
-        android:progress="0" />
+        android:max="3"
+        android:progress="0"
+        android:layout_marginTop="9dp"
+        android:layout_below="@+id/roomToMoveTxt"
+        android:layout_alignLeft="@+id/roomToMoveTxt"
+        android:layout_alignStart="@+id/roomToMoveTxt" />
 
 </RelativeLayout>

@@ -18,24 +18,16 @@
         android:id="@+id/nextBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/paverSizeSpin"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/paverSizeSpin"
-        android:layout_marginBottom="26dp"
+        android:layout_marginBottom="25dp"
         android:clickable="true"
         app:elevation="0dp"
         app:fabSize="normal"
-        app:srcCompat="@drawable/right_arrow" />
-
-    <Spinner
-        android:id="@+id/paverSizeSpin"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/paverSizeTxt"
-        android:layout_alignStart="@+id/paverSizeTxt"
-        android:layout_below="@+id/paverSizeTxt"
-        android:layout_marginTop="11dp"
-        android:entries="@array/paver_size" />
+        app:srcCompat="@drawable/right_arrow"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="22dp"
+        android:layout_marginEnd="22dp" />
 
     <TextView
         android:id="@+id/sunkTxt"
@@ -63,34 +55,33 @@
         android:id="@+id/paverSizeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/jointFillTxt"
-        android:layout_alignStart="@+id/jointFillTxt"
-        android:layout_below="@+id/jointFillTxt"
-        android:layout_marginTop="77dp"
+        android:layout_marginTop="17dp"
         android:text="Size of pavers:"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/jointFillDisplay"
+        android:layout_alignLeft="@+id/jointFillDisplay"
+        android:layout_alignStart="@+id/jointFillDisplay" />
 
     <SeekBar
         android:id="@+id/sunkAmtSlider"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:max="10"
-        android:progress="0"
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/sunkScaleTxt"
         android:layout_alignLeft="@+id/sunkTxt"
-        android:layout_alignStart="@+id/sunkTxt" />
-
-    <TextView
-        android:id="@+id/sunkScaleTxt"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/sunkAmtSlider"
-        android:layout_alignStart="@+id/sunkAmtSlider"
+        android:layout_alignStart="@+id/sunkTxt"
         android:layout_below="@+id/sunkTxt"
         android:layout_marginTop="9dp"
-        android:text="(Hasn't sunk)                             (Has sunk a lot)"
+        android:max="4"
+        android:progress="0" />
+
+    <TextView
+        android:id="@+id/sunkDisplay"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/jointFillTxt"
+        android:layout_alignStart="@+id/jointFillTxt"
+        android:layout_below="@+id/sunkAmtSlider"
+        android:text="Hasn't sunk"
         android:textAlignment="viewStart" />
 
     <SeekBar
@@ -98,53 +89,73 @@
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:max="10"
-        android:progress="0"
-        android:layout_below="@+id/jointFillSliderTxt"
-        android:layout_alignLeft="@+id/jointFillSliderTxt"
-        android:layout_alignStart="@+id/jointFillSliderTxt" />
+        android:layout_alignLeft="@+id/jointFillDisplay"
+        android:layout_alignStart="@+id/jointFillDisplay"
+        android:layout_below="@+id/jointFillTxt"
+        android:layout_marginTop="10dp"
+        android:max="4"
+        android:progress="0" />
 
     <TextView
-        android:id="@+id/jointFillSliderTxt"
+        android:id="@+id/jointFillDisplay"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:text="(Not hard)                                           (Very Hard)"
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/jointFillTxt"
         android:layout_alignLeft="@+id/jointFillTxt"
-        android:layout_alignStart="@+id/jointFillTxt" />
+        android:layout_alignStart="@+id/jointFillTxt"
+        android:layout_below="@+id/jointFillSlider"
+        android:text="Not very hard" />
 
     <TextView
         android:id="@+id/weedTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/paverSizeSpin"
-        android:layout_alignStart="@+id/paverSizeSpin"
-        android:layout_below="@+id/paverSizeSpin"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="26dp"
         android:text="Weeds in the interlock:"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/paverSlider"
+        android:layout_alignLeft="@+id/paverSlider"
+        android:layout_alignStart="@+id/paverSlider" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/weedDisplay"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/weedSlider"
+        android:layout_alignStart="@+id/weedSlider"
+        android:layout_below="@+id/weedSlider"
+        android:text="No weeds" />
+
+    <SeekBar
+        android:id="@+id/weedSlider"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/weedTxt"
         android:layout_alignStart="@+id/weedTxt"
         android:layout_below="@+id/weedTxt"
-        android:layout_marginTop="11dp"
-        android:text="(No weeds)                               (Tons of weeds)" />
+        android:layout_marginTop="9dp"
+        android:max="4"
+        android:progress="0" />
 
     <SeekBar
-        android:id="@+id/seekBar4"
+        android:id="@+id/paverSlider"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView7"
-        android:layout_alignStart="@+id/textView7"
-        android:layout_below="@+id/textView7"
-        android:layout_marginTop="8dp"
-        android:max="10"
+        android:layout_alignLeft="@+id/paverSizeTxt"
+        android:layout_alignStart="@+id/paverSizeTxt"
+        android:layout_centerVertical="true"
+        android:max="2"
         android:progress="0" />
+
+    <TextView
+        android:id="@+id/paversDisplay"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/paverSlider"
+        android:layout_alignStart="@+id/paverSlider"
+        android:layout_below="@+id/paverSlider"
+        android:text="Small Paver Size"
+        android:textAlignment="textStart" />
 
 </RelativeLayout>
