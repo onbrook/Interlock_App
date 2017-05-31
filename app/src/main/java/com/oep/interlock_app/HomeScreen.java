@@ -77,14 +77,6 @@ public class HomeScreen extends AppCompatActivity {
                 startActivity(new Intent(HomeScreen.this, EstimationPage.class));
             }
         });
-        try {
-            FileOutputStream fos = openFileOutput(ActivityDatabaseAccounts.EMAIL_FILE_NAME, Context.MODE_PRIVATE);
-            fos.write("odog.j1633@gmail.com\n".getBytes());
-            fos.write("ethansm10@gmail.com\n".getBytes());
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);

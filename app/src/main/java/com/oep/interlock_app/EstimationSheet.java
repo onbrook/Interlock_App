@@ -39,7 +39,6 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -105,6 +104,7 @@ class EstimationSheet {
     private int currentActualTime;
     private List<String> currentEmails;
     private List<Permission> currentPermissions;
+    private Permission currentPermission;
     private String currentDatabaseId;
     private int variableNum;
     private int nextEstimationId = -1;
@@ -250,11 +250,11 @@ class EstimationSheet {
     }
 
 
-    void startRemovingPermissions(final List<Permission> permissions, final RemovePermissionsListener listener){
+    void startRemovingPermission(final Permission permission, final RemovePermissionListener listener){
         if(currentProcess != NO_PROCESS && currentProcess != REMOVE_PERMISSIONS_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
         currentProcess = REMOVE_PERMISSIONS_PROCESS;
-        currentPermissions = permissions;
+        currentPermission = permission;
         currentListener = listener;
         if (! isGooglePlayServicesAvailable()){
             acquireGooglePlayServices();
@@ -267,14 +267,14 @@ class EstimationSheet {
             showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to store data.", RETRY_ACTION);
         }
         else{
-            TaskRemovePermissions taskRemovePermissions = new TaskRemovePermissions(permissions, new RemovePermissionsListener() {
+            TaskRemovePermission taskRemovePermission = new TaskRemovePermission(permission, new RemovePermissionListener() {
                 @Override
                 public void whenFinished(boolean success) {
                     currentProcess = NO_PROCESS;
                     listener.whenFinished(success);
                 }
             });
-            taskRemovePermissions.execute();
+            taskRemovePermission.execute();
         }
     }
 
@@ -672,7 +672,7 @@ class EstimationSheet {
                 startAddingPermissions(currentEmails, (AddPermissionsListener) currentListener);
                 break;
             case REMOVE_PERMISSIONS_PROCESS:
-                startRemovingPermissions(currentPermissions, (RemovePermissionsListener) currentListener);
+                startRemovingPermission(currentPermission, (RemovePermissionListener) currentListener);
                 break;
             case CHECK_DATABASE_ID_VALIDITY_PROCESS:
                 startCheckingDatabaseIdValidity(currentDatabaseId, (CheckDatabaseIdValidityListener) currentListener);
@@ -1024,17 +1024,12 @@ class EstimationSheet {
 
         private void setPermissions() {
             String fileId = getDatabaseId();
-            FileOutputStream fos = null;
-            try {
-                fos = activity.openFileOutput(ActivityDatabaseAccounts.EMAIL_FILE_NAME, Context.MODE_PRIVATE);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
             for(String email : emails) {
                 try {
                     Permission permission = new Permission();
                     permission.setType("user");
                     permission.setRole("writer");
+                    permission.setValue(email);
                     permission.setEmailAddress(email);
                     // Email notification message
                     String emailMessage =
@@ -1049,22 +1044,12 @@ class EstimationSheet {
                     /*driveService.permissions().create(fileId, permission).setSendNotificationEmail(true)
                             .setEmailMessage(emailMessage).execute();*/
                     driveService.permissions().insert(fileId, permission)
-                            .setSendNotificationEmails(true).setEmailMessage(emailMessage);
+                            .setSendNotificationEmails(true).setEmailMessage(emailMessage).execute();
                 } catch (IOException e){
                     lastError = e;
                 }
-
-                // Save email address
-                try{
-                    fos.write((email+"\n").getBytes());
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
+                System.out.println("Email: "+email);
             }
-            try {
-                if (fos != null)
-                    fos.close();
-            } catch (IOException e) {}
 
             if(lastError != null)
                 cancel(true);
@@ -1106,16 +1091,16 @@ class EstimationSheet {
     }
 
 
-    private class TaskRemovePermissions extends AsyncTask<Void, Void, Void> {
+    private class TaskRemovePermission extends AsyncTask<Void, Void, Void> {
 
-        private RemovePermissionsListener listener = null;
+        private RemovePermissionListener listener = null;
         private Exception lastError = null;
         com.google.api.services.drive.Drive driveService = null;
-        private List<Permission> permissions = null;
+        private Permission permission = null;
 
-        TaskRemovePermissions(List<Permission> permissions, RemovePermissionsListener listener) {
+        TaskRemovePermission(Permission permission, RemovePermissionListener listener) {
             this.listener = listener;
-            this.permissions = permissions;
+            this.permission = permission;
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             driveService = new com.google.api.services.drive.Drive.Builder(
@@ -1140,10 +1125,7 @@ class EstimationSheet {
 
 
         private void removePermissions() throws IOException {
-            String fileId = getDatabaseId();
-            for(Permission permission : permissions) {
-                driveService.permissions().delete(fileId, permission.getId()).execute();
-            }
+            driveService.permissions().delete(getDatabaseId(), permission.getId()).execute();
         }
 
 
@@ -1215,7 +1197,14 @@ class EstimationSheet {
 
         private List<Permission> getPermissions() throws IOException {
             //return driveService.permissions().list(getDatabaseId()).execute().getPermissions();
-            return driveService.permissions().list(getDatabaseId()).execute().getItems();
+            List<Permission> permissions = driveService.permissions().list(getDatabaseId())
+                    .execute().getItems();
+
+            for(int i = 0; i < permissions.size(); i++)
+                if(permissions.get(i).getEmailAddress().equals(googleAccountCredential.getSelectedAccountName()))
+                    permissions.remove(i);
+
+            return permissions;
         }
 
 
@@ -1752,7 +1741,7 @@ interface AddPermissionsListener extends Listener {
     void whenFinished(boolean success);
 }
 
-interface RemovePermissionsListener extends Listener {
+interface RemovePermissionListener extends Listener {
     /**
      * Called when the currently running process if finished.
      * @param success whether the process was successful or not.

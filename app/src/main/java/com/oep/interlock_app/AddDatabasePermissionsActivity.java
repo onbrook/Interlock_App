@@ -103,22 +103,34 @@ public class AddDatabasePermissionsActivity extends AppCompatActivity {
                                                 startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                                             }
                                         });
+                                alertDialog.show();
                             } else {
-                                AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
 
-                                alertDialog.setTitle("Error");
-                                alertDialog.setMessage("An error has occurred when trying to give the" +
+                                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+                                builder.setTitle("Error");
+                                builder.setMessage("An error has occurred when trying to give the" +
                                         " requested Google Accounts access to the database. This could" +
                                         " have been caused from some of the emails which where entered being" +
-                                        " non-existent");
+                                        " non-existent. You can see which accounts have access by" +
+                                        " going to Database Permissions.");
 
-                                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                                builder.setPositiveButton("OK",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 dialog.dismiss();
                                                 startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                                             }
                                         });
+                                builder.setNeutralButton("TAKE ME THERE",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                                startActivity(new Intent(getApplicationContext(), ActivityDatabaseAccounts.class));
+                                            }
+                                        });
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
                             }
 
 
