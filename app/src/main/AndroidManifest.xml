@@ -25,14 +25,14 @@
             android:label="Interlock Relaying" />
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying_Complications"
-            android:label="Interlock Relaying"/>
+            android:label="Interlock Relaying" />
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying_ToJob"
-            android:label="Interlock Relaying"/>
+            android:label="Interlock Relaying" />
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying_Estimate"
-            android:label="Interlock Relaying"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:label="Interlock Relaying" />
         <activity android:name="com.oep.interlock_app.Step_Rebuilding">
             <activity android:name="Step_Rebuilding.NextActivity" />
         </activity>
@@ -72,18 +72,21 @@
             android:label="@string/cleaning_sealing_title" />
         <activity
             android:name="com.oep.interlock_app.CleaningSealing2"
-            android:label="@string/cleaning_sealing_title"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:label="@string/cleaning_sealing_title" />
         <activity
             android:name="com.oep.interlock_app.CleaningSealingEstimation"
-            android:label="@string/cleaning_sealing_title"
-            android:configChanges="orientation|screenSize"/>
-        <activity android:name="com.oep.interlock_app.SetUserTypeActivity"
-            android:label="Setup Interlock App"/>
-        <activity android:name="com.oep.interlock_app.AddDatabasePermissionsActivity"
-            android:label="Database Access"/>
-        <activity android:name="com.oep.interlock_app.EnterDatabaseIdActivity"
-            android:label="Setup Interlock App"/>
+            android:configChanges="orientation|screenSize"
+            android:label="@string/cleaning_sealing_title" />
+        <activity
+            android:name="com.oep.interlock_app.SetUserTypeActivity"
+            android:label="Setup Interlock App" />
+        <activity
+            android:name="com.oep.interlock_app.AddDatabasePermissionsActivity"
+            android:label="Database Access" />
+        <activity
+            android:name="com.oep.interlock_app.EnterDatabaseIdActivity"
+            android:label="Setup Interlock App" />
         <activity
             android:name="com.oep.interlock_app.EstimationPage"
             android:label="Estimation Page" />
@@ -94,7 +97,8 @@
             android:name="com.oep.interlock_app.HelpPage"
             android:label="Help Page" />
         <activity android:name="com.oep.interlock_app.DatabaseEntry" />
-        <activity android:name="com.oep.interlock_app.DatabaseRemoval"></activity>
+        <activity android:name="com.oep.interlock_app.DatabaseRemoval" />
+        <activity android:name="com.oep.interlock_app.ActivityDatabaseAccounts"></activity>
     </application>
 
 </manifest>

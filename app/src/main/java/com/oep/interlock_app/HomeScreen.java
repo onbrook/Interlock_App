@@ -1,5 +1,6 @@
 package com.oep.interlock_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -17,6 +18,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.oep.owenslaptop.interlock_app.R;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -43,20 +48,21 @@ public class HomeScreen extends AppCompatActivity {
 
         //check if the user is new and if so, go to correct activity
         EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
-        isUserOwner = estimationSheet.isUserOwner();
         if(!estimationSheet.doesUserHaveRole())
             startActivity(new Intent(getApplicationContext(), SetUserTypeActivity.class));
-        else if (!estimationSheet.isDatabaseIdSaved())
-            if(isUserOwner) {
+        else if (!estimationSheet.isDatabaseIdSaved()) {
+            isUserOwner = estimationSheet.isUserOwner();
+            if (isUserOwner) {
                 estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
                     @Override
                     public void whenFinished(boolean success) {
 
                     }
                 });
-            }else
+            } else
                 startActivity(new Intent(getApplicationContext(), EnterDatabaseIdActivity.class));
-
+        }else
+            isUserOwner = estimationSheet.isUserOwner();
 
         setContentView(R.layout.activity_home_screen);
         setTitle("Home");
@@ -71,7 +77,14 @@ public class HomeScreen extends AppCompatActivity {
                 startActivity(new Intent(HomeScreen.this, EstimationPage.class));
             }
         });
-
+        try {
+            FileOutputStream fos = openFileOutput(ActivityDatabaseAccounts.EMAIL_FILE_NAME, Context.MODE_PRIVATE);
+            fos.write("odog.j1633@gmail.com\n".getBytes());
+            fos.write("ethansm10@gmail.com\n".getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);
@@ -102,20 +115,24 @@ public class HomeScreen extends AppCompatActivity {
                     startActivity(new Intent(HomeScreen.this, HomeScreen.class));
                 }
                 else if(position==3){
+                    Toast.makeText(HomeScreen.this, "Estimation Page", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(HomeScreen.this, EstimationPage.class));
+                }
+                else if(position==4){
                     Toast.makeText(HomeScreen.this, "Database Time Entry", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(HomeScreen.this, DatabaseEntry.class));
                 }
-                else if(position==4){
+                else if(position==5){
                     Toast.makeText(HomeScreen.this, "Database Removal", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(HomeScreen.this, DatabaseRemoval.class));
                 }
-                else if(position==5){
+                else if(position==6){
                     Toast.makeText(HomeScreen.this, "Database Setup", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(HomeScreen.this, EnterDatabaseIdActivity.class));
                 }
-                else if(position==6){//this will only be true if the user is owner
+                else if(position==7){//this will only be true if the user is owner
                     Toast.makeText(HomeScreen.this, "Database Permissions", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(HomeScreen.this, AddDatabasePermissionsActivity.class));
+                    startActivity(new Intent(HomeScreen.this, ActivityDatabaseAccounts.class));
                 }
             }
         });
@@ -144,10 +161,10 @@ public class HomeScreen extends AppCompatActivity {
     private void addDrawerItems(){
         // Only have the "Database Permissions" if the user owns the database
         if(isUserOwner) {
-            String[] osArray = { "About", "Help!", "Home Screen", "Database Time Entry", "Database Removal", "Database Setup", "Database Permissions"};
+            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Time Entry", "Database Removal", "Database Setup", "Database Permissions"};
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         } else {
-            String[] osArray = { "About", "Help!", "Home Screen", "Database Time Entry", "Database Removal", "Database Setup" };
+            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Time Entry", "Database Removal", "Database Setup" };
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         }
         mDrawerList.setAdapter(mAdapter);

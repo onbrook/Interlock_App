@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -52,7 +53,7 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                         @Override
                         public void whenFinished(boolean success, Boolean validId) {
                             if(!success)
-                                showDialog("Error", "An error has occurred. This could be caused from the database not existing.");
+                                showDialog("Invalid ID", "The database ID which was entered you do not have access to or it does not exist.");
                             else if(!validId)
                                 showDialog("Invalid ID", "The database ID which was entered you do not have access to.");
                             else { // ID is correct

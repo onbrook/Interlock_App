@@ -27,6 +27,7 @@ import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
+import com.google.api.services.drive.model.User;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ClearValuesRequest;
@@ -38,6 +39,7 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -1022,6 +1024,12 @@ class EstimationSheet {
 
         private void setPermissions() {
             String fileId = getDatabaseId();
+            FileOutputStream fos = null;
+            try {
+                fos = activity.openFileOutput(ActivityDatabaseAccounts.EMAIL_FILE_NAME, Context.MODE_PRIVATE);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             for(String email : emails) {
                 try {
                     Permission permission = new Permission();
@@ -1038,12 +1046,25 @@ class EstimationSheet {
                                     "identification number\n" +
                                     getDatabaseId() + "\n" +
                                     "where requested.";
-                    driveService.permissions().create(fileId, permission).setSendNotificationEmail(true)
-                            .setEmailMessage(emailMessage).execute();
+                    /*driveService.permissions().create(fileId, permission).setSendNotificationEmail(true)
+                            .setEmailMessage(emailMessage).execute();*/
+                    driveService.permissions().insert(fileId, permission)
+                            .setSendNotificationEmails(true).setEmailMessage(emailMessage);
                 } catch (IOException e){
                     lastError = e;
                 }
+
+                // Save email address
+                try{
+                    fos.write((email+"\n").getBytes());
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
             }
+            try {
+                if (fos != null)
+                    fos.close();
+            } catch (IOException e) {}
 
             if(lastError != null)
                 cancel(true);
@@ -1193,7 +1214,8 @@ class EstimationSheet {
 
 
         private List<Permission> getPermissions() throws IOException {
-            return driveService.permissions().list(getDatabaseId()).execute().getPermissions();
+            //return driveService.permissions().list(getDatabaseId()).execute().getPermissions();
+            return driveService.permissions().list(getDatabaseId()).execute().getItems();
         }
 
 
@@ -1293,16 +1315,26 @@ class EstimationSheet {
                         || sheetTitle.equals(JOINT_FILL_SHEET_NAME)
                         || sheetTitle.equals(INTERLOCK_RELAYING_SHEET_NAME)))
                     valid = false;
-            }
+            }/*
             try {
                 // Try doing something to check if user has edit access
                 driveService.files().get(databaseId).execute().setName(DATABASE_TITLE);
             } catch (Exception e){
                 valid = false;
+            }*/
+            File file = driveService.files().get(databaseId).execute();
+            if(valid)
+                valid = file.getEditable();
+
+            String userType = USER_TYPE_EMPLOYEE;
+
+            List<User> owners = file.getOwners();
+            for(User owner : owners) {
+                if (owner.getEmailAddress().equals(googleAccountCredential.getSelectedAccount().name))
+                    userType = USER_TYPE_OWNER;
             }
 
-            if(valid)
-                setUserType(USER_TYPE_OWNER);
+            setUserType(userType);
 
             // If it gets here without throwing an exception, the ID is good
             return valid;
