@@ -175,10 +175,6 @@ public class AddDatabasePermissionsActivity extends AppCompatActivity {
 
     }
 
-    private void appendEmail(String email, List<String> emails){
-
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
