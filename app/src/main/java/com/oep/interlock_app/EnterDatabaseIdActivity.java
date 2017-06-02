@@ -49,6 +49,7 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                     Toast.makeText(EnterDatabaseIdActivity.this, "Please enter an ID", Toast.LENGTH_SHORT).show();
                 else{
                     // Check if id is valid
+                    saveId(input);
                     estimationSheet.startCheckingDatabaseIdValidity(input, new CheckDatabaseIdValidityListener() {
                         @Override
                         public void whenFinished(boolean success, Boolean validId) {
@@ -74,46 +75,54 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
 
-        addDrawerItems();
-        setupDrawer();
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        if(estimationSheet.isDatabaseIdSaved()){
+            addDrawerItems();
+            setupDrawer();
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
 
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position==0){
-                    Toast.makeText(EnterDatabaseIdActivity.this, "About", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(EnterDatabaseIdActivity.this, AboutPage.class));
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+            mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if(position==0){
+                        Toast.makeText(EnterDatabaseIdActivity.this, "About", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, AboutPage.class));
+                    }
+                    else if(position==1){
+                        Toast.makeText(EnterDatabaseIdActivity.this, "Home Screen", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, HomeScreen.class));
+                    }
+                    else if(position==2){
+                        Toast.makeText(EnterDatabaseIdActivity.this, "Database Entry", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, DatabaseEntry.class));
+                    }
+                    else if(position==3){
+                        Toast.makeText(EnterDatabaseIdActivity.this, "Database Removal", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, DatabaseRemoval.class));
+                    }
+                    else if(position==4){
+                        Toast.makeText(EnterDatabaseIdActivity.this, "Database Setup", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, EnterDatabaseIdActivity.class));
+                    }
+                    else if(position==5){
+                        Toast.makeText(EnterDatabaseIdActivity.this, "Database Permissions", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, AddDatabasePermissionsActivity.class));
+                    }
+                    else{
+                        Toast.makeText(EnterDatabaseIdActivity.this, "Help!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, HelpPage.class));
+                    }
                 }
-                else if(position==1){
-                    Toast.makeText(EnterDatabaseIdActivity.this, "Home Screen", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(EnterDatabaseIdActivity.this, HomeScreen.class));
-                }
-                else if(position==2){
-                    Toast.makeText(EnterDatabaseIdActivity.this, "Database Entry", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(EnterDatabaseIdActivity.this, DatabaseEntry.class));
-                }
-                else if(position==3){
-                    Toast.makeText(EnterDatabaseIdActivity.this, "Database Removal", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(EnterDatabaseIdActivity.this, DatabaseRemoval.class));
-                }
-                else if(position==4){
-                    Toast.makeText(EnterDatabaseIdActivity.this, "Database Setup", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(EnterDatabaseIdActivity.this, EnterDatabaseIdActivity.class));
-                }
-                else if(position==5){
-                    Toast.makeText(EnterDatabaseIdActivity.this, "Database Permissions", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(EnterDatabaseIdActivity.this, AddDatabasePermissionsActivity.class));
-                }
-                else{
-                    Toast.makeText(EnterDatabaseIdActivity.this, "Help!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(EnterDatabaseIdActivity.this, HelpPage.class));
-                }
-            }
-        });
+            });
+        }
+        else{
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+
     }
 
     private void saveId(String databaseId){
