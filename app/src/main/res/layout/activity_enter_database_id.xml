@@ -51,7 +51,6 @@
         android:hint="Database ID"
         android:inputType="text"/>
 
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/ok_fab"
         android:layout_width="wrap_content"
