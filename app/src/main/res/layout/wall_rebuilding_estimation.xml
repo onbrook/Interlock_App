@@ -58,12 +58,20 @@
                 android:text="Room to maneuver:" />
 
             <TextView
-                android:id="@+id/dimensions_title"
+                android:id="@+id/height_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/room_title"
                 android:layout_marginTop="15dp"
-                android:text="Dimensions:" />
+                android:text="Height:" />
+
+            <TextView
+                android:id="@+id/length_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/height_title"
+                android:layout_marginTop="15dp"
+                android:text="Length:" />
 
             <TextView
                 android:id="@+id/shape_title"
@@ -71,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:text="Shape:"
                 android:layout_marginTop="15dp"
-                android:layout_below="@+id/dimensions_title"/>
+                android:layout_below="@+id/length_title"/>
 
             <TextView
                 android:id="@+id/hard_line_title"
@@ -152,14 +160,24 @@
                 android:layout_alignTop="@+id/room_title" />
 
             <TextView
-                android:id="@+id/dimensions_out"
+                android:id="@+id/height_out"
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/dimensions_title" />
+                android:layout_alignTop="@+id/height_title" />
+
+            <TextView
+                android:id="@+id/length_out"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/length_title" />
 
             <TextView
                 android:id="@+id/shape_out"

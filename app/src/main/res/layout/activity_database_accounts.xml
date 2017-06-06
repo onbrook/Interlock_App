@@ -25,7 +25,16 @@
         <ListView
             android:id="@+id/accounts_list_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="There are no other accounts that have access to this database."
+            android:gravity="center"
+            android:visibility="gone"
+            android:id="@+id/no_accounts_text_view"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_fab"

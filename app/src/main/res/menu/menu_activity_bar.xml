@@ -6,4 +6,8 @@
         android:icon="@mipmap/menu"
         app:showAsAction="always"
         android:title="Next"/>
+    <item
+        android:id="@+id/new_database"
+        app:showAsAction="never"
+        android:title="New Database"/>
 </menu>

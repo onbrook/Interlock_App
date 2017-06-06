@@ -11,6 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -51,17 +53,15 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                     // Check if id is valid
                     estimationSheet.startCheckingDatabaseIdValidity(input, new CheckDatabaseIdValidityListener() {
                         @Override
-                        public void whenFinished(boolean success, Boolean validId) {
-                            if(!success)
-                                showDialog("Invalid ID", "The database ID which was entered you do not have access to or it does not exist.");
-                            else if(!validId)
-                                showDialog("Invalid ID", "The database ID which was entered you do not have access to.");
-                            else { // ID is correct
+                        public void whenFinished(boolean validId) {
+                            if (validId) { // ID is correct
                                 saveId(input);
                                 if(estimationSheet.isUserOwner())
-                                    startActivity(new Intent(getApplicationContext(), AddDatabasePermissionsActivity.class));
+                                    startActivityForResult(new Intent(getApplicationContext(), AddDatabasePermissionsActivity.class), EstimationSheet.REQUEST_ADD_PERMISSIONS);
                                 else
-                                    startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                                    finish(); // Go back to where you where before coming here
+                            } else {
+                                showDialog("Invalid ID", "You do not have access to this database or it does not exist.");
                             }
                         }
                     });
@@ -116,6 +116,26 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_activity_bar, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        //create new database
+        estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
+            @Override
+            public void whenFinished(boolean success) {
+                if(success){
+                    startActivityForResult(getIntent().setClass(getApplicationContext(), AddDatabasePermissionsActivity.class), EstimationSheet.REQUEST_ADD_PERMISSIONS);
+                }
+            }
+        });
+        return true;
+    }
+
     private void saveId(String databaseId){
         try {
             FileOutputStream fos = openFileOutput(EstimationSheet.DATABASE_ID_FILE_NAME, Context.MODE_PRIVATE);
@@ -142,7 +162,10 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        estimationSheet.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == EstimationSheet.REQUEST_ADD_PERMISSIONS)
+            finish();
+        else
+            estimationSheet.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

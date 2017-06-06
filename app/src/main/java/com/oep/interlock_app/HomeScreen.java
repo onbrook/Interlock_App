@@ -47,20 +47,26 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //check if the user is new and if so, go to correct activity
-        EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
-        if(!estimationSheet.doesUserHaveRole())
+        final EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
+        if(!estimationSheet.doesUserHaveRole()) {
             startActivity(new Intent(getApplicationContext(), SetUserTypeActivity.class));
-        else if (!estimationSheet.isDatabaseIdSaved()) {
+            // Update isUserOwner since the user may have changed databases
+            isUserOwner = estimationSheet.isUserOwner();
+        } else if (!estimationSheet.isDatabaseIdSaved()) {
             isUserOwner = estimationSheet.isUserOwner();
             if (isUserOwner) {
                 estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
                     @Override
                     public void whenFinished(boolean success) {
-
+                        // Update isUserOwner since the user may have changed databases
+                        isUserOwner = estimationSheet.isUserOwner();
                     }
                 });
-            } else
+            } else {
                 startActivity(new Intent(getApplicationContext(), EnterDatabaseIdActivity.class));
+                // Update isUserOwner since the user may have changed databases
+                isUserOwner = estimationSheet.isUserOwner();
+            }
         }else
             isUserOwner = estimationSheet.isUserOwner();
 
@@ -120,7 +126,7 @@ public class HomeScreen extends AppCompatActivity {
                 }
                 else if(position==6){
                     Toast.makeText(HomeScreen.this, "Database Setup", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(HomeScreen.this, EnterDatabaseIdActivity.class));
+                    startActivityForResult(new Intent(HomeScreen.this, EnterDatabaseIdActivity.class), EstimationSheet.REQUEST_GET_DATABASE_ID);
                 }
                 else if(position==7){//this will only be true if the user is owner
                     Toast.makeText(HomeScreen.this, "Database Permissions", Toast.LENGTH_SHORT).show();
