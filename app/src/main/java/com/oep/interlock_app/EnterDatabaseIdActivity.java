@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,32 +88,25 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if(position==0){
-                        Toast.makeText(EnterDatabaseIdActivity.this, "About", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(EnterDatabaseIdActivity.this, AboutPage.class));
                     }
                     else if(position==1){
-                        Toast.makeText(EnterDatabaseIdActivity.this, "Home Screen", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(EnterDatabaseIdActivity.this, HomeScreen.class));
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, HelpPage.class));
                     }
                     else if(position==2){
-                        Toast.makeText(EnterDatabaseIdActivity.this, "Database Entry", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(EnterDatabaseIdActivity.this, DatabaseManagement.class));
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, HomeScreen.class));
                     }
                     else if(position==3){
-                        Toast.makeText(EnterDatabaseIdActivity.this, "Database Removal", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(EnterDatabaseIdActivity.this, DatabaseRemoval.class));
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, EstimationPage.class));
                     }
                     else if(position==4){
-                        Toast.makeText(EnterDatabaseIdActivity.this, "Database Setup", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(EnterDatabaseIdActivity.this, EnterDatabaseIdActivity.class));
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, DatabaseManagement.class));
                     }
                     else if(position==5){
-                        Toast.makeText(EnterDatabaseIdActivity.this, "Database Permissions", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(EnterDatabaseIdActivity.this, AddDatabasePermissionsActivity.class));
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, EnterDatabaseIdActivity.class));
                     }
-                    else{
-                        Toast.makeText(EnterDatabaseIdActivity.this, "Help!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(EnterDatabaseIdActivity.this, HelpPage.class));
+                    else if(position==6){//this will only be true if the user is owner
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, ActivityDatabaseAccounts.class));
                     }
                 }
             });
@@ -132,14 +126,21 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item){
         //create new database
-        estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
-            @Override
-            public void whenFinished(boolean success) {
-                if(success){
-                    startActivityForResult(getIntent().setClass(getApplicationContext(), AddDatabasePermissionsActivity.class), EstimationSheet.REQUEST_ADD_PERMISSIONS);
+        if(item.getItemId() == R.id.new_database)
+            estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
+                @Override
+                public void whenFinished(boolean success) {
+                    if(success){
+                        startActivityForResult(getIntent().setClass(getApplicationContext(), AddDatabasePermissionsActivity.class), EstimationSheet.REQUEST_ADD_PERMISSIONS);
+                    }
                 }
-            }
-        });
+            });
+        else
+        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT))
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
+        else
+            mDrawerLayout.openDrawer(Gravity.LEFT);
+
         return true;
     }
 
@@ -185,8 +186,15 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
     }
 
     private void addDrawerItems(){
-        String[] osArray = { "About", "Home Screen", "Database Entry", "Database Removal", "Database Setup", "Database Permissions", "Help!"};
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        // Only have the "Database Permissions" if the user owns the database
+        EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
+        if(estimationSheet.isUserOwner()) {
+            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
+            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        } else {
+            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup" };
+            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        }
         mDrawerList.setAdapter(mAdapter);
     }
 
@@ -194,23 +202,20 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.string.drawer_open, R.string.drawer_close) {
 
-            /**
-             * Called when a drawer has settled in a completely open state.
-             */
+            /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 getSupportActionBar().setTitle("Navigation!");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
-            /**
-             * Called when a drawer has settled in a completely closed state.
-             */
+            /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 getSupportActionBar().setTitle(mActivityTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
+        mDrawerToggle.syncState();
     }
 }

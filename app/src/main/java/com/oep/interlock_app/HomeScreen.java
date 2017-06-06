@@ -94,41 +94,29 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position==0){
-                    Toast.makeText(HomeScreen.this, "About", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(HomeScreen.this, AboutPage.class));
                 }
                 else if(position==1){
-                    Toast.makeText(HomeScreen.this, "Help!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(HomeScreen.this, HelpPage.class));
                 }
                 else if(position==2){
-                    Toast.makeText(HomeScreen.this, "Home Screen", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(HomeScreen.this, HomeScreen.class));
                 }
                 else if(position==3){
-                    Toast.makeText(HomeScreen.this, "Estimation Page", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(HomeScreen.this, EstimationPage.class));
                 }
                 else if(position==4){
-                    Toast.makeText(HomeScreen.this, "Database Time Entry", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(HomeScreen.this, DatabaseManagement.class));
                 }
                 else if(position==5){
-                    Toast.makeText(HomeScreen.this, "Database Removal", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(HomeScreen.this, DatabaseRemoval.class));
+                    startActivity(new Intent(HomeScreen.this, EnterDatabaseIdActivity.class));
                 }
-                else if(position==6){
-                    Toast.makeText(HomeScreen.this, "Database Setup", Toast.LENGTH_SHORT).show();
-                    startActivityForResult(new Intent(HomeScreen.this, EnterDatabaseIdActivity.class), EstimationSheet.REQUEST_GET_DATABASE_ID);
-                }
-                else if(position==7){//this will only be true if the user is owner
-                    Toast.makeText(HomeScreen.this, "Database Permissions", Toast.LENGTH_SHORT).show();
+                else if(position==6){//this will only be true if the user is owner
                     startActivity(new Intent(HomeScreen.this, ActivityDatabaseAccounts.class));
                 }
             }
         });
     }
-
 
     //called when the back button in the title bas is pressed
     public boolean onOptionsItemSelected(MenuItem item){
@@ -139,13 +127,15 @@ public class HomeScreen extends AppCompatActivity {
         return true;
     }
 
+
     private void addDrawerItems(){
         // Only have the "Database Permissions" if the user owns the database
-        if(isUserOwner) {
-            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Time Entry", "Database Removal", "Database Setup", "Database Permissions"};
+        EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
+        if(estimationSheet.isUserOwner()) {
+            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         } else {
-            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Time Entry", "Database Removal", "Database Setup" };
+            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup" };
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         }
         mDrawerList.setAdapter(mAdapter);
