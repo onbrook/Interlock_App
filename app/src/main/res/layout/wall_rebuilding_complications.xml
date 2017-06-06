@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+@drawable/right_arrow:
+    edited form:https://www.iconfinder.com/icons/1031536/arrow_arrow_right_chevron_chevronright_right_right_icon_icon#size=128
+    by: Denis Mikhutin
+    -->
 
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
 

@@ -57,7 +57,7 @@ public class SetUserTypeActivity extends AppCompatActivity {
                         }
                     });
                 }else { // Use an existing one is selected
-                    startActivity(new Intent(getApplicationContext(), EnterDatabaseIdActivity.class));
+                    startActivityForResult(new Intent(getApplicationContext(), EnterDatabaseIdActivity.class), EstimationSheet.REQUEST_GET_DATABASE_ID);
                 }
             }
         });
@@ -65,8 +65,12 @@ public class SetUserTypeActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        estimationSheet.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == EstimationSheet.REQUEST_GET_DATABASE_ID)
+            finish(); // Go back to Home
+        else {
+            super.onActivityResult(requestCode, resultCode, data);
+            estimationSheet.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override

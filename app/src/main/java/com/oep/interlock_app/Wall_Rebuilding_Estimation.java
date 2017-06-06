@@ -1,11 +1,9 @@
 package com.oep.interlock_app;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,7 +43,8 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         TextView locationOut = (TextView) findViewById(R.id.location_out);
         TextView accessibilityOut = (TextView) findViewById(R.id.accessibility_out);
         TextView roomOut = (TextView) findViewById(R.id.room_out);
-        TextView dimensionsOut = (TextView) findViewById(R.id.dimensions_out);
+        TextView heightOut = (TextView) findViewById(R.id.height_out);
+        TextView lengthOut = (TextView) findViewById(R.id.length_out);
         TextView shapeOut = (TextView) findViewById(R.id.shape_out);
         TextView hardLineOut = (TextView) findViewById(R.id.hard_line_out);
         TextView baseShiftOut = (TextView) findViewById(R.id.base_shift_out);
@@ -70,15 +69,16 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         boolean clipsChecked = extras.getBoolean("clipsChecked");
         //add data to the data list
         //NOTE: the list must be in the same order as the data in the Google Sheet
-        data.add(heightInput*lengthInput);
-        data.add(accessIndex);
+        data.add(heightInput);
+        data.add(lengthInput);
+        data.add(baseShiftIndex);
         data.add(maneuverIndex);
+        data.add(accessIndex);
         data.add(locationIndex);
         data.add(straightCurvedNum);
-        data.add(lineChecked);
-        data.add(baseShiftIndex);
         data.add(rootsNum);
         data.add(plantsNum);
+        data.add(lineChecked);
         data.add(glueChecked);
         data.add(clipsChecked);
         //put data into the TextViews
@@ -115,7 +115,8 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
                 roomOut.setText(getResources().getStringArray(R.array.accessibility)[3]);
                 break;
         }
-        dimensionsOut.setText(heightInput+"ft x "+lengthInput+"ft");
+        heightOut.setText(heightInput+"ft");
+        lengthOut.setText(lengthInput+"ft");
         switch (straightCurvedNum){
             case 0:
                 shapeOut.setText("Curved");
@@ -181,8 +182,7 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
 
         final Activity activity = this;
         wallRebuildingSheet = new EstimationSheet(EstimationSheet.WALL_REBUILDING_ID, this);
-        System.out.println("Estimation starting...");
-        wallRebuildingSheet.startEstimation(data, new EstimateListener() {
+        wallRebuildingSheet.startEstimation(data, new EstimationListener() {
             @Override
             public void whenFinished(boolean success, boolean accurate, Double totalHours) {
                 if(success) {

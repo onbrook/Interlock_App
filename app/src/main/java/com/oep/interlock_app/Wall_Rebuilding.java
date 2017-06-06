@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.oep.owenslaptop.interlock_app.R;
 
@@ -20,9 +22,9 @@ import static com.oep.interlock_app.ViewValidity.*;
 public class Wall_Rebuilding extends AppCompatActivity {
     // getting to the job layout Views
     private Spinner locationSpinner;
-    private Spinner accessibilitySpinner;
-    private Spinner maneuverSpinner;
-    private View[] views = new View[3];
+
+    private int accessibilityNum = 0;
+    private int maneuverNum = 0;
 
 
     @Override
@@ -32,22 +34,22 @@ public class Wall_Rebuilding extends AppCompatActivity {
         setContentView(R.layout.wall_rebuilding_tojob);
         // getting to the job layout Views
         locationSpinner = (Spinner) findViewById(R.id.location_spinner);
-        accessibilitySpinner = (Spinner) findViewById(R.id.accessibility_spinner);
-        maneuverSpinner = (Spinner) findViewById(R.id.maneuver_spinner);
-        views[0] = locationSpinner;
-        views[1] = accessibilitySpinner;
-        views[2] = maneuverSpinner;
+        SeekBar accessibilitySeekBar = (SeekBar) findViewById(R.id.accessibility_seek_bar);
+        final TextView accessibilityTextView = (TextView) findViewById(R.id.accessibility_tv);
+        SeekBar maneuverSeekBar = (SeekBar) findViewById(R.id.maneuver_seek_bar);
+        final TextView maneuverTextView = (TextView) findViewById(R.id.maneuver_tv);
+
         //setup back button in title bar
         try {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }catch (NullPointerException npex){
+        }catch (NullPointerException e){
             try {
                 getActionBar().setDisplayHomeAsUpEnabled(true);
             }catch(NullPointerException ex){
                 //back button not supported
             }
         }
-        //listeners
+        //spinner listeners
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -64,36 +66,51 @@ public class Wall_Rebuilding extends AppCompatActivity {
                     updateViewValidity(locationSpinner);
             }
         });
-        accessibilitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //Seek Bar Listeners
+        accessibilitySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
-                int index = accessibilitySpinner.getSelectedItemPosition();
-                if(index != 0)
-                    updateViewValidity(accessibilitySpinner);
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {/* do nothing*/}
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                int index = accessibilitySpinner.getSelectedItemPosition();
-                if(index != 0)
-                    updateViewValidity(accessibilitySpinner);
+            public void onStartTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // update angleTV
+                if(progress == 0){
+                    accessibilityTextView.setText("Hard to access");
+                    accessibilityNum = 0;
+                }else if(progress == 1){
+                    accessibilityTextView.setText("Average");
+                    accessibilityNum = 1;
+                }else if(progress == 2){
+                    accessibilityTextView.setText("Easy to access");
+                    accessibilityNum = 2;
+                }
             }
         });
-        maneuverSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        maneuverSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
-                int index = maneuverSpinner.getSelectedItemPosition();
-                if(index != 0)
-                    updateViewValidity(maneuverSpinner);
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {/* do nothing*/}
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                int index = maneuverSpinner.getSelectedItemPosition();
-                if(index != 0)
-                    updateViewValidity(maneuverSpinner);
+            public void onStartTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // update angleTV
+                if(progress == 0){
+                    maneuverTextView.setText("Little room");
+                    maneuverNum = 0;
+                }else if(progress == 1){
+                    maneuverTextView.setText("Some room");
+                    maneuverNum = 1;
+                }else if(progress == 2){
+                    maneuverTextView.setText("Lots of room");
+                    maneuverNum = 2;
+                }
             }
         });
     }
@@ -101,7 +118,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
 
 
     public void fabClicked(View view){
-        if(areViewsValid(views)) {
+        if(isViewValid(locationSpinner)) {
             //create a new intent (you do not get the current one because we do not need any
             // information from the home screen)
             Intent intent = new Intent(getApplicationContext(), Wall_Rebuilding2.class);
@@ -109,12 +126,12 @@ public class Wall_Rebuilding extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //extras--for passing data
             intent.putExtra("locationIndex", locationSpinner.getSelectedItemPosition());
-            intent.putExtra("accessIndex", accessibilitySpinner.getSelectedItemPosition());
-            intent.putExtra("maneuverIndex", maneuverSpinner.getSelectedItemPosition());
+            intent.putExtra("accessIndex", accessibilityNum);
+            intent.putExtra("maneuverIndex", maneuverNum);
             //start activity
             startActivity(intent);
         }else
-            updateViewValidity(views);
+            updateViewValidity(locationSpinner);
     }
 
     //called when the back button in the title bas is pressed

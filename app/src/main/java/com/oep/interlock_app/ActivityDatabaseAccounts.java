@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.api.services.drive.model.Permission;
 import com.oep.owenslaptop.interlock_app.R;
@@ -26,7 +27,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class ActivityDatabaseAccounts extends AppCompatActivity {
 
     private EstimationSheet estimationSheet;
-    private boolean finishedGettingData = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +41,15 @@ public class ActivityDatabaseAccounts extends AppCompatActivity {
         addFAB.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick (View view){
-                if(finishedGettingData)
-                    startActivity(new Intent(getApplicationContext(), AddDatabasePermissionsActivity.class));
+                startActivity(new Intent(getApplicationContext(), AddDatabasePermissionsActivity.class));
             }
         });
     }
 
     private void showEmails(){
         final Activity activity = this;
+        final TextView textView = (TextView) findViewById(R.id.no_accounts_text_view);
         final ListView accountsListView = (ListView) findViewById(R.id.accounts_list_view);
-        finishedGettingData = false;
         estimationSheet.startGettingPermissions(new GetPermissionsListener() {
             @Override
             public void whenFinished(boolean success, final List<Permission> permissions) {
@@ -58,6 +57,9 @@ public class ActivityDatabaseAccounts extends AppCompatActivity {
                     List<String> emailAddresses = new ArrayList<>();
                     for (Permission permission : permissions)
                         emailAddresses.add(permission.getEmailAddress());
+
+                    if(emailAddresses.size() == 0)
+                        textView.setVisibility(View.VISIBLE);
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, emailAddresses);
                     accountsListView.setAdapter(adapter);
@@ -92,8 +94,8 @@ public class ActivityDatabaseAccounts extends AppCompatActivity {
                             alertDialog.show();
                         }
                     });
-                }
-                finishedGettingData = true;
+                } else
+                    textView.setVisibility(View.VISIBLE);
 
             }
         });

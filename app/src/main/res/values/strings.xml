@@ -114,4 +114,10 @@
     <string name="joint_fill_title">Joint Fill Replacement</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="accessibility_title">Accessibility</string>
+    <string name="location_title">Location</string>
+    <string name="none">None</string>
+    <string name="maneuver_title">Room to maneuver</string>
+    <string name="hard_to_access">Hard to access</string>
+    <string name="little_room">Little room</string>
 </resources>

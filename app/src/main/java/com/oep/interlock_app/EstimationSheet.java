@@ -25,9 +25,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.drive.DriveScopes;
-import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
-import com.google.api.services.drive.model.User;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ClearValuesRequest;
@@ -66,6 +64,9 @@ class EstimationSheet {
     private static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     private static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
 
+    static final int REQUEST_ADD_PERMISSIONS = 0;
+    static final int REQUEST_GET_DATABASE_ID = 1;
+
     private static final int NO_PROCESS = -1;
     private static final int GET_DATA_PROCESS = 0;
     private static final int GET_ESTIMATED_TIME_PROCESS = 1;
@@ -81,7 +82,8 @@ class EstimationSheet {
     private static final int COLUMN_ESTIMATION_ID = 0;
     private static final int COLUMN_DATE = 1;
     private static final int COLUMN_ACTUAL_TIME = 2;
-    private static final int COLUMN_ARIA = 3;
+    private static final int COLUMN_ARIA1 = 3;
+    private static final int COLUMN_ARIA2 = 4;
 
     private int currentProcess = NO_PROCESS;
     private int currentHeldProcess = NO_PROCESS;
@@ -107,7 +109,7 @@ class EstimationSheet {
     private Permission currentPermission;
     private String currentDatabaseId;
     private int variableNum;
-    private int nextEstimationId = -1;
+    private int nextEstimationId = 0;
     private List<List<Object>> pastEstimationData;
 
     private static final int OK_ACTION = 0;
@@ -205,7 +207,7 @@ class EstimationSheet {
             chooseAccount();
         }
         else if (! isDeviceOnline()) {
-            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to store data.", RETRY_ACTION);
+            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to create a database.", RETRY_ACTION);
         }
         else{
             TaskCreateDatabase taskCreateDatabase = new TaskCreateDatabase(new CreateDatabaseListener() {
@@ -235,7 +237,7 @@ class EstimationSheet {
             chooseAccount();
         }
         else if (! isDeviceOnline()) {
-            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to store data.", RETRY_ACTION);
+            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to give Google accounts access to the database.", RETRY_ACTION);
         }
         else{
             TaskAddPermissions taskAddPermissions = new TaskAddPermissions(emails, new AddPermissionsListener() {
@@ -264,7 +266,7 @@ class EstimationSheet {
             chooseAccount();
         }
         else if (! isDeviceOnline()) {
-            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to store data.", RETRY_ACTION);
+            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to remove account access to the database.", RETRY_ACTION);
         }
         else{
             TaskRemovePermission taskRemovePermission = new TaskRemovePermission(permission, new RemovePermissionListener() {
@@ -292,7 +294,7 @@ class EstimationSheet {
             chooseAccount();
         }
         else if (! isDeviceOnline()) {
-            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to store data.", RETRY_ACTION);
+            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to get the accounts with permission to access the database.", RETRY_ACTION);
         }
         else{
             TaskGetPermissions taskGetPermissions = new TaskGetPermissions(new GetPermissionsListener() {
@@ -314,20 +316,20 @@ class EstimationSheet {
         currentDatabaseId = databaseId;
         if (! isGooglePlayServicesAvailable()){
             acquireGooglePlayServices();
-            listener.whenFinished(false, null);
+            listener.whenFinished(false);
         }
         else if (googleAccountCredential.getSelectedAccountName() == null) {
             chooseAccount();
         }
         else if (! isDeviceOnline()) {
-            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to store data.", RETRY_ACTION);
+            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection save the database ID.", RETRY_ACTION);
         }
         else{
             TaskCheckDatabaseIdValidity taskCheckDatabaseIdValidity = new TaskCheckDatabaseIdValidity(databaseId, new CheckDatabaseIdValidityListener() {
                 @Override
-                public void whenFinished(boolean success, Boolean validId) {
+                public void whenFinished(boolean validId) {
                     currentProcess = NO_PROCESS;
-                    listener.whenFinished(success, validId);
+                    listener.whenFinished(validId);
                 }
             });
             taskCheckDatabaseIdValidity.execute();
@@ -336,58 +338,39 @@ class EstimationSheet {
 
     /**
      *
-     * @param data the data to make estimation with
+     * @param newData the data to make estimation with (was just collected from user)
      * @param estimationListener GetDataListener for what to do when finished getting estimation
      */
-    void startEstimation(final List<Object> data, final EstimateListener estimationListener){
+    void startEstimation(final List<Object> newData, final EstimationListener estimationListener){
         if(currentProcess != NO_PROCESS && currentProcess != GET_ESTIMATED_TIME_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
         try {
             currentHeldProcess = GET_ESTIMATED_TIME_PROCESS;
             GetDataListener getDataGetDataListener = new GetDataListener() {
                 @Override
-                public void whenFinished(boolean success, List<List<Object>> output) {
+                public void whenFinished(boolean success, List<List<Object>> dataFromSheets) {
                     //finished getting data from Sheets
                     currentProcess = GET_ESTIMATED_TIME_PROCESS;
                     currentHeldProcess = NO_PROCESS;
-                    //update progressDialog message
-                    progressDialog.setMessage("Making estimation...");
-                    boolean accurate;
-                    double estimatedTime;
+                    progressDialog.dismiss();
+                    showErrorDialog("An estimation cannot be made yet because the code for it is still being worked on.", OK_ACTION);
                     if (success) {
-                        List<List<Object>> pastEstimations = (ArrayList) output;
-                        List<List<Object>> dataSets = new ArrayList<>();
-                        for(List<Object> estimation : pastEstimations){
-                            if(!estimation.get(COLUMN_ACTUAL_TIME).equals(""))//a time has been entered
-                                dataSets.add(estimation);
-                        }
-                        if(dataSets.size() < variableNum){
-                            //use only the aria to find estimated time
-                            accurate = false;
-                            double sumAlphas = 0;
-                            int numAlphas = 0;
-                            for(List<Object> dataSet : dataSets){
-                                double actualTime = Double.parseDouble((String) dataSet.get(COLUMN_ACTUAL_TIME));
-                                double aria = Double.parseDouble((String) dataSet.get(COLUMN_ARIA));
-                                sumAlphas += actualTime/aria;
-                                numAlphas ++;
+                        EstimationListener estimationListener1 = new EstimationListener() {
+                            @Override
+                            public void whenFinished(boolean success, boolean accurate, Double estimatedHours) {
+                                currentProcess = NO_PROCESS;
+                                progressDialog.dismiss();
+                                estimationListener.whenFinished(success, accurate, estimatedHours);
                             }
-                            double alpha = sumAlphas/numAlphas;//average of all alphas
-                            estimatedTime = alpha*(double)data.get(0);
-                        }else{
-                            //TODO fix startEstimation() for when estimation should be accurate
-                            //use all data
-                            accurate = true;
-                            estimatedTime = -1;
-                        }
-                        estimationListener.whenFinished(true, accurate, estimatedTime);
+                        };
+                        currentListener = estimationListener1;
+                        //new TaskGetEstimation(newData, dataFromSheets, estimationListener1).execute();
                     } else {
                         //abort startEstimation; an error has occurred
+                        progressDialog.dismiss();
                         estimationListener.whenFinished(false, false, null);
+                        currentProcess = NO_PROCESS;
                     }
-                    currentProcess = NO_PROCESS;
-                    currentHeldProcess = NO_PROCESS;
-                    progressDialog.hide();
                 }
             };
             currentListener = getDataGetDataListener;
@@ -428,7 +411,7 @@ class EstimationSheet {
             chooseAccount();
         }
         else if (! isDeviceOnline()) {
-            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to store data.", RETRY_ACTION);
+            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to save data.", RETRY_ACTION);
         }
         else{
             progressDialog.setMessage("Storing data...");
@@ -438,7 +421,7 @@ class EstimationSheet {
                 @Override
                 public void whenFinished(boolean success) {
                     currentProcess = NO_PROCESS;
-                    progressDialog.hide();
+                    progressDialog.dismiss();
                     addEstimationListener.whenFinished(success);
                 }
             });
@@ -462,7 +445,7 @@ class EstimationSheet {
             chooseAccount();
         }
         else if (! isDeviceOnline()) {
-            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to store data.", RETRY_ACTION);
+            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to remove data from the database.", RETRY_ACTION);
         }
         else{
             TaskRemoveEstimation taskRemoveEstimation = new TaskRemoveEstimation(estimationId, new RemoveEstimationListener() {
@@ -493,7 +476,7 @@ class EstimationSheet {
             chooseAccount();
         }
         else if (! isDeviceOnline()) {
-            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to store data.", RETRY_ACTION);
+            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to save the actual time a job took.", RETRY_ACTION);
         }
         else{
             TaskSetActualTime taskSetActualTime = new TaskSetActualTime(totalHours, estimationId, new SetActualTimeListener() {
@@ -515,7 +498,7 @@ class EstimationSheet {
         getData(new GetDataListener() {
             @Override
             public void whenFinished(boolean success, List<List<Object>> output) {
-                progressDialog.hide();
+                progressDialog.dismiss();
                 getDataListener.whenFinished(success, output);
             }
         });
@@ -552,6 +535,49 @@ class EstimationSheet {
             } catch (Exception e){
                 e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Collect the data sets which can be used for the estimation recursively
+     * @param newDataSet the data which was just collected from the user
+     * @param oldDataSets Data from sheets. The minimum number of rows (dataSets) possible is 2
+     * @return The usable data sets
+     */
+
+    private List<List<Object>> getUsableDataSets(List<Object> newDataSet, List<List<Object>> oldDataSets){
+
+        List<List<Object>> usableDataSets = new ArrayList<>();
+
+        for (int row = 0; row < oldDataSets.size(); row++) {
+
+            List<Object> dataSet = oldDataSets.get(row);
+            boolean dataSetValid = true;  // Flag
+
+            //Remove last item from olDataSets row for recursive call
+            oldDataSets.get(row).remove(dataSet.size()-1);
+
+            for (int itemNum = dataSet.size() - 1; itemNum > 2; itemNum--) {  // start at the end
+                // if all of the items in this row (data set) are not all equal to the items in the
+                // newDataSet (excluding the two aria variables and actual time), then...
+                if (!dataSet.get(itemNum).equals(newDataSet.get(itemNum - 1))) {
+                    // This row of data (data set) cannot be used for the estimation while using
+                    // this many variables
+                    dataSetValid = false;
+                    break;
+                }
+            }
+            // if the row (data set) is invalid then it should not be added to the usableDataSets
+            if(dataSetValid)
+                usableDataSets.add(dataSet);
+        }
+        // since there are two variables that are being used to find the estimation; length/height
+        // and width, the smallest size that the usableDataSets can be is 2
+        // if this is not met, re-run the method with the last column gone
+        if (usableDataSets.size() >= 2)
+            return usableDataSets;
+        else {
+            return getUsableDataSets(newDataSet, oldDataSets);
         }
     }
 
@@ -622,30 +648,35 @@ class EstimationSheet {
     }
 
     private void showErrorDialog(String error, int action){
-        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-        alertDialog.setTitle("Error");
-        alertDialog.setMessage(error);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Error");
+        builder.setMessage(error);
         if(action == OK_ACTION)
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+            builder.setPositiveButton("OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
                     });
         else if(action == RETRY_ACTION) {
-            alertDialog.setCanceledOnTouchOutside(false);
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "RETRY",
+            builder.setPositiveButton("RETRY",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             resumeProcess();
                         }
                     });
+            builder.setNegativeButton("CANCEL",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
         }
         else
             throw new IllegalArgumentException("'"+action+"' is an invalid action. Please use one of the given actions which are in the format <ACTION>_ACTION.");
 
-        alertDialog.show();
+        builder.create().show();
     }
 
     private void resumeProcess(){
@@ -699,10 +730,9 @@ class EstimationSheet {
             chooseAccount();
         }
         else if (! isDeviceOnline()) {
-            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to get an estimation.", RETRY_ACTION);
+            showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to get an data from the database.", RETRY_ACTION);
         }
         else{
-            progressDialog.setMessage("Collecting data for estimation...");
             TaskGetData taskGetData = new TaskGetData(new GetDataListener() {
                 @Override
                 public void whenFinished(boolean success, List<List<Object>> output) {
@@ -719,7 +749,7 @@ class EstimationSheet {
     }
 
     private int getNextEstimationId(List<List<Object>> data){
-        int maxId = -2;// will return -1 if not found
+        int maxId = -1;
         try {
             maxId = Integer.parseInt((String) data.get(data.size() - 1).get(COLUMN_ESTIMATION_ID));
         } catch (Exception e){
@@ -967,13 +997,13 @@ class EstimationSheet {
 
         @Override
         protected void onPostExecute(Void output) {
-            progressDialog.hide();
+            progressDialog.dismiss();
             createDatabaseListener.whenFinished(true);
         }
 
         @Override
         protected void onCancelled() {
-            progressDialog.hide();
+            progressDialog.dismiss();
             if (lastError != null) {
                 if (lastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -1064,7 +1094,7 @@ class EstimationSheet {
 
         @Override
         protected void onPostExecute(Void output) {
-            progressDialog.hide();
+            progressDialog.dismiss();
             listener.whenFinished(true);
         }
 
@@ -1085,7 +1115,7 @@ class EstimationSheet {
             } else {
                 System.err.println("Request to get add permissions canceled.");
             }
-            progressDialog.hide();
+            progressDialog.dismiss();
             listener.whenFinished(false);
         }
     }
@@ -1137,13 +1167,13 @@ class EstimationSheet {
 
         @Override
         protected void onPostExecute(Void output) {
-            progressDialog.hide();
+            progressDialog.dismiss();
             listener.whenFinished(true);
         }
 
         @Override
         protected void onCancelled() {
-            progressDialog.hide();
+            progressDialog.dismiss();
             if (lastError != null) {
                 if (lastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -1216,7 +1246,7 @@ class EstimationSheet {
 
         @Override
         protected void onPostExecute(List<Permission> output) {
-            progressDialog.hide();
+            progressDialog.dismiss();
             if(output == null || output.size() == 0){
                 listener.whenFinished(false, null);
             }else {
@@ -1226,7 +1256,7 @@ class EstimationSheet {
 
         @Override
         protected void onCancelled() {
-            progressDialog.hide();
+            progressDialog.dismiss();
             if (lastError != null) {
                 if (lastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -1280,7 +1310,7 @@ class EstimationSheet {
             } catch (Exception e) {
                 lastError = e;
                 cancel(true);
-                return null;
+                return false;
             }
         }
 
@@ -1288,13 +1318,12 @@ class EstimationSheet {
         private Boolean checkValidity() throws IOException{
 
             Spreadsheet spreadsheet = sheetsService.spreadsheets().get(databaseId).execute();
-            boolean valid = true;
             if(!spreadsheet.getProperties().getTitle().equals(DATABASE_TITLE))
-                valid = false;
+                return false;
 
             List<Sheet> sheets = spreadsheet.getSheets();
             if(sheets.size() != 5)
-                valid = false;
+                return false;
 
             for(Sheet sheet : sheets) {
                 String sheetTitle = sheet.getProperties().getTitle();
@@ -1303,7 +1332,7 @@ class EstimationSheet {
                         || sheetTitle.equals(STEP_REBUILDING_SHEET_NAME)
                         || sheetTitle.equals(JOINT_FILL_SHEET_NAME)
                         || sheetTitle.equals(INTERLOCK_RELAYING_SHEET_NAME)))
-                    valid = false;
+                    return false;
             }/*
             try {
                 // Try doing something to check if user has edit access
@@ -1311,22 +1340,49 @@ class EstimationSheet {
             } catch (Exception e){
                 valid = false;
             }*/
-            File file = driveService.files().get(databaseId).execute();
-            if(valid)
-                valid = file.getEditable();
-
-            String userType = USER_TYPE_EMPLOYEE;
-
-            List<User> owners = file.getOwners();
-            for(User owner : owners) {
-                if (owner.getEmailAddress().equals(googleAccountCredential.getSelectedAccount().name))
-                    userType = USER_TYPE_OWNER;
+            //driveService.files().get(databaseId).execute().getOwnedByMe();
+            try {
+                String role = driveService.permissions().get(databaseId, driveService.about().get().execute().getPermissionId()).execute().getRole();
+                switch (role) {
+                    case "owner":
+                        setUserType(USER_TYPE_OWNER);
+                        break;
+                    default:
+                        setUserType(USER_TYPE_EMPLOYEE);
+                        break;
+                }
+            } catch (IOException e){
+                setUserType(USER_TYPE_EMPLOYEE);
             }
+                //check if file is in drive
+                //driveService.files().get(databaseId).execute();
 
-            setUserType(userType);
+            //Boolean ownedByMe = driveService.files().get(databaseId).execute().getOwnedByMe();
+            //if(ownedByMe == null || !ownedByMe)
+            //    setUserType(USER_TYPE_EMPLOYEE);
+            //else
+            //    setUserType(USER_TYPE_OWNER);
+
+            //return true;
+//return driveService.files().get(databaseId).execute().getCapabilities().getCanEdit();
+            //if(valid)
+                //valid = file.getEditable();
+            return true;
+
+            //return true;
+
+            //System.out.println("Editable: "+file.getEditable());
+            //String userType = USER_TYPE_EMPLOYEE;
+
+            //List<User> owners = file.getOwners();
+            //for(User owner : owners) {
+                //if (owner.getEmailAddress().equals(googleAccountCredential.getSelectedAccount().name))
+                    //userType = USER_TYPE_OWNER;
+            //}
+
+            //setUserType(userType);
 
             // If it gets here without throwing an exception, the ID is good
-            return valid;
 /*
             File file = driveService.files().get(databaseId).execute().getHasAugmentedPermissions();
             Boolean ownedByMe = file.getOwnedByMe();
@@ -1353,13 +1409,13 @@ class EstimationSheet {
 
         @Override
         protected void onPostExecute(Boolean output) {
-            progressDialog.hide();
-            listener.whenFinished(true, output);
+            progressDialog.dismiss();
+            listener.whenFinished(output);
         }
 
         @Override
         protected void onCancelled() {
-            progressDialog.hide();
+            progressDialog.dismiss();
             if (lastError != null) {
                 if (lastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -1375,7 +1431,162 @@ class EstimationSheet {
             } else {
                 System.err.println("Request to get permissions canceled.");
             }
-            listener.whenFinished(false, null);
+            listener.whenFinished(false);
+        }
+    }
+
+
+    private class TaskGetEstimation extends AsyncTask<Void, Void, Double> {
+
+        private Exception lastError = null;
+        private EstimationListener estimationListener = null;
+        private boolean accurate = true;
+        private List<List<Object>> dataFromSheets;
+        private List<Object> newData;
+
+        TaskGetEstimation(List<Object> newData, List<List<Object>> dataFromSheets, EstimationListener estimationListener) {
+            this.estimationListener = estimationListener;
+            this.dataFromSheets = dataFromSheets;
+            this.newData = newData;
+        }
+
+        /**
+         * Background task to call Google Sheets API.
+         * @param params no parameters needed for this task.
+         */
+        @Override
+        protected Double doInBackground(Void... params) {
+            try {
+                // create new column names since columns are removed (date and estimation ID)
+                final int COLUMN_NEW_ACTUAL_TIME = COLUMN_ACTUAL_TIME - 2;
+                final int COLUMN_NEW_ARIA1 = COLUMN_ARIA1 - 2;
+                final int COLUMN_NEW_ARIA2 = COLUMN_ARIA2 - 2;
+
+                List<List<Object>> dataSets = new ArrayList<>();
+                for(List<Object> dataSet : dataFromSheets){
+                    int type;
+
+                    // only get the data sets with a time entered
+                    if(dataSet.get(COLUMN_ACTUAL_TIME).equals(""))
+                        continue;
+
+                    // Remove un-needed columns
+                    dataSet.remove(COLUMN_DATE);
+                    dataSet.remove(COLUMN_ESTIMATION_ID);
+
+                    // Change each value to an int if it is a number or a boolean if it is that
+                    dataSet.set(COLUMN_NEW_ACTUAL_TIME, Double.parseDouble((String) dataSet.get(COLUMN_NEW_ACTUAL_TIME)));
+                    dataSet.set(COLUMN_NEW_ARIA1, Double.parseDouble((String) dataSet.get(COLUMN_NEW_ARIA1)));
+                    dataSet.set(COLUMN_NEW_ARIA2, Double.parseDouble((String) dataSet.get(COLUMN_NEW_ARIA2)));
+                    for(int i = COLUMN_NEW_ARIA2 + 1; i < dataSet.size() - 1; i++){
+                        try {
+                            boolean value = toBoolean((String) dataSet.get(i));
+                            dataSet.set(i, value);
+                        } catch (Exception e) {
+                            try {
+                                int value = Integer.parseInt((String)dataSet.get(i));
+                                dataSet.set(i, value);
+                            } catch (Exception ignored){}
+                        }
+                    }
+
+                    dataSets.add(dataSet);
+                }
+
+                // Return if there is not enough data
+                if(dataSets.size() < 2)
+                    estimationListener.whenFinished(false, false, null);
+
+                // get the past estimations that can actually be used
+                List<List<Object>> usableDataSets = getUsableDataSets(newData, dataSets);
+
+                if(usableDataSets.get(0).size() < 5)
+                    accurate = false;
+
+                // Use data to make estimation
+                // Take two sets of data at a time to find the two variables; x (which stands for
+                // height for instance), and y (length). Then take the averages for each of those
+                // variables
+                double XTotal = 0;
+                int XNum = 0;
+                double YTotal = 0;
+                int YNum = 0;
+                for(int location1 = 0; location1 <= usableDataSets.size() - 2; location1++)
+                    for(int location2 = location1 + 1; location2 <= usableDataSets.size() - 1; location2++){
+                        List<Object> dataSet1 = usableDataSets.get(location1);
+                        List<Object> dataSet2 = usableDataSets.get(location2);
+                        // "Eq" stands for equation which in this case is the same as each set of
+                        // data or each past estimation.
+                        // each x or y here (like in "xEq1") stands for the coefficient. Do not get
+                        // this confused with the variables x and y which are being found.
+                        double actualTimeEq1 = (double) dataSet1.get(COLUMN_NEW_ACTUAL_TIME);
+                        double actualTimeEq2 = (double) dataSet2.get(COLUMN_NEW_ACTUAL_TIME);
+                        double xEq1 = (double) dataSet1.get(COLUMN_NEW_ARIA1);
+                        double yEq1 = (double) dataSet1.get(COLUMN_NEW_ARIA2);
+                        double xEq2 = (double) dataSet2.get(COLUMN_NEW_ARIA1);
+                        double yEq2 = (double) dataSet2.get(COLUMN_NEW_ARIA2);
+                        // Here's the fun part; finding X and Y
+                        // If you where to have two equations
+                        // t1 = x1X + y1Y
+                        // t2 = x2X + y2Y
+                        // where t1, x1, y1 etc. are all variables; the actual time, the length
+                        // dimension for instance that was entered, and the height dimension
+                        // respectively. X and Y are then the variables that are being found
+                        // When you boil down the equation, you get this:
+                        double X = (actualTimeEq1*xEq2 - actualTimeEq2 * xEq1)/
+                                (yEq1 * xEq2 - yEq2 * xEq1);
+                        double Y = (actualTimeEq1 - xEq1 * X)/yEq1;
+                        XTotal += X;
+                        XNum ++;
+                        YTotal += Y;
+                        YNum ++;
+                    }
+                // Get the averages for both variables
+                double XAverage = XTotal/XNum;
+                double YAverage = YTotal/YNum;
+                // multiply the variables by their coefficients and add the products of that
+                return ((double) newData.get(0)) * XAverage + ((double) newData.get(1)) * YAverage;
+            } catch (Exception e) {
+                lastError = e;
+                cancel(true);
+                return null;
+            }
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage("Making Estimation...");
+            // progress dialog is still being shown from TaskGetData
+            //progressDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Double output) {
+
+            //progressDialog.dismiss();
+            estimationListener.whenFinished(true, accurate, output);
+        }
+
+        @Override
+        protected void onCancelled() {
+            //progressDialog.dismiss();
+            if (lastError != null) {
+                if (lastError instanceof GooglePlayServicesAvailabilityIOException) {
+                    showGooglePlayServicesAvailabilityErrorDialog(
+                            ((GooglePlayServicesAvailabilityIOException) lastError)
+                                    .getConnectionStatusCode());
+                } else if (lastError instanceof UserRecoverableAuthIOException) {
+                    activity.startActivityForResult(
+                            ((UserRecoverableAuthIOException) lastError).getIntent(),
+                            REQUEST_AUTHORIZATION);
+                } else {
+                    lastError.printStackTrace();
+                }
+            } else {
+                System.err.println("Request to make estimation was canceled.");
+            }
+            estimationListener.whenFinished(false, false, null);
         }
     }
 
@@ -1433,8 +1644,9 @@ class EstimationSheet {
 
         @Override
         protected void onPostExecute(List<List<Object>> output) {
+            //progressDialog.dismiss();
             if (output == null || output.size() < 1) {
-                if(currentProcess == GET_DATA_PROCESS)
+                if(currentProcess == GET_DATA_PROCESS && currentHeldProcess != GET_ESTIMATED_TIME_PROCESS)
                     showErrorDialog("There is no data from this job yet.", OK_ACTION);
                 else if(currentHeldProcess == GET_ESTIMATED_TIME_PROCESS)
                     showErrorDialog("There is no data from this job yet. The estimation cannot be made.", OK_ACTION);
@@ -1448,6 +1660,7 @@ class EstimationSheet {
 
         @Override
         protected void onCancelled() {
+            //progressDialog.dismiss();
             if (lastError != null) {
                 if (lastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -1525,13 +1738,13 @@ class EstimationSheet {
 
         @Override
         protected void onPostExecute(Void param) {
-            progressDialog.hide();
+            progressDialog.dismiss();
             addEstimationListener.whenFinished(true);
         }
 
         @Override
         protected void onCancelled() {
-            progressDialog.hide();
+            progressDialog.dismiss();
             if (lastError != null) {
                 if (lastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -1607,13 +1820,13 @@ class EstimationSheet {
 
         @Override
         protected void onPostExecute(Void param) {
-            progressDialog.hide();
+            progressDialog.dismiss();
             listener.whenFinished(true);
         }
 
         @Override
         protected void onCancelled() {
-            progressDialog.hide();
+            progressDialog.dismiss();
             if (lastError != null) {
                 if (lastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -1698,13 +1911,13 @@ class EstimationSheet {
 
         @Override
         protected void onPostExecute(Void param) {
-            progressDialog.hide();
+            progressDialog.dismiss();
             setActualTimeListener.whenFinished(true);
         }
 
         @Override
         protected void onCancelled() {
-            progressDialog.hide();
+            progressDialog.dismiss();
             if (lastError != null) {
                 if (lastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -1760,9 +1973,8 @@ interface GetPermissionsListener extends Listener {
 interface CheckDatabaseIdValidityListener extends Listener {
     /**
      * Called when the currently running process if finished.
-     * @param success whether the process was successful or not.
      */
-    void whenFinished(boolean success, Boolean validId);
+    void whenFinished(boolean validId);
 }
 
 interface GetDataListener extends Listener {
@@ -1774,7 +1986,7 @@ interface GetDataListener extends Listener {
     void whenFinished(boolean success, List<List<Object>> output);
 }
 
-interface EstimateListener extends Listener {
+interface EstimationListener extends Listener {
     /**
      * Called when the currently running process if finished.
      * @param success whether the process was successful or not.
