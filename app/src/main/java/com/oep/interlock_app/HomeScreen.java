@@ -136,23 +136,13 @@ public class HomeScreen extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activity_bar, menu);
-        return true;
-    }
 
     //called when the back button in the title bas is pressed
     public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == R.id.drawer)
-            if(mDrawerLayout.isDrawerOpen(Gravity.RIGHT))
-                mDrawerLayout.closeDrawer(Gravity.RIGHT);
-            else
-                mDrawerLayout.openDrawer(Gravity.RIGHT);
-
-        else // back button
-            onBackPressed();
+        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT))
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
+        else
+            mDrawerLayout.openDrawer(Gravity.LEFT);
         return true;
     }
 
@@ -186,5 +176,6 @@ public class HomeScreen extends AppCompatActivity {
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
+        mDrawerToggle.syncState();
     }
 }
