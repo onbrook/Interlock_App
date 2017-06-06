@@ -37,6 +37,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:layout_below="@+id/headlineTextView"
             android:id="@+id/scroll_view">
             <LinearLayout
@@ -47,20 +48,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Amount that the base has shifted"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginStart="32dp"
                     android:id="@+id/baseShift_tv"/>
 
-                <Spinner
-                    android:id="@+id/baseShift_spinner"
+                <SeekBar
+                    android:id="@+id/base_shift_seek_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginStart="32dp"
-                    android:entries="@array/base_shift"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
                     android:layout_marginTop="10dp"
-                    style="@style/no_outline_spinner" />
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:max="3"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginStart="64dp"
+                    android:id="@+id/base_shift_text_view"
+                    android:text="@string/none"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -76,7 +84,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:max="3"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,7 +94,7 @@
                     android:layout_marginLeft="64dp"
                     android:layout_marginStart="64dp"
                     android:id="@+id/roots_tv"
-                    android:text="None"/>
+                    android:text="@string/none"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -100,7 +110,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="10dp" />
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_marginTop="10dp"
+                    android:max="3"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -108,7 +120,7 @@
                     android:layout_marginLeft="64dp"
                     android:layout_marginStart="64dp"
                     android:id="@+id/plants_tv"
-                    android:text="None"/>
+                    android:text="@string/none"/>
 
                 <TextView
                     android:layout_width="wrap_content"

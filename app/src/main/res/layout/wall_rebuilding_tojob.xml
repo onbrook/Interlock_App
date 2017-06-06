@@ -35,63 +35,88 @@
             android:drawablePadding="20dp"
             android:id="@+id/headlineTextView"
             android:layout_marginRight="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Location"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="32dp"
             android:layout_below="@+id/headlineTextView"
-            android:id="@+id/location_tv"/>
+            android:id="@+id/scroll_view"
+            android:layout_margin="20dp">
 
-        <Spinner
-            android:id="@+id/location_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:entries="@array/location"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/location_tv"
-            style="@style/no_outline_spinner"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Accessibility"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="32dp"
-            android:layout_below="@+id/location_spinner"
-            android:id="@+id/accessibility_tv"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location_title"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp" />
 
-        <Spinner
-            android:id="@+id/accessibility_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:entries="@array/accessibility"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/accessibility_tv"
-            style="@style/no_outline_spinner"/>
+                <Spinner
+                    android:id="@+id/location_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"
+                    android:entries="@array/location"
+                    android:layout_marginTop="10dp"
+                    style="@style/no_outline_spinner"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Room to maneuver"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="32dp"
-            android:layout_below="@+id/accessibility_spinner"
-            android:id="@+id/maneuver_tv"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accessibility_title"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"/>
 
-        <Spinner
-            android:id="@+id/maneuver_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:entries="@array/maneuver"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/maneuver_tv"
-            style="@style/no_outline_spinner"/>
+                <SeekBar
+                    android:id="@+id/accessibility_seek_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:max="2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginStart="64dp"
+                    android:id="@+id/accessibility_tv"
+                    android:text="@string/hard_to_access"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/maneuver_title"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"/>
+
+                <SeekBar
+                    android:id="@+id/maneuver_seek_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:max="2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginStart="64dp"
+                    android:id="@+id/maneuver_tv"
+                    android:text="@string/little_room"/>
+            </LinearLayout>
+        </ScrollView>
 
 
         <android.support.design.widget.FloatingActionButton
