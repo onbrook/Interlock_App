@@ -34,31 +34,36 @@ public class HomeScreen extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
     private boolean isUserOwner = false;
+    private Bundle savedInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
+        // See javadoc comment for why this is in a separate method
+        setupHome();
+    }
 
+    /**
+     * This method is separate from onCreate so that it can be called multiple times; once when the
+     * activity is stared, and, since the app checks if there is a database when this activity is
+     * started and starts the EnterDatabaseId activity if it is not, this needs to be re-run once a
+     * new database is entered/created.
+     */
+    private void setupHome(){
         //check if the user is new and if so, go to correct activity
         final EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
         if(!estimationSheet.doesUserHaveRole()) {
-            startActivity(new Intent(getApplicationContext(), SetUserTypeActivity.class));
-            // Update isUserOwner since the user may have changed databases
-            isUserOwner = estimationSheet.isUserOwner();
+            startActivityForResult(new Intent(getApplicationContext(), SetUserTypeActivity.class), EstimationSheet.REQUEST_GET_DATABASE_ID);
         } else if (!estimationSheet.isDatabaseIdSaved()) {
             isUserOwner = estimationSheet.isUserOwner();
             if (isUserOwner) {
                 estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
                     @Override
-                    public void whenFinished(boolean success) {
-                        // Update isUserOwner since the user may have changed databases
-                        isUserOwner = estimationSheet.isUserOwner();
-                    }
+                    public void whenFinished(boolean success) {/* do nothing*/}
                 });
             } else {
-                startActivity(new Intent(getApplicationContext(), EnterDatabaseIdActivity.class));
-                // Update isUserOwner since the user may have changed databases
-                isUserOwner = estimationSheet.isUserOwner();
+                startActivityForResult(new Intent(getApplicationContext(), EnterDatabaseIdActivity.class), EstimationSheet.REQUEST_GET_DATABASE_ID);
             }
         }else
             isUserOwner = estimationSheet.isUserOwner();
@@ -109,13 +114,21 @@ public class HomeScreen extends AppCompatActivity {
                     startActivity(new Intent(HomeScreen.this, DatabaseManagement.class));
                 }
                 else if(position==5){
-                    startActivity(new Intent(HomeScreen.this, EnterDatabaseIdActivity.class));
+                    startActivityForResult(new Intent(HomeScreen.this, EnterDatabaseIdActivity.class), EstimationSheet.REQUEST_GET_DATABASE_ID);
                 }
                 else if(position==6){//this will only be true if the user is owner
                     startActivity(new Intent(HomeScreen.this, ActivityDatabaseAccounts.class));
                 }
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == EstimationSheet.REQUEST_GET_DATABASE_ID)
+            // re-call this to make sure that, if a new database was entered, the
+            // "database permissions" is there if it should be or is not if it should not.
+            setupHome();
     }
 
     //called when the back button in the title bas is pressed
@@ -130,8 +143,7 @@ public class HomeScreen extends AppCompatActivity {
 
     private void addDrawerItems(){
         // Only have the "Database Permissions" if the user owns the database
-        EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
-        if(estimationSheet.isUserOwner()) {
+        if(isUserOwner) {
             String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         } else {
