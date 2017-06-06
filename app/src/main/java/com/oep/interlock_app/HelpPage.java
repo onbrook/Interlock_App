@@ -51,7 +51,7 @@ public class HelpPage extends AppCompatActivity {
                 }
                 else if(position==2){
                     Toast.makeText(HelpPage.this, "Database Entry", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(HelpPage.this, DatabaseEntry.class));
+                    startActivity(new Intent(HelpPage.this, DatabaseManagement.class));
                 }
                 else if(position==3){
                     Toast.makeText(HelpPage.this, "Database Removal", Toast.LENGTH_SHORT).show();

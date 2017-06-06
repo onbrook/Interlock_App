@@ -96,8 +96,7 @@
         <activity
             android:name="com.oep.interlock_app.HelpPage"
             android:label="Help Page" />
-        <activity android:name="com.oep.interlock_app.DatabaseEntry" />
-        <activity android:name="com.oep.interlock_app.DatabaseRemoval" />
+        <activity android:name="com.oep.interlock_app.DatabaseManagement" />
         <activity android:name="com.oep.interlock_app.ActivityDatabaseAccounts"></activity>
     </application>
 

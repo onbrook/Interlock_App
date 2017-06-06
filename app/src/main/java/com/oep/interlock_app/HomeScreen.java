@@ -1,14 +1,11 @@
 package com.oep.interlock_app;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,10 +15,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.oep.owenslaptop.interlock_app.R;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -112,7 +105,7 @@ public class HomeScreen extends AppCompatActivity {
                 }
                 else if(position==4){
                     Toast.makeText(HomeScreen.this, "Database Time Entry", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(HomeScreen.this, DatabaseEntry.class));
+                    startActivity(new Intent(HomeScreen.this, DatabaseManagement.class));
                 }
                 else if(position==5){
                     Toast.makeText(HomeScreen.this, "Database Removal", Toast.LENGTH_SHORT).show();

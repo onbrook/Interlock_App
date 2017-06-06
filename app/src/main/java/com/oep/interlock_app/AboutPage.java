@@ -51,7 +51,7 @@ public class AboutPage extends AppCompatActivity {
                 }
                 else if(position==2){
                     Toast.makeText(AboutPage.this, "Database Entry", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AboutPage.this, DatabaseEntry.class));
+                    startActivity(new Intent(AboutPage.this, DatabaseManagement.class));
                 }
                 else if(position==3){
                     Toast.makeText(AboutPage.this, "Database Removal", Toast.LENGTH_SHORT).show();

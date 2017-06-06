@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- The first child in the layout is for the main Activity UI-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffffff"
+        android:paddingBottom="@dimen/fab_margin"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin"
+        android:paddingTop="@dimen/fab_margin"
+        tools:context=".MainActivity">
+
+        <ListView
+            android:id="@+id/estDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@+id/estTxt"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/estSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/estDisplay"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="search by id (eg. 111)"
+            android:inputType="number"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/idSearchBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/estSearch"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="11dp"
+            android:text="Search for ID" />
+
+        <TextView
+            android:id="@+id/estTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Tap an estimate to modify"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <!-- Side navigation drawer UI -->
+
+</android.support.v4.widget.DrawerLayout>

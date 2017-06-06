@@ -1,6 +1,5 @@
 package com.oep.interlock_app;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -98,7 +96,7 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                     }
                     else if(position==2){
                         Toast.makeText(EnterDatabaseIdActivity.this, "Database Entry", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(EnterDatabaseIdActivity.this, DatabaseEntry.class));
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, DatabaseManagement.class));
                     }
                     else if(position==3){
                         Toast.makeText(EnterDatabaseIdActivity.this, "Database Removal", Toast.LENGTH_SHORT).show();

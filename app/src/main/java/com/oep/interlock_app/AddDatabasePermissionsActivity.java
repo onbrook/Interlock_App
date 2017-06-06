@@ -164,7 +164,7 @@ public class AddDatabasePermissionsActivity extends AppCompatActivity {
                 }
                 else if(position==2){
                     Toast.makeText(AddDatabasePermissionsActivity.this, "Database Entry", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AddDatabasePermissionsActivity.this, DatabaseEntry.class));
+                    startActivity(new Intent(AddDatabasePermissionsActivity.this, DatabaseManagement.class));
                 }
                 else if(position==3){
                     Toast.makeText(AddDatabasePermissionsActivity.this, "Database Removal", Toast.LENGTH_SHORT).show();
