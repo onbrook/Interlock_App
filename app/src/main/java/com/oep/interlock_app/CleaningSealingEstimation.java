@@ -56,60 +56,33 @@ public class CleaningSealingEstimation extends AppCompatActivity {
         double heightDouble = extras.getDouble("height_double");
         double lengthDouble = extras.getDouble("length_double");
         dimensionsOut.setText(heightDouble+"ft x "+lengthDouble+"ft");
-        double angleDouble = extras.getDouble("angle_double");
-        if(angleDouble==0 || angleDouble==180)
-            angleOut.setText("Horizontal");
-        else if(angleDouble==90)
-            angleOut.setText("Vertical");
+        int angleId = extras.getInt("angle_id");
+        if(angleId==R.id.angle_horizontal_radio_button)
+            angleOut.setText(getString(R.string.horizontal));
+        else if(angleId == R.id.angle_vertical_radio_button)
+            angleOut.setText(getString(R.string.vertical));
         else
-            angleOut.setText(angleDouble+"°");
+            System.err.println("invalid angle id. the angle id is "+angleId);
         boolean stainChecked = extras.getBoolean("stain_checked");
         if(stainChecked) {
             stainOut.setText("Yes");
             String stainTypeStr = extras.getString("stain_type_str");
             stainTypeOut.setText(stainTypeStr);
-            int stainPercent = extras.getInt("stain_percent");
-            stainPercentOut.setText(stainPercent+"%");
+            int stainAmount = extras.getInt("stain_amount");
+            stainPercentOut.setText(getResources().getStringArray(R.array.amount_increasing)[stainAmount]);
         }else {// stain not checked
             stainOut.setText("No");
             stainTypeOut.setText("--");
             stainPercentOut.setText("--");
         }
-        int ageNum = extras.getInt("age_num");
-        switch(ageNum){
-            case 0:
-                ageOut.setText("Less than 6 months");
-                break;
-            case 1:
-                ageOut.setText("6 months");
-                break;
-            case 2:
-                ageOut.setText("1 year");
-                break;
-            case 3:
-                ageOut.setText("1.5 years");
-                break;
-            case 4:
-                ageOut.setText("2 years");
-                break;
-            case 5:
-                ageOut.setText("more than 2 years");
+        boolean old = extras.getBoolean("old");
+        if(old) {
+            ageOut.setText("Yes");
+        }else {
+            ageOut.setText("No");
         }
         int otherCompNum = extras.getInt("other_comp_num");
-        switch(otherCompNum){
-            case 0:
-                otherCompOut.setText("None");
-                break;
-            case 1:
-                otherCompOut.setText("Some");
-                break;
-            case 2:
-                otherCompOut.setText("Moderate");
-                break;
-            case 3:
-                otherCompOut.setText("Lots more");
-                break;
-        }
+        otherCompOut.setText(getResources().getStringArray(R.array.amount_increasing)[otherCompNum]);
         finalOut.setText("Final Estimate: 0 hours and 0 minuets");
 
         //code to use the drawer

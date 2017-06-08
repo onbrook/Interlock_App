@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.oep.owenslaptop.interlock_app.R;
@@ -29,9 +28,9 @@ public class Wall_Rebuilding3 extends AppCompatActivity {
 
     CheckBox glueCheckBox;
     CheckBox clipsCheckBox;
-    int baseShiftNum = 0;
-    int rootsNum = 0;
-    int plantsNum = 0;
+    SeekBar baseShiftSeekBar;
+    SeekBar rootsSeekBar;
+    SeekBar plantsSeekBar;
 
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
@@ -54,11 +53,11 @@ public class Wall_Rebuilding3 extends AppCompatActivity {
             }
         }
         //views
-        SeekBar baseShiftSeekBar = (SeekBar) findViewById(R.id.base_shift_seek_bar);
+        baseShiftSeekBar = (SeekBar) findViewById(R.id.base_shift_seek_bar);
         final TextView baseShiftTextView = (TextView) findViewById(R.id.base_shift_text_view);
-        SeekBar rootsSeekBar = (SeekBar) findViewById(R.id.roots_seek_bar);
+        rootsSeekBar = (SeekBar) findViewById(R.id.roots_seek_bar);
         final TextView rootsTV = (TextView) findViewById(R.id.roots_tv);
-        SeekBar plantsSeekBar = (SeekBar) findViewById(R.id.plants_seek_bar);
+        plantsSeekBar = (SeekBar) findViewById(R.id.plants_seek_bar);
         final TextView plantsTV = (TextView) findViewById(R.id.plants_tv);
         glueCheckBox = (CheckBox) findViewById(R.id.glue_CheckBox);
         clipsCheckBox = (CheckBox) findViewById(R.id.clips_CheckBox);
@@ -75,19 +74,7 @@ public class Wall_Rebuilding3 extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // update angleTV
-                if(progress == 0){
-                    baseShiftTextView.setText("None");
-                    baseShiftNum = 0;
-                }else if(progress == 1){
-                    baseShiftTextView.setText("Little");
-                    baseShiftNum = 1;
-                }else if(progress == 2){
-                    baseShiftTextView.setText("A moderate amount");
-                    baseShiftNum = 2;
-                }else{
-                    baseShiftTextView.setText("Lots");
-                    baseShiftNum = 3;
-                }
+                baseShiftTextView.setText(getResources().getStringArray(R.array.amount_increasing)[progress]);
             }
         });
         rootsSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -100,20 +87,8 @@ public class Wall_Rebuilding3 extends AppCompatActivity {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // update angleTV
-                if(progress == 0){
-                    rootsTV.setText("None");
-                    rootsNum = 0;
-                }else if(progress == 1){
-                    rootsTV.setText("Little");
-                    rootsNum = 1;
-                }else if(progress == 2){
-                    rootsTV.setText("A moderate amount");
-                    rootsNum = 2;
-                }else{
-                    rootsTV.setText("Lots");
-                    rootsNum = 3;
-                }
+                // update rootsTV
+                rootsTV.setText(getResources().getStringArray(R.array.amount_increasing)[progress]);
             }
         });
         plantsSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -126,20 +101,8 @@ public class Wall_Rebuilding3 extends AppCompatActivity {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // update angleTV
-                if(progress == 0){
-                    plantsTV.setText("None");
-                    plantsNum = 0;
-                }else if(progress == 1){
-                    plantsTV.setText("Little");
-                    plantsNum = 1;
-                }else if(progress == 2){
-                    plantsTV.setText("A moderate amount");
-                    plantsNum = 2;
-                }else{
-                    plantsTV.setText("Lots");
-                    plantsNum = 3;
-                }
+                // update plantsTV
+                plantsTV.setText(getResources().getStringArray(R.array.amount_increasing)[progress]);
             }
         });
 
@@ -190,9 +153,9 @@ public class Wall_Rebuilding3 extends AppCompatActivity {
         //update class
         intent.setClass(getApplicationContext(), Wall_Rebuilding_Estimation.class);
         //extras--for passing data
-        intent.putExtra("baseShiftIndex", baseShiftNum);
-        intent.putExtra("rootsNum", rootsNum);
-        intent.putExtra("plantsNum", plantsNum);
+        intent.putExtra("baseShiftIndex", baseShiftSeekBar.getProgress());
+        intent.putExtra("rootsNum", rootsSeekBar.getProgress());
+        intent.putExtra("plantsNum", plantsSeekBar.getProgress());
         intent.putExtra("glueChecked", glueCheckBox.isChecked());
         intent.putExtra("clipsChecked", clipsCheckBox.isChecked());
         startActivity(intent);

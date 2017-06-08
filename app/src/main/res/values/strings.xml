@@ -8,18 +8,16 @@
     <string name="to_job_title">Getting to the job</string>
     <array name="location">
         <item>Choose one</item>
-        <item>Frontyard</item>
-        <item>Sideyard</item>
-        <item>backyard</item>
+        <item>Front yard</item>
+        <item>Side yard</item>
+        <item>back yard</item>
     </array>
     <array name="accessibility">
-        <item>Choose one</item>
         <item>Hard to access</item>
         <item>Average</item>
         <item>Easy to access</item>
     </array>
     <array name="maneuver">
-        <item>Choose one</item>
         <item>Little room</item>
         <item>Some room</item>
         <item>Lots of room</item>
@@ -29,12 +27,11 @@
         <item>Curved</item>
         <item>Straight</item>
     </array>
-    <array name="base_shift">
-        <item>Choose one</item>
-        <item>A lot</item>
-        <item>A moderate amount</item>
-        <item>Little</item>
+    <array name="amount_increasing">
         <item>None</item>
+        <item>Little</item>
+        <item>A moderate amount</item>
+        <item>Lots</item>
     </array>
     <array name="stain_type">
         <item>Stain Type</item>
@@ -120,4 +117,8 @@
     <string name="maneuver_title">Room to maneuver</string>
     <string name="hard_to_access">Hard to access</string>
     <string name="little_room">Little room</string>
+    <string name="straight">Straight</string>
+    <string name="curved">Curved</string>
+    <string name="horizontal">Horizontal</string>
+    <string name="vertical">Vertical</string>
 </resources>

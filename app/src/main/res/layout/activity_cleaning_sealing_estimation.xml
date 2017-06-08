@@ -79,7 +79,7 @@
                     android:id="@+id/stain_percent_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Percent covered:"
+                    android:text="Amount covered:"
                     android:layout_marginTop="15dp"
                     android:layout_below="@+id/stain_type_title"
                     android:layout_marginLeft="15dp"
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/stain_percent_title"
                     android:layout_marginTop="15dp"
-                    android:text="Age of job:" />
+                    android:text="Job older than 2 years:" />
 
                 <TextView
                     android:id="@+id/comp_title"

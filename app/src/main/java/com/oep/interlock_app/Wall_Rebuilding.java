@@ -28,14 +28,13 @@ public class Wall_Rebuilding extends AppCompatActivity {
     // getting to the job layout Views
     private Spinner locationSpinner;
 
-    private int accessibilityNum = 0;
-    private int maneuverNum = 0;
-
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+    SeekBar accessibilitySeekBar;
+    SeekBar maneuverSeekBar;
 
 
     @Override
@@ -45,9 +44,9 @@ public class Wall_Rebuilding extends AppCompatActivity {
         setContentView(R.layout.wall_rebuilding_tojob);
         // getting to the job layout Views
         locationSpinner = (Spinner) findViewById(R.id.location_spinner);
-        SeekBar accessibilitySeekBar = (SeekBar) findViewById(R.id.accessibility_seek_bar);
+        accessibilitySeekBar = (SeekBar) findViewById(R.id.accessibility_seek_bar);
         final TextView accessibilityTextView = (TextView) findViewById(R.id.accessibility_tv);
-        SeekBar maneuverSeekBar = (SeekBar) findViewById(R.id.maneuver_seek_bar);
+        maneuverSeekBar = (SeekBar) findViewById(R.id.maneuver_seek_bar);
         final TextView maneuverTextView = (TextView) findViewById(R.id.maneuver_tv);
 
         //setup back button in title bar
@@ -89,16 +88,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // update angleTV
-                if(progress == 0){
-                    accessibilityTextView.setText("Hard to access");
-                    accessibilityNum = 0;
-                }else if(progress == 1){
-                    accessibilityTextView.setText("Average");
-                    accessibilityNum = 1;
-                }else if(progress == 2){
-                    accessibilityTextView.setText("Easy to access");
-                    accessibilityNum = 2;
-                }
+                accessibilityTextView.setText(getResources().getStringArray(R.array.accessibility)[progress]);
             }
         });
         maneuverSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -112,16 +102,7 @@ public class Wall_Rebuilding extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // update angleTV
-                if(progress == 0){
-                    maneuverTextView.setText("Little room");
-                    maneuverNum = 0;
-                }else if(progress == 1){
-                    maneuverTextView.setText("Some room");
-                    maneuverNum = 1;
-                }else if(progress == 2){
-                    maneuverTextView.setText("Lots of room");
-                    maneuverNum = 2;
-                }
+                maneuverTextView.setText(getResources().getStringArray(R.array.maneuver)[progress]);
             }
         });
 
@@ -175,8 +156,8 @@ public class Wall_Rebuilding extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //extras--for passing data
             intent.putExtra("locationIndex", locationSpinner.getSelectedItemPosition());
-            intent.putExtra("accessIndex", accessibilityNum);
-            intent.putExtra("maneuverIndex", maneuverNum);
+            intent.putExtra("accessIndex", accessibilitySeekBar.getProgress());
+            intent.putExtra("maneuverIndex", maneuverSeekBar.getProgress());
             //start activity
             startActivity(intent);
         }else

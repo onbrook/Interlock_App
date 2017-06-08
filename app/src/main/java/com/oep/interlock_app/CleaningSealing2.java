@@ -32,15 +32,13 @@ public class CleaningSealing2 extends AppCompatActivity {
     private CheckBox stainCheckBox;
     private Spinner stainTypeSpinner;
     private SeekBar stainAmountSeekBar;
-    private SeekBar ageSeekBar;
     private SeekBar otherCompSeekBar;
-    private int otherCompNum = 0;
-    private int ageNum = 0;
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+    private CheckBox oldCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +58,10 @@ public class CleaningSealing2 extends AppCompatActivity {
         stainCheckBox = (CheckBox) findViewById(R.id.stain_checkBox);
         stainTypeSpinner = (Spinner) findViewById(R.id.stain_spinner);
         stainAmountSeekBar = (SeekBar) findViewById(R.id.percent_stain_seekBar);
-        ageSeekBar = (SeekBar) findViewById(R.id.age_seekBar);
         otherCompSeekBar = (SeekBar) findViewById(R.id.other_comp_seekBar);
+        oldCheckBox = (CheckBox) findViewById(R.id.old_check_box);
         final TextView percentStainTitleTextView = (TextView) findViewById(R.id.stains_percent_headline_tv);
         final TextView percentStainTextView = (TextView) findViewById(R.id.percent_stain_tv);
-        final TextView ageTextView = (TextView) findViewById(R.id.age_tv);
         final TextView otherCompTextView = (TextView) findViewById(R.id.other_comp_tv);
         //disable unused views (for stains)
         stainTypeSpinner.setEnabled(false);
@@ -95,46 +92,7 @@ public class CleaningSealing2 extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // update percentStainTextView
-                String percent = progress+"%";
-                percentStainTextView.setText(percent);
-            }
-        });
-        ageSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {/* do nothing*/}
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {/* do nothing*/}
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // update angleTV
-                if(progress<=17){
-                    seekBar.setProgress(0);
-                    ageTextView.setText("Less than six months old");
-                    ageNum = 0;
-                }else if(progress<=33){
-                    seekBar.setProgress(20);
-                    ageTextView.setText("Six months old");
-                    ageNum = 1;
-                }else if(progress<=50){
-                    seekBar.setProgress(40);
-                    ageTextView.setText("One year old");
-                    ageNum = 2;
-                }else if(progress<=67){
-                    seekBar.setProgress(60);
-                    ageTextView.setText("One and a half years old");
-                    ageNum = 3;
-                }else if(progress<=83){
-                    seekBar.setProgress(80);
-                    ageTextView.setText("Two years old");
-                    ageNum = 4;
-                }else if(progress<=100){
-                    seekBar.setProgress(100);
-                    ageTextView.setText("More than two years old");
-                    ageNum = 5;
-                }
+                percentStainTextView.setText(getResources().getStringArray(R.array.amount_increasing)[progress]);
             }
         });
         otherCompSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -147,24 +105,7 @@ public class CleaningSealing2 extends AppCompatActivity {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // update angleTV
-                if(progress<=12){
-                    seekBar.setProgress(0);
-                    otherCompTextView.setText("No other complications");
-                    otherCompNum = 0;
-                }else if(progress<=50){
-                    seekBar.setProgress(33);
-                    otherCompTextView.setText("Some");
-                    otherCompNum = 1;
-                }else if(progress<=88){
-                    seekBar.setProgress(66);
-                    otherCompTextView.setText("A moderate amount");
-                    otherCompNum = 2;
-                }else{
-                    seekBar.setProgress(100);
-                    otherCompTextView.setText("Lots more");
-                    otherCompNum = 3;
-                }
+                otherCompTextView.setText(getResources().getStringArray(R.array.amount_increasing)[progress]);
             }
         });
         //Spinner listener
@@ -237,9 +178,9 @@ public class CleaningSealing2 extends AppCompatActivity {
             intent.putExtra("stain_checked", stainCheckBox.isChecked());
             intent.putExtra("stain_type_index", stainTypeSpinner.getSelectedItemPosition());
             intent.putExtra("stain_type_str", stainTypeSpinner.getSelectedItem().toString());
-            intent.putExtra("stain_percent", stainAmountSeekBar.getProgress());
-            intent.putExtra("age_num", ageNum);
-            intent.putExtra("other_comp_num", otherCompNum);
+            intent.putExtra("stain_amount", stainAmountSeekBar.getProgress());
+            intent.putExtra("old", oldCheckBox.isChecked());
+            intent.putExtra("other_comp_num", otherCompSeekBar.getProgress());
             //start activity
             startActivity(intent);
         }else if(!stainCheckBox.isChecked()){
@@ -249,9 +190,9 @@ public class CleaningSealing2 extends AppCompatActivity {
             //this removes the animation
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //extras--for passing data
-            intent.putExtra("stainCheckBoxChecked", stainCheckBox.isChecked());
-            intent.putExtra("age", ageSeekBar.getProgress()/50);//make max is 2
-            intent.putExtra("otherCompProgress", otherCompSeekBar.getProgress());
+            intent.putExtra("stain_checked", stainCheckBox.isChecked());
+            intent.putExtra("old", oldCheckBox.isChecked());//make max is 2
+            intent.putExtra("other_comp_num", otherCompSeekBar.getProgress());
             //start activity
             startActivity(intent);
         }else

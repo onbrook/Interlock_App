@@ -1,5 +1,6 @@
 package com.oep.interlock_app;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,6 +43,7 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.ok_fab);
         final EditText editText = (EditText) findViewById(R.id.edit_text);
         estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
+        final Activity activity = this;
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick (View view){
@@ -57,9 +59,10 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                             if (validId) { // ID is correct
                                 saveId(input);
                                 if(estimationSheet.isUserOwner())
-                                    startActivityForResult(new Intent(getApplicationContext(), AddDatabasePermissionsActivity.class), EstimationSheet.REQUEST_ADD_PERMISSIONS);
+                                    startActivity(new Intent(getApplicationContext(), AddDatabasePermissionsActivity.class));
                                 else
-                                    finish(); // Go back to where you where before coming here
+                                    // Go back to home
+                                    startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                             } else {
                                 showDialog("Invalid ID", "You do not have access to this database or it does not exist.");
                             }
@@ -130,9 +133,9 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
             estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
                 @Override
                 public void whenFinished(boolean success) {
-                    if(success){
-                        startActivityForResult(getIntent().setClass(getApplicationContext(), AddDatabasePermissionsActivity.class), EstimationSheet.REQUEST_ADD_PERMISSIONS);
-                    }
+                if(success){
+                    startActivity(getIntent().setClass(getApplicationContext(), AddDatabasePermissionsActivity.class));
+                }
                 }
             });
         else
@@ -170,10 +173,7 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == EstimationSheet.REQUEST_ADD_PERMISSIONS)
-            finish();
-        else
-            estimationSheet.onActivityResult(requestCode, resultCode, data);
+        estimationSheet.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

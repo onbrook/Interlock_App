@@ -67,46 +67,26 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Percent covered"
+                    android:text="Amount covered"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="45dp"
+                    android:layout_marginLeft="40dp"
                     android:id="@+id/stains_percent_headline_tv"/>
 
                 <SeekBar
+                    style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
+                    android:max="3"
                     android:id="@+id/percent_stain_seekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginLeft="48dp"
                     android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="64dp"
+                    android:layout_marginLeft="72dp"
                     android:id="@+id/percent_stain_tv"
-                    android:text="0%"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Age of job"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="32dp"
-                    android:id="@+id/age_headline_tv"/>
-
-                <SeekBar
-                    android:id="@+id/age_seekBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="64dp"
-                    android:id="@+id/age_tv"
-                    android:text="Less than six months old"/>
+                    android:text="None"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -117,6 +97,8 @@
                     android:id="@+id/other_headline_tv"/>
 
                 <SeekBar
+                    style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
+                    android:max="3"
                     android:id="@+id/other_comp_seekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -129,6 +111,23 @@
                     android:layout_marginLeft="64dp"
                     android:id="@+id/other_comp_tv"
                     android:text="No other complications"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Other"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="32dp"
+                    android:id="@+id/age_headline_tv"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="40dp"
+                    android:id="@+id/old_check_box"
+                    android:text="Job older than 2 years"/>
             </LinearLayout>
         </ScrollView>
 

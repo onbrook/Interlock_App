@@ -6,8 +6,7 @@ xmlns:tools="http://schemas.android.com/tools"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:id="@+id/drawer_layout"
 android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+android:layout_height="match_parent">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
@@ -68,22 +67,28 @@ tools:context="com.oep.interlock_app.Wall_Rebuilding2">
             android:layout_below="@+id/length_input"
             android:id="@+id/angle_headline_tv"/>
 
-        <SeekBar
-            android:id="@+id/angle_seek_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/angle_headline_tv"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"/>
-
-        <TextView
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_below="@id/angle_headline_tv"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="64dp"
-            android:layout_below="@+id/angle_seek_bar"
-            android:text="Horizontal"
-            android:id="@+id/angle_tv"/>
+            android:id="@+id/angle_rg">
+
+            <RadioButton
+                android:id="@+id/angle_horizontal_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/horizontal"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/angle_vertical_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/vertical" />
+        </RadioGroup>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/wall_rebuilding_FAB"

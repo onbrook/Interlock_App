@@ -352,8 +352,8 @@ class EstimationSheet {
                     //finished getting data from Sheets
                     currentProcess = GET_ESTIMATED_TIME_PROCESS;
                     currentHeldProcess = NO_PROCESS;
-                    progressDialog.dismiss();
-                    showErrorDialog("An estimation cannot be made yet because the code for it is still being worked on.", OK_ACTION);
+                    //progressDialog.dismiss();
+                    //showErrorDialog("An estimation cannot be made yet because the code for it is still being worked on.", OK_ACTION);
                     if (success) {
                         EstimationListener estimationListener1 = new EstimationListener() {
                             @Override
@@ -364,7 +364,7 @@ class EstimationSheet {
                             }
                         };
                         currentListener = estimationListener1;
-                        //new TaskGetEstimation(newData, dataFromSheets, estimationListener1).execute();
+                        new TaskGetEstimation(newData, dataFromSheets, estimationListener1).execute();
                     } else {
                         //abort startEstimation; an error has occurred
                         progressDialog.dismiss();
@@ -538,49 +538,6 @@ class EstimationSheet {
         }
     }
 
-    /**
-     * Collect the data sets which can be used for the estimation recursively
-     * @param newDataSet the data which was just collected from the user
-     * @param oldDataSets Data from sheets. The minimum number of rows (dataSets) possible is 2
-     * @return The usable data sets
-     */
-
-    private List<List<Object>> getUsableDataSets(List<Object> newDataSet, List<List<Object>> oldDataSets){
-
-        List<List<Object>> usableDataSets = new ArrayList<>();
-
-        for (int row = 0; row < oldDataSets.size(); row++) {
-
-            List<Object> dataSet = oldDataSets.get(row);
-            boolean dataSetValid = true;  // Flag
-
-            //Remove last item from olDataSets row for recursive call
-            oldDataSets.get(row).remove(dataSet.size()-1);
-
-            for (int itemNum = dataSet.size() - 1; itemNum > 2; itemNum--) {  // start at the end
-                // if all of the items in this row (data set) are not all equal to the items in the
-                // newDataSet (excluding the two aria variables and actual time), then...
-                if (!dataSet.get(itemNum).equals(newDataSet.get(itemNum - 1))) {
-                    // This row of data (data set) cannot be used for the estimation while using
-                    // this many variables
-                    dataSetValid = false;
-                    break;
-                }
-            }
-            // if the row (data set) is invalid then it should not be added to the usableDataSets
-            if(dataSetValid)
-                usableDataSets.add(dataSet);
-        }
-        // since there are two variables that are being used to find the estimation; length/height
-        // and width, the smallest size that the usableDataSets can be is 2
-        // if this is not met, re-run the method with the last column gone
-        if (usableDataSets.size() >= 2)
-            return usableDataSets;
-        else {
-            return getUsableDataSets(newDataSet, oldDataSets);
-        }
-    }
-
     private String getDatabaseId(){
         try {
             FileInputStream input = activity.openFileInput(DATABASE_ID_FILE_NAME);
@@ -751,10 +708,9 @@ class EstimationSheet {
     private int getNextEstimationId(List<List<Object>> data){
         int maxId = -1;
         try {
+            // Try to get the last estimation and from that the estimation ID
             maxId = Integer.parseInt((String) data.get(data.size() - 1).get(COLUMN_ESTIMATION_ID));
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        } catch (Exception ignore){}
         return maxId + 1;
     }
 
@@ -1458,27 +1414,20 @@ class EstimationSheet {
         protected Double doInBackground(Void... params) {
             try {
                 // create new column names since columns are removed (date and estimation ID)
-                final int COLUMN_NEW_ACTUAL_TIME = COLUMN_ACTUAL_TIME - 2;
-                final int COLUMN_NEW_ARIA1 = COLUMN_ARIA1 - 2;
-                final int COLUMN_NEW_ARIA2 = COLUMN_ARIA2 - 2;
 
                 List<List<Object>> dataSets = new ArrayList<>();
                 for(List<Object> dataSet : dataFromSheets){
-                    int type;
+                    System.out.println("Estimation ID: "+dataSet.get(COLUMN_ESTIMATION_ID));
 
                     // only get the data sets with a time entered
                     if(dataSet.get(COLUMN_ACTUAL_TIME).equals(""))
                         continue;
 
-                    // Remove un-needed columns
-                    dataSet.remove(COLUMN_DATE);
-                    dataSet.remove(COLUMN_ESTIMATION_ID);
-
                     // Change each value to an int if it is a number or a boolean if it is that
-                    dataSet.set(COLUMN_NEW_ACTUAL_TIME, Double.parseDouble((String) dataSet.get(COLUMN_NEW_ACTUAL_TIME)));
-                    dataSet.set(COLUMN_NEW_ARIA1, Double.parseDouble((String) dataSet.get(COLUMN_NEW_ARIA1)));
-                    dataSet.set(COLUMN_NEW_ARIA2, Double.parseDouble((String) dataSet.get(COLUMN_NEW_ARIA2)));
-                    for(int i = COLUMN_NEW_ARIA2 + 1; i < dataSet.size() - 1; i++){
+                    dataSet.set(COLUMN_ACTUAL_TIME, Double.parseDouble((String) dataSet.get(COLUMN_ACTUAL_TIME)));
+                    dataSet.set(COLUMN_ARIA1, Double.parseDouble((String) dataSet.get(COLUMN_ARIA1)));
+                    dataSet.set(COLUMN_ARIA2, Double.parseDouble((String) dataSet.get(COLUMN_ARIA2)));
+                    for(int i = COLUMN_ARIA2 + 1; i < dataSet.size(); i++){
                         try {
                             boolean value = toBoolean((String) dataSet.get(i));
                             dataSet.set(i, value);
@@ -1513,29 +1462,39 @@ class EstimationSheet {
                 int YNum = 0;
                 for(int location1 = 0; location1 <= usableDataSets.size() - 2; location1++)
                     for(int location2 = location1 + 1; location2 <= usableDataSets.size() - 1; location2++){
+                        System.out.println("row1: "+location1);
+                        System.out.println("row2: "+location2);
                         List<Object> dataSet1 = usableDataSets.get(location1);
                         List<Object> dataSet2 = usableDataSets.get(location2);
                         // "Eq" stands for equation which in this case is the same as each set of
                         // data or each past estimation.
                         // each x or y here (like in "xEq1") stands for the coefficient. Do not get
                         // this confused with the variables x and y which are being found.
-                        double actualTimeEq1 = (double) dataSet1.get(COLUMN_NEW_ACTUAL_TIME);
-                        double actualTimeEq2 = (double) dataSet2.get(COLUMN_NEW_ACTUAL_TIME);
-                        double xEq1 = (double) dataSet1.get(COLUMN_NEW_ARIA1);
-                        double yEq1 = (double) dataSet1.get(COLUMN_NEW_ARIA2);
-                        double xEq2 = (double) dataSet2.get(COLUMN_NEW_ARIA1);
-                        double yEq2 = (double) dataSet2.get(COLUMN_NEW_ARIA2);
+                        double actualTimeEq1 = (double) dataSet1.get(COLUMN_ACTUAL_TIME);
+                        double actualTimeEq2 = (double) dataSet2.get(COLUMN_ACTUAL_TIME);
+                        double xEq1 = (double) dataSet1.get(COLUMN_ARIA1);
+                        double yEq1 = (double) dataSet1.get(COLUMN_ARIA2);
+                        double xEq2 = (double) dataSet2.get(COLUMN_ARIA1);
+                        double yEq2 = (double) dataSet2.get(COLUMN_ARIA2);
+                        System.out.println("actualTimeEq1: "+actualTimeEq1);
+                        System.out.println("actualTimeEq2: "+actualTimeEq2);
+                        System.out.println("xEq1: "+xEq1);
+                        System.out.println("yEq1: "+yEq1);
+                        System.out.println("xEq2: "+xEq2);
+                        System.out.println("yEq2: "+yEq2);
                         // Here's the fun part; finding X and Y
                         // If you where to have two equations
-                        // t1 = x1X + y1Y
-                        // t2 = x2X + y2Y
+                        // t1 = x1*X + y1*Y
+                        // t2 = x2*X + y2*Y
                         // where t1, x1, y1 etc. are all variables; the actual time, the length
                         // dimension for instance that was entered, and the height dimension
                         // respectively. X and Y are then the variables that are being found
                         // When you boil down the equation, you get this:
-                        double X = (actualTimeEq1*xEq2 - actualTimeEq2 * xEq1)/
-                                (yEq1 * xEq2 - yEq2 * xEq1);
-                        double Y = (actualTimeEq1 - xEq1 * X)/yEq1;
+                        double Y = (actualTimeEq2 - xEq2 * actualTimeEq1 / xEq1)/
+                                (-1*yEq1 * xEq2 / xEq1 + yEq2);
+                        double X = (actualTimeEq1 - yEq1 * Y)/xEq1;
+                        System.out.println("X: "+X);
+                        System.out.println("Y: "+Y);
                         XTotal += X;
                         XNum ++;
                         YTotal += Y;
@@ -1543,13 +1502,57 @@ class EstimationSheet {
                     }
                 // Get the averages for both variables
                 double XAverage = XTotal/XNum;
+                System.out.println("XAverage: "+XAverage);
                 double YAverage = YTotal/YNum;
+                System.out.println("YAverage: "+YAverage);
                 // multiply the variables by their coefficients and add the products of that
                 return ((double) newData.get(0)) * XAverage + ((double) newData.get(1)) * YAverage;
             } catch (Exception e) {
                 lastError = e;
                 cancel(true);
                 return null;
+            }
+        }
+
+        /**
+         * Collect the data sets which can be used for the estimation recursively
+         * @param newDataSet the data which was just collected from the user
+         * @param oldDataSets Data from sheets. The minimum number of rows (dataSets) possible is 2
+         * @return The usable data sets
+         */
+
+        private List<List<Object>> getUsableDataSets(List<Object> newDataSet, List<List<Object>> oldDataSets){
+
+            List<List<Object>> usableDataSets = new ArrayList<>();
+
+            for (int row = 0; row < oldDataSets.size(); row++) {
+                System.out.println("row: "+row);
+                List<Object> dataSet = oldDataSets.get(row);
+                boolean dataSetValid = true;  // Flag
+
+                for (int itemNum = dataSet.size() - 1; itemNum > 4; itemNum--) {  // start at the end
+                    // if all of the items in this row (data set) are not all equal to the items in the
+                    // newDataSet (excluding the two aria variables and actual time), then...
+                    if (!dataSet.get(itemNum).equals(newDataSet.get(itemNum - 3))) {
+                        // This row of data (data set) cannot be used for the estimation while using
+                        // this many variables
+                        dataSetValid = false;
+                        break;
+                    }
+                }
+                // if the row (data set) is invalid then it should not be added to the usableDataSets
+                if(dataSetValid)
+                    usableDataSets.add(dataSet);
+                //Remove last item from olDataSets row for recursive call
+                oldDataSets.get(row).remove(dataSet.size()-1);
+            }
+            // since there are two variables that are being used to find the estimation; length/height
+            // and width, the smallest size that the usableDataSets can be is 2
+            // if this is not met, re-run the method with the last column gone
+            if (usableDataSets.size() >= 2)
+                return usableDataSets;
+            else {
+                return getUsableDataSets(newDataSet, oldDataSets);
             }
         }
 
@@ -1627,7 +1630,7 @@ class EstimationSheet {
          */
         private List<List<Object>> getDataFromApi() throws IOException {
             String spreadsheetId = getDatabaseId();
-            String range = sheetName+"!A2:N";
+            String range = sheetName+"!A1:Z";
             ValueRange response = this.service.spreadsheets().values()
                     .get(spreadsheetId, range)
                     .execute();
@@ -1718,7 +1721,7 @@ class EstimationSheet {
          */
         private void setDataWithApi() throws IOException {
             String spreadsheetId = getDatabaseId();
-            String range = sheetName+"!A:N";
+            String range = sheetName+"!A1";
             ValueRange requestBody = new ValueRange();
             requestBody.setValues(estimationData);
             requestBody.setMajorDimension("ROWS");
@@ -1803,7 +1806,7 @@ class EstimationSheet {
         private void removeEstimation() throws IOException {
             int rowNum = getEstimationRowNum(estimationId, pastEstimationData);
             String spreadsheetId = getDatabaseId();
-            String range = sheetName+"!"+rowNum+"A:"+rowNum+"N";
+            String range = sheetName+"!"+rowNum+"A:"+rowNum+"Z";
             ClearValuesRequest requestBody = new ClearValuesRequest();
             // Remove data from Sheet
             this.service.spreadsheets().values().clear(spreadsheetId, range, requestBody)

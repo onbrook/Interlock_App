@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -29,7 +30,7 @@ public class CleaningSealing extends AppCompatActivity {
     // getting to the job layout Views
     private EditText heightEditText;
     private EditText lengthEditText;
-    private SeekBar angleSeekBar;
+    private RadioGroup angleRadioGroup;
     private View[] views = new View[2];
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
@@ -54,34 +55,10 @@ public class CleaningSealing extends AppCompatActivity {
         //get views
         heightEditText = (EditText) findViewById(R.id.height_input);
         lengthEditText = (EditText) findViewById(R.id.length_input);
-        angleSeekBar = (SeekBar) findViewById(R.id.angle_seek_bar);
-        final TextView angleTV = (TextView) findViewById(R.id.angle_tv);
+        angleRadioGroup = (RadioGroup) findViewById(R.id.angle_rg);
         //setup views[]
         views[0] = heightEditText;
         views[1] = lengthEditText;
-        //SeekBar listener
-        angleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {/* do nothing*/}
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {/* do nothing*/}
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // update angleTV
-                if(progress==0){
-                    angleTV.setText("Horizontal");
-                }else if(progress<=55 && progress>=45){//range - to make it "sticky" when it is near 50%
-                    seekBar.setProgress(50);
-                    angleTV.setText("Vertical");
-                }else {
-                    String angle = String.format("%.2f", progress*1.8) + "°";
-                    angleTV.setText(angle);
-                }
-            }
-        });
         //EditText listeners
         heightEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -151,7 +128,7 @@ public class CleaningSealing extends AppCompatActivity {
             //extras--for passing data
             intent.putExtra("height_double", Double.parseDouble(heightEditText.getText().toString()));
             intent.putExtra("length_double", Double.parseDouble(lengthEditText.getText().toString()));
-            intent.putExtra("angle_double", Double.parseDouble(String.format("%.2f", angleSeekBar.getProgress()*1.8)));
+            intent.putExtra("angle_id", angleRadioGroup.getCheckedRadioButtonId());
             //start activity
             startActivity(intent);
         }else

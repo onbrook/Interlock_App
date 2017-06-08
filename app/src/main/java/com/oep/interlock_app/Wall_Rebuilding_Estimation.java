@@ -1,9 +1,14 @@
 package com.oep.interlock_app;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -96,67 +101,25 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         data.add(glueChecked);
         data.add(clipsChecked);
         //put data into the TextViews
-        switch (locationIndex){
-            case 1:
-                locationOut.setText(getResources().getStringArray(R.array.location)[1]);
-                break;
-            case 2:
-                locationOut.setText(getResources().getStringArray(R.array.location)[2]);
-                break;
-            case 3:
-                locationOut.setText(getResources().getStringArray(R.array.location)[3]);
-                break;
-        }
-        switch (accessIndex){
-            case 1:
-                accessibilityOut.setText(getResources().getStringArray(R.array.accessibility)[1]);
-                break;
-            case 2:
-                accessibilityOut.setText(getResources().getStringArray(R.array.accessibility)[2]);
-                break;
-            case 3:
-                accessibilityOut.setText(getResources().getStringArray(R.array.accessibility)[3]);
-                break;
-        }
-        switch (maneuverIndex){
-            case 1:
-                roomOut.setText(getResources().getStringArray(R.array.accessibility)[1]);
-                break;
-            case 2:
-                roomOut.setText(getResources().getStringArray(R.array.accessibility)[2]);
-                break;
-            case 3:
-                roomOut.setText(getResources().getStringArray(R.array.accessibility)[3]);
-                break;
-        }
+        locationOut.setText(getResources().getStringArray(R.array.location)[locationIndex]);
+        accessibilityOut.setText(getResources().getStringArray(R.array.accessibility)[accessIndex]);
+        roomOut.setText(getResources().getStringArray(R.array.maneuver)[maneuverIndex]);
         heightOut.setText(heightInput+"ft");
         lengthOut.setText(lengthInput+"ft");
         switch (straightCurvedNum){
             case 0:
-                shapeOut.setText("Curved");
+                shapeOut.setText(getString(R.string.curved));
                 break;
             case 1:
-                shapeOut.setText("Straight");
+                shapeOut.setText(getString(R.string.straight));
                 break;
         }
         if(lineChecked)
             hardLineOut.setText("Yes");
         else
             hardLineOut.setText("No");
-        switch (baseShiftIndex){
-            case 1:
-                baseShiftOut.setText(getResources().getStringArray(R.array.base_shift)[1]);
-                break;
-            case 2:
-                baseShiftOut.setText(getResources().getStringArray(R.array.base_shift)[2]);
-                break;
-            case 3:
-                baseShiftOut.setText(getResources().getStringArray(R.array.base_shift)[3]);
-                break;
-            case 4:
-                baseShiftOut.setText(getResources().getStringArray(R.array.base_shift)[4]);
-                break;
-        }
+        baseShiftOut.setText(getResources().getStringArray(R.array.amount_increasing)[baseShiftIndex]);
+
         switch (rootsNum){
             case 0:
                 rootsOut.setText("None");
@@ -215,12 +178,30 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
                             minute = 0;
                             hours++;
                         }
-                        finalEstimate.setText("Final Estimate: " + hours + " hours and " + minute + " minutes.");
+                        String hoursStr;
+                        switch(hours){
+                            case 1:
+                                hoursStr = "hour";
+                                break;
+                            default:
+                                hoursStr = "hours";
+                                break;
+                        }
+                        finalEstimate.setText("Final Estimate: " + hours + " "+hoursStr+" and " + minute + " minutes.");
                     } else {
                         if (minute >= 30)
                             hours++;
+                        String hoursStr;
+                        switch(hours){
+                            case 1:
+                                hoursStr = "hour";
+                                break;
+                            default:
+                                hoursStr = "hours";
+                                break;
+                        }
                         Toast.makeText(activity, "Attention: this estimation is likely not very accurate.", Toast.LENGTH_LONG).show();
-                        finalEstimate.setText("Final Estimate: " + hours + " hours.");
+                        finalEstimate.setText("Final Estimate: " + hours + " "+hoursStr+".");
                     }
                 }
             }
