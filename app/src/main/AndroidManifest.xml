@@ -95,9 +95,6 @@
             android:name="com.oep.interlock_app.EstimationPage"
             android:label="Estimation Page" />
         <activity
-            android:name="com.oep.interlock_app.AboutPage"
-            android:label="About Page" />
-        <activity
             android:name="com.oep.interlock_app.HelpPage"
             android:label="Help Page" />
         <activity android:name="com.oep.interlock_app.DatabaseManagement" />
