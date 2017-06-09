@@ -17,7 +17,8 @@ import java.util.LinkedHashMap;
 
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.Toast;
+
 
 import com.oep.owenslaptop.interlock_app.R;
 
@@ -97,36 +98,31 @@ public class HelpPage extends AppCompatActivity {
         //attach the adapter to the list
         expandableListView.setAdapter(listAdapter);
 
-        //collapse  all Groups
-        collapseAll();
-
         //listener for child row click
         expandableListView.setOnChildClickListener(myListItemClicked);
-        //listener for group heading click
-        expandableListView.setOnGroupClickListener(myListGroupClicked);
     }
 
-    //method to expand all groups
-    private void expandAll() {
-        int count = listAdapter.getGroupCount();
-        for (int i = 0; i < count; i++){
-            expandableListView.expandGroup(i);
-        }
-    }
 
-    //method to collapse all groups
-    private void collapseAll() {
-        int count = listAdapter.getGroupCount();
-        for (int i = 0; i < count; i++){
-            expandableListView.collapseGroup(i);
+    //our child listener
+    private OnChildClickListener myListItemClicked =  new OnChildClickListener() {
+
+        public boolean onChildClick(ExpandableListView parent, View v,
+                                    int groupPosition, int childPosition, long id) {
+
+            //get the group header
+            HeaderInfo headerInfo = SectionList.get(groupPosition);
+            //get the child info
+            DetailInfo detailInfo =  headerInfo.getProductList().get(childPosition);
+            //collapse the one that is open
+            expandableListView.collapseGroup(groupPosition);
+            return false;
         }
-    }
+    };
 
     //load some initial data into out list
     private void AddProduct(){
 
         //this is where we add the information
-
         String commonError, createEstimate, setUpNewDa, useExDa, addPermish, dataMan;
         commonError = "NCAOY";
         createEstimate = "To create an estimate navigate to the create estimate page and then select the " +
@@ -141,7 +137,7 @@ public class HelpPage extends AppCompatActivity {
                 " for the person you are wanting to invite.  ";
         dataMan = "NCAOY";
 
-        addProduct("Common Errors and Questions",commonError);
+        addProduct("Common errors and questions",commonError);
         addProduct("Create an estimate",createEstimate);
         addProduct("Setting up a new database",setUpNewDa);
         addProduct("Using an existing database",useExDa);
@@ -149,37 +145,8 @@ public class HelpPage extends AppCompatActivity {
         addProduct("Database management",dataMan);
 
     }
-
-    //our child listener
-    private OnChildClickListener myListItemClicked =  new OnChildClickListener() {
-
-        public boolean onChildClick(ExpandableListView parent, View v,
-                                    int groupPosition, int childPosition, long id) {
-
-            //get the group header
-            HeaderInfo headerInfo = SectionList.get(groupPosition);
-            //get the child info
-            DetailInfo detailInfo =  headerInfo.getProductList().get(childPosition);
-            return false;
-        }
-    };
-
-    //our group listener
-    private OnGroupClickListener myListGroupClicked =  new OnGroupClickListener() {
-
-        public boolean onGroupClick(ExpandableListView parent, View v,
-                                    int groupPosition, long id) {
-
-            //get the group header
-            HeaderInfo headerInfo = SectionList.get(groupPosition);
-            return false;
-        }
-    };
-
     //here we maintain our products in various departments
-    private int addProduct(String department, String product){
-
-        int groupPosition = 0;
+    private void addProduct(String department, String product){
 
         //check the hash map if the group already exists
         HeaderInfo headerInfo = mySection.get(department);
@@ -193,21 +160,11 @@ public class HelpPage extends AppCompatActivity {
 
         //get the children for the group
         ArrayList<DetailInfo> productList = headerInfo.getProductList();
-        //size of the children list
-        int listSize = productList.size();
-        //add to the counter
-        listSize++;
-
         //create a new child and add that to the group
         DetailInfo detailInfo = new DetailInfo();
-        detailInfo.setSequence(String.valueOf(listSize));
         detailInfo.setName(product);
         productList.add(detailInfo);
         headerInfo.setProductList(productList);
-
-        //find the group position inside the list
-        groupPosition = SectionList.indexOf(headerInfo);
-        return groupPosition;
     }
 
     //called when the back button in the title bas is pressed
