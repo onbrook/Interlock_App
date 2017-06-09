@@ -26,6 +26,18 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
+        <TextView
+            android:id="@+id/aboutTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_marginTop="19dp"
+            android:text="About Page"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/mainTitle"
+            android:layout_toStartOf="@+id/mainTitle" />
+
     </RelativeLayout>
 
     <!-- Side navigation drawer UI -->
