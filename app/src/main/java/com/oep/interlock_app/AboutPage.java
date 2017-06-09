@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oep.owenslaptop.interlock_app.R;
@@ -32,6 +33,17 @@ public class AboutPage extends AppCompatActivity {
         mDrawerList = (ListView)findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
+        TextView aboutDisplayTV = (TextView) findViewById(R.id.mainTitle);
+
+
+        String aboutText;
+
+        aboutText = "This app is used to create estimates for different Interlock installations.  " +
+                "It takes the previous data and uses it to create new estimates and then saves those as well" +
+                " to keep improving its efficiency.  It also allows the user to create a new database and " +
+                "to add users to allow for access. ";
+
+        aboutDisplayTV.setText(aboutText);
 
         addDrawerItems();
         setupDrawer();

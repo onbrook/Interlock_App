@@ -95,6 +95,16 @@
         <item>Wall Rebuilding</item>
     </array>
 
+    <!-- this is the code that has the categories for the help menu -->
+    <string-array name="dept_array">
+        <item>Common Errors and Questions</item>
+        <item>Create an estimate</item>
+        <item>Setting up a new database</item>
+        <item>Using an existing database</item>
+        <item>Adding permissions</item>
+        <item>Database management</item>
+    </string-array>
+
 
     <string name="app_name">Interlock App</string>
     <string name="wall_rebuilding_title">Wall Rebuilding</string>

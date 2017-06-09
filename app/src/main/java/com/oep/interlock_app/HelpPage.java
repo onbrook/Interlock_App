@@ -11,7 +11,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
+
 
 import com.oep.owenslaptop.interlock_app.R;
 
@@ -22,6 +29,12 @@ public class HelpPage extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+
+    private LinkedHashMap<String, HeaderInfo> mySection = new LinkedHashMap<>();
+    private ArrayList<HeaderInfo> SectionList = new ArrayList<>();
+
+    private MyListAdapter listAdapter;
+    private ExpandableListView expandableListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +80,91 @@ public class HelpPage extends AppCompatActivity {
                 }
             }
         });
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.dept_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+
+        //adding the data
+        AddProduct();
+
+        //get reference to the ExpandableListView
+        expandableListView = (ExpandableListView) findViewById(R.id.myList);
+        //create the adapter by passing your ArrayList data
+        listAdapter = new MyListAdapter(HelpPage.this, SectionList);
+        //attach the adapter to the list
+        expandableListView.setAdapter(listAdapter);
+
+        //listener for child row click
+        expandableListView.setOnChildClickListener(myListItemClicked);
+    }
+
+
+    //our child listener
+    private OnChildClickListener myListItemClicked =  new OnChildClickListener() {
+
+        public boolean onChildClick(ExpandableListView parent, View v,
+                                    int groupPosition, int childPosition, long id) {
+
+            //get the group header
+            HeaderInfo headerInfo = SectionList.get(groupPosition);
+            //get the child info
+            DetailInfo detailInfo =  headerInfo.getProductList().get(childPosition);
+            //collapse the one that is open
+            expandableListView.collapseGroup(groupPosition);
+            return false;
+        }
+    };
+
+    //load some initial data into out list
+    private void AddProduct(){
+
+        //this is where we add the information
+        String commonError, createEstimate, setUpNewDa, useExDa, addPermish, dataMan;
+        commonError = "NCAOY";
+        createEstimate = "To create an estimate navigate to the create estimate page and then select the " +
+                "job that you are wanting to get a time estimate for.  Navigate through the pages, and enter the" +
+                " asked for data as accurately as possible.  At the end you will be provided with the estimated " +
+                "time which is projected from the old job history.";
+        setUpNewDa = "NCAOY";
+        useExDa = "To use an existing database you will need to be sent an invitation from the database manager " +
+                "(the one who set it up) and then enter that id into the text entry box. ";
+        addPermish = "Adding permissions only applies to the database owner.  To allow others to access your database " +
+                "(which you would want for those in the same company) go to the permissions page and enter in the email" +
+                " for the person you are wanting to invite.  ";
+        dataMan = "NCAOY";
+
+        addProduct("Common errors and questions",commonError);
+        addProduct("Create an estimate",createEstimate);
+        addProduct("Setting up a new database",setUpNewDa);
+        addProduct("Using an existing database",useExDa);
+        addProduct("Adding permissions",addPermish);
+        addProduct("Database management",dataMan);
+
+    }
+    //here we maintain our products in various departments
+    private void addProduct(String department, String product){
+
+        //check the hash map if the group already exists
+        HeaderInfo headerInfo = mySection.get(department);
+        //add the group if doesn't exists
+        if(headerInfo == null){
+            headerInfo = new HeaderInfo();
+            headerInfo.setName(department);
+            mySection.put(department, headerInfo);
+            SectionList.add(headerInfo);
+        }
+
+        //get the children for the group
+        ArrayList<DetailInfo> productList = headerInfo.getProductList();
+        //create a new child and add that to the group
+        DetailInfo detailInfo = new DetailInfo();
+        detailInfo.setName(product);
+        productList.add(detailInfo);
+        headerInfo.setProductList(productList);
     }
 
     //called when the back button in the title bas is pressed
