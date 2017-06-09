@@ -7,39 +7,84 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
         <!--add values below here -->
 
         <TextView
-            android:id="@+id/titleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Joint fill Replacement"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/gettingJobTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="10dp"
-            android:text=" - Potential Issues"
+            android:text="@string/complications_title"
             android:textStyle="bold"
-            android:layout_below="@id/titleTV"/>
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:id="@+id/headlineTextView"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/headlineTextView"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/scroll_view"
+            android:layout_above="@+id/wall_rebuilding_FAB">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Joint Fill"/>
+
+                <SeekBar
+                    android:id="@+id/jointFillSB"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:max="4"
+                    android:progress="2"/>
+
+                <TextView
+                    android:id="@+id/jointFDisplayTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Other"/>
+
+
+                <CheckBox
+                    android:id="@+id/weedsCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weeds in the Interlock"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+        </ScrollView>
 
 
         <android.support.design.widget.FloatingActionButton
@@ -53,61 +98,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"/>
-
-        <TextView
-            android:id="@+id/arethereTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:text="Are there:"
-            android:layout_below="@+id/gettingJobTV"
-            android:layout_alignLeft="@+id/gettingJobTV"
-            android:layout_alignStart="@+id/gettingJobTV"
-            android:layout_marginLeft="13dp"
-            android:layout_marginStart="13dp" />
-
-
-        <CheckBox
-            android:id="@+id/weedsCB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Weeds in the Interlock?"
-            android:layout_below="@+id/arethereTV"
-            android:layout_alignRight="@+id/titleTV"
-            android:layout_alignEnd="@+id/titleTV"
-            android:layout_marginTop="19dp" />
-
-        <TextView
-            android:id="@+id/jointFillTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="39dp"
-            android:text="Joint Fill"
-            android:layout_below="@+id/weedsCB"
-            android:layout_alignLeft="@+id/arethereTV"
-            android:layout_alignStart="@+id/arethereTV" />
-
-        <SeekBar
-            android:id="@+id/jointFillSB"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="37dp"
-            android:max="4"
-            android:progress="2"
-            android:layout_below="@+id/jointFillTV"
-            android:layout_alignLeft="@+id/jointFillTV"
-            android:layout_alignStart="@+id/jointFillTV" />
-
-        <TextView
-            android:id="@+id/jointFDisplayTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/jointFillSB"
-            android:layout_alignStart="@+id/jointFillSB"
-            android:layout_below="@+id/jointFillSB"
-            android:layout_marginTop="25dp" />
+            android:layout_margin="25dp"/>
 
         <!--add values above here -->
 

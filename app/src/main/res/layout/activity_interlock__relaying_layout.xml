@@ -7,142 +7,137 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
         <!--add values below here -->
 
         <TextView
-            android:id="@+id/pageTitle"
-            android:layout_width="280dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Interlock Relaying"
-            android:textSize="18sp"
+            android:text="@string/project_info"
             android:textStyle="bold"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:id="@+id/headlineTextView"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
 
-        <TextView
-            android:id="@+id/widthTxt"
-            android:layout_width="280dp"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/pageTitle"
-            android:layout_alignStart="@+id/pageTitle"
-            android:layout_below="@+id/pageTitle"
-            android:layout_marginTop="27dp"
-            android:text="Size of the job (Width):"
-            android:textStyle="bold" />
+            android:layout_below="@+id/headlineTextView"
+            android:id="@+id/scroll_view"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_above="@+id/nextBtn">
 
-        <EditText
-            android:id="@+id/widtInput"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/widthTxt"
-            android:layout_alignStart="@+id/widthTxt"
-            android:layout_below="@+id/widthTxt"
-            android:layout_marginTop="13dp"
-            android:ems="10"
-            android:hint="Width (ft)"
-            android:inputType="numberDecimal" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/lenTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/widtInput"
-            android:layout_alignStart="@+id/widtInput"
-            android:layout_below="@+id/widtInput"
-            android:layout_marginTop="23dp"
-            android:text="Size of the job (Length):"
-            android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dimensions_title"/>
 
-        <EditText
-            android:id="@+id/lenInput"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/lenTxt"
-            android:layout_alignStart="@+id/lenTxt"
-            android:layout_below="@+id/lenTxt"
-            android:layout_marginTop="18dp"
-            android:ems="10"
-            android:hint="Length (ft)"
-            android:inputType="numberDecimal" />
+                <EditText
+                    android:id="@+id/widtInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:ems="10"
+                    android:hint="@string/width_hint"
+                    android:inputType="numberDecimal"
+                    style="@style/no_outline_edit_text"/>
 
-        <Spinner
-            android:id="@+id/ptrnTypeSpin"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:entries="@array/pattern_type"
-            android:layout_below="@+id/lenInput"
-            android:layout_alignLeft="@+id/lenInput"
-            android:layout_alignStart="@+id/lenInput" />
+                <EditText
+                    android:id="@+id/lenInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:ems="10"
+                    android:hint="@string/length_hint"
+                    android:inputType="numberDecimal"
+                    style="@style/no_outline_edit_text" />
 
-        <Spinner
-            android:id="@+id/jobShapeSpin"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/ptrnTypeSpin"
-            android:layout_alignStart="@+id/ptrnTypeSpin"
-            android:layout_below="@+id/ptrnTypeSpin"
-            android:layout_marginTop="42dp"
-            android:entries="@array/job_shape_relay" />
+                <TextView
+                    android:id="@+id/ptrnTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Pattern Type" />
 
-        <TextView
-            android:id="@+id/ptrnTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/ptrnTypeSpin"
-            android:layout_alignStart="@+id/ptrnTypeSpin"
-            android:layout_below="@+id/lenInput"
-            android:layout_marginTop="16dp"
-            android:text="Pattern Type:"
-            android:textStyle="bold" />
+                <Spinner
+                    android:id="@+id/ptrnTypeSpin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:entries="@array/pattern_type"
+                    style="@style/no_outline_spinner"/>
 
-        <TextView
-            android:id="@+id/jobShapeTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/jobShapeSpin"
-            android:layout_alignStart="@+id/jobShapeSpin"
-            android:layout_below="@+id/ptrnTypeSpin"
-            android:layout_marginTop="20dp"
-            android:text="Shape of job:"
-            android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Shape of job"/>
+
+                <Spinner
+                    android:id="@+id/jobShapeSpin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:entries="@array/job_shape_relay"
+                    style="@style/no_outline_spinner"/>
+
+
+                <TextView
+                    android:id="@+id/jobShapeTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Other"/>
+
+                <CheckBox
+                    android:id="@+id/edgeCheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Edging" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!--add values above here -->
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/nextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/jobShapeSpin"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/jobShapeSpin"
-            android:layout_marginBottom="24dp"
             android:clickable="true"
             app:fabSize="normal"
-            app:srcCompat="@drawable/right_arrow" />
-
-        <CheckBox
-            android:id="@+id/edgeCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/nextBtn"
-            android:layout_alignLeft="@+id/jobShapeSpin"
-            android:layout_alignStart="@+id/jobShapeSpin"
-            android:layout_marginBottom="7dp"
-            android:text="Is there edging?" />
-
-        <!--add values above here -->
+            app:srcCompat="@drawable/right_arrow"
+            android:onClick="fabClicked"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="25dp"/>
 
     </RelativeLayout>
 

@@ -7,73 +7,40 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
         <!--add values below here -->
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/stepRebuildingFAB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            app:fabSize="normal"
-            app:srcCompat="@drawable/right_arrow"
-            android:onClick="fabClicked"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"/>
+
 
         <TextView
-            android:id="@+id/titleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="Joint Fill"
-            android:textSize="18sp"
+            android:text="@string/estimation_title"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.039"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.017" />
-
-        <TextView
-            android:id="@+id/gettingJobTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text=" - Final Estimate"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.031"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.089"
-            android:textStyle="bold"
-            android:layout_below="@+id/titleTV"
-            android:layout_alignLeft="@+id/titleTV"
-            android:layout_alignStart="@+id/titleTV" />
+            android:id="@+id/headlineTextView"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"/>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/gettingJobTV"
-            android:layout_above="@+id/stepRebuildingFAB">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/headlineTextView"
+            android:layout_above="@+id/fab"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/scroll_view">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -82,8 +49,7 @@
                     android:id="@+id/sizeJobWTTitleV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="Size of the Job (w):" />
+                    android:text="Width:" />
 
                 <TextView
                     android:id="@+id/sizeJobLTitleTV"
@@ -93,7 +59,7 @@
                     android:layout_alignStart="@+id/sizeJobWTTitleV"
                     android:layout_below="@+id/sizeJobWTTitleV"
                     android:layout_marginTop="15dp"
-                    android:text="Size of the Job (l):" />
+                    android:text="Length:" />
 
                 <TextView
                     android:id="@+id/sizeJointsTitleTV"
@@ -175,17 +141,6 @@
                     android:layout_below="@+id/weedsJointTitleTV"
                     android:layout_marginTop="15dp"
                     android:text="Hard Joint Fill:" />
-
-                <TextView
-                    android:id="@+id/finalEstTitleTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="Final Estimate:"
-                    android:layout_marginTop="50dp"
-                    android:layout_below="@+id/hardJointTitleTV"
-                    android:layout_alignRight="@+id/easeTitleTV"
-                    android:layout_alignEnd="@+id/easeTitleTV" />
 
                 <TextView
                     android:id="@+id/sizeJobWTV"
@@ -287,18 +242,21 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignTop="@+id/hardJointTitleTV" />
 
-                <TextView
-                    android:id="@+id/finalEstTV"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@+id/finalEstTitleTV" />
-
             </RelativeLayout>
         </ScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/check_mark"
+            android:onClick="fabClicked"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="25dp"/>
 
         <!--add values above here -->
 

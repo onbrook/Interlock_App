@@ -7,109 +7,125 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
-        tools:context=".MainActivity"
         android:background="#ffffffff">
 
         <!--add values below here -->
 
         <TextView
-            android:id="@+id/titleTV"
+            android:id="@+id/headlineTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Step Rebuilding"
-            android:textSize="18sp"
+            android:text="About the Project"
             android:textStyle="bold"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"/>
-
-        <TextView
-            android:id="@+id/gettingJobTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" - About the Project"
-            android:layout_below="@+id/titleTV"
-            android:textStyle="bold"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             />
 
-        <TextView
-            android:id="@+id/sJHeightTV"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Size of Job (height):"
-            android:layout_marginTop="19dp"
-            android:layout_below="@id/gettingJobTV"
-            android:layout_marginLeft="20dp"/>
+            android:layout_below="@+id/headlineTextView"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/scroll_view"
+            android:layout_above="@+id/stepRebuildingFAB">
 
-        <TextView
-            android:id="@+id/sJLengthTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Size of Job (length):"
-            android:layout_marginTop="29dp"
-            android:layout_below="@+id/height_input"
-            android:layout_toRightOf="@+id/errorTV"
-            android:layout_toEndOf="@+id/errorTV" />
-
-        <TextView
-            android:id="@+id/stepsTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Are the steps..."
-            android:layout_above="@+id/curvedStraightRBG"
-            android:layout_toRightOf="@+id/errorTV"
-            android:layout_toEndOf="@+id/errorTV"
-            android:layout_marginBottom="11dp" />
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/curvedStraightRBG"
-            android:layout_alignBottom="@+id/stepRebuildingFAB"
-            android:layout_alignRight="@+id/stepsTV"
-            android:layout_alignEnd="@+id/stepsTV"
-            android:layout_marginBottom="34dp">
-
-            <RadioButton
-                android:id="@+id/curvedRB"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Curved"
-                android:checked="true"/>
+                android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/straightRB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Straight" />
-        </RadioGroup>
+                <TextView
+                    android:id="@+id/sJHeightTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dimensions_title"/>
 
-        <TextView
-            android:id="@+id/errorTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_below="@id/curvedStraightRBG"/>
+                <EditText
+                    android:id="@+id/height_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/height_hint"
+                    android:inputType="numberDecimal"
+                    style="@style/no_outline_edit_text"/>
 
-        <TextView
-            android:id="@+id/bShiftTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Amount base Shifted:"
-            android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/sJHeightTV"
-            android:layout_alignStart="@+id/sJHeightTV" />
+                <EditText
+                    android:id="@+id/length_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/length_hint"
+                    android:inputType="numberDecimal"
+                    style="@style/no_outline_edit_text"/>
+
+                <TextView
+                    android:id="@+id/stepsTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shape"
+                    android:layout_marginTop="10dp" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/curvedStraightRBG"
+                    android:layout_marginTop="10dp">
+
+                    <RadioButton
+                        android:id="@+id/curvedRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Curved"
+                        android:checked="true"/>
+
+                    <RadioButton
+                        android:id="@+id/straightRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Straight" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/bShiftTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Amount base Shifted:"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"/>
+
+                <SeekBar
+                    android:id="@+id/baseShiftSB"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:max="4"
+                    android:progress="2"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:id="@+id/baseShiftDisplayTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"/>
+            </LinearLayout>
+        </ScrollView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/stepRebuildingFAB"
@@ -122,52 +138,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"/>
+            android:layout_margin="25dp"/>
 
-        <SeekBar
-            android:id="@+id/baseShiftSB"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/bShiftTV"
-            android:layout_alignStart="@+id/bShiftTV"
-            android:layout_below="@+id/bShiftTV"
-            android:layout_marginTop="22dp"
-            android:max="4"
-            android:progress="2" />
-
-        <TextView
-            android:id="@+id/baseShiftDisplayTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/baseShiftSB"
-            android:layout_alignStart="@+id/baseShiftSB"
-            android:layout_below="@+id/baseShiftSB"
-            android:layout_marginTop="18dp" />
-
-        <EditText
-            android:id="@+id/height_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sJHeightTV"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:hint="@string/height_hint"
-            android:inputType="numberDecimal"
-            style="@style/no_outline_edit_text"/>
-
-        <EditText
-            android:id="@+id/length_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sJLengthTV"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:hint="@string/height_hint"
-            android:inputType="numberDecimal"
-            style="@style/no_outline_edit_text"/>
 
         <!--add values above here -->
 

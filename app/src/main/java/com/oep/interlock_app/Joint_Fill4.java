@@ -50,7 +50,6 @@ public class Joint_Fill4 extends AppCompatActivity {
         TextView whatArrTV = (TextView) findViewById(R.id.whatArrTV);
         TextView weedJointTV = (TextView) findViewById(R.id.weedJointTV);
         TextView hardJointTV = (TextView) findViewById(R.id.hardJointTV);
-        TextView finalEstTV = (TextView) findViewById(R.id.finalEstTV);
 
         //adding the variables to the textviews for display
         sizeJobWTV.setText(Joint_Fill.widInputSt);
@@ -63,7 +62,6 @@ public class Joint_Fill4 extends AppCompatActivity {
         whatArrTV.setText(Joint_Fill2.whatArrSt);
         weedJointTV.setText(Joint_Fill3.weedJointSt);
         hardJointTV.setText(Joint_Fill3.hardJointSt);
-        finalEstTV.setText("??");
 
         //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);

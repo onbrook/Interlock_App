@@ -37,19 +37,24 @@
             android:name="com.oep.interlock_app.Interlock_Relaying_Estimate"
             android:configChanges="orientation|screenSize"
             android:label="Interlock Relaying" />
-        <activity android:name="com.oep.interlock_app.Step_Rebuilding">
-            <activity android:name="Step_Rebuilding.NextActivity" />
-        </activity>
-        <activity android:name="com.oep.interlock_app.Step_Rebuilding2" />
-        <activity android:name="com.oep.interlock_app.Step_Rebuilding3" />
+        <activity
+            android:name="com.oep.interlock_app.Step_Rebuilding"
+            android:label="Step Rebuilding"/>
+        <activity
+            android:name="com.oep.interlock_app.Step_Rebuilding2"
+            android:label="Step Rebuilding" />
+        <activity
+            android:name="com.oep.interlock_app.Step_Rebuilding3"
+            android:label="Step Rebuilding" />
         <activity
             android:name="com.oep.interlock_app.Step_Rebuilding4"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.oep.interlock_app.Wall_Rebuilding"
-            android:label="@string/wall_rebuilding_title" />
+            android:configChanges="orientation|screenSize"
+            android:label="Step Rebuilding" />
         <activity
             android:name="com.oep.interlock_app.Wall_Rebuilding2"
+            android:label="@string/wall_rebuilding_title" />
+        <activity
+            android:name="com.oep.interlock_app.Wall_Rebuilding"
             android:label="@string/wall_rebuilding_title" />
         <activity
             android:name="com.oep.interlock_app.Wall_Rebuilding3"
@@ -100,8 +105,12 @@
         <activity
             android:name="com.oep.interlock_app.HelpPage"
             android:label="Help Page" />
-        <activity android:name="com.oep.interlock_app.DatabaseManagement" />
-        <activity android:name="com.oep.interlock_app.ActivityDatabaseAccounts"></activity>
+        <activity
+            android:name="com.oep.interlock_app.DatabaseManagement"
+            android:label="Database Managment" />
+        <activity
+            android:name="com.oep.interlock_app.ActivityDatabaseAccounts"
+            android:label="Accounts"/>
     </application>
 
 </manifest>

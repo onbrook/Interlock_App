@@ -7,118 +7,163 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
         <!--add values below here -->
 
         <TextView
-            android:id="@+id/titleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Joint fill Replacement"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/gettingJobTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="10dp"
-            android:text=" - Getting to the Job"
+            android:text="@string/to_job_title"
             android:textStyle="bold"
-            android:layout_below="@id/titleTV"/>
+            android:id="@+id/headlineTextView"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
 
-        <TextView
-            android:id="@+id/easeTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ease of Access..."
-            android:layout_below="@+id/locationSp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="19dp" />
-
-        <Spinner
-            android:id="@+id/locationSp"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/no_outline_spinner"
-            android:entries="@array/job_location"
-            android:layout_below="@+id/locationTV"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_below="@+id/headlineTextView"
+            android:id="@+id/scroll_view"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_above="@+id/stepRebuildingFAB">
 
-        <TextView
-            android:id="@+id/locationTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Location:"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/gettingJobTV"
-            android:layout_alignLeft="@+id/gettingJobTV"
-            android:layout_alignStart="@+id/gettingJobTV" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <SeekBar
-            android:id="@+id/easeSB"
-            android:layout_width="match_parent"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/easeTV"
-            android:layout_marginTop="17dp"
-            android:max="2"
-            android:progress="1" />
+                <TextView
+                    android:id="@+id/locationTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location"/>
 
-        <TextView
-            android:id="@+id/easeDisplayTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/easeSB"
-            android:layout_marginTop="17dp"
-            />
+                <Spinner
+                    android:id="@+id/locationSp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/no_outline_spinner"
+                    android:entries="@array/job_location"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
 
-        <TextView
-            android:id="@+id/roomManTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/easeDisplayTV"
-            android:layout_marginTop="22dp"
-            android:text="Room to Maneuver " />
+                <TextView
+                    android:id="@+id/easeTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ease of Access"
+                    android:layout_below="@+id/locationSp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"/>
 
-        <SeekBar
-            android:id="@+id/roomManSB"
-            android:layout_width="match_parent"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/easeSB"
-            android:layout_alignRight="@+id/easeSB"
-            android:layout_below="@+id/roomManTV"
-            android:layout_marginTop="22dp"
-            android:max="4"
-            android:progress="2" />
+                <SeekBar
+                    android:id="@+id/easeSB"
+                    android:layout_width="match_parent"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/easeTV"
+                    android:layout_marginTop="10dp"
+                    android:max="2"
+                    android:progress="1"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
 
-        <TextView
-            android:id="@+id/roomDisplayTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/roomManSB"
-            android:layout_marginTop="21dp"
-            android:layout_toEndOf="@+id/easeDisplayTV"
-            android:layout_toRightOf="@+id/easeDisplayTV" />
+                <TextView
+                    android:id="@+id/easeDisplayTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/easeSB"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"
+                    />
+
+                <TextView
+                    android:id="@+id/roomManTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/easeDisplayTV"
+                    android:layout_marginTop="10dp"
+                    android:text="Room to Maneuver"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp" />
+
+                <SeekBar
+                    android:id="@+id/roomManSB"
+                    android:layout_width="match_parent"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/easeSB"
+                    android:layout_alignRight="@+id/easeSB"
+                    android:layout_below="@+id/roomManTV"
+                    android:layout_marginTop="10dp"
+                    android:max="4"
+                    android:progress="2"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:id="@+id/roomDisplayTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/roomManSB"
+                    android:layout_toEndOf="@+id/easeDisplayTV"
+                    android:layout_toRightOf="@+id/easeDisplayTV"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"/>
+
+                <TextView
+                    android:id="@+id/whatAroundTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Whats around"
+                    android:layout_below="@+id/roomDisplayTV"
+                    android:layout_alignRight="@+id/easeTV"
+                    android:layout_alignEnd="@+id/easeTV" />
+
+                <CheckBox
+                    android:id="@+id/playStrucCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/whatAroundTV"
+                    android:layout_marginTop="10dp"
+                    android:text="Play Structure"/>
+
+                <CheckBox
+                    android:id="@+id/deckCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/playStrucCB"
+                    android:text="Deck"
+                    android:layout_marginTop="10dp"/>
+
+                <CheckBox
+                    android:id="@+id/poolCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pool"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+        </ScrollView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/stepRebuildingFAB"
@@ -131,48 +176,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"/>
-
-        <TextView
-            android:id="@+id/whatAroundTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
-            android:text="Whats around?"
-            android:layout_below="@+id/roomDisplayTV"
-            android:layout_alignRight="@+id/easeTV"
-            android:layout_alignEnd="@+id/easeTV" />
-
-        <CheckBox
-            android:id="@+id/playStrucCB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/whatAroundTV"
-            android:layout_marginTop="15dp"
-            android:text="Play Structure?"/>
-
-        <CheckBox
-            android:id="@+id/deckCB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/playStrucCB"
-            android:layout_marginLeft="19dp"
-            android:layout_marginStart="19dp"
-            android:layout_toEndOf="@+id/playStrucCB"
-            android:layout_toRightOf="@+id/playStrucCB"
-            android:text="Deck?" />
-
-        <CheckBox
-            android:id="@+id/poolCB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pool?"
-            android:layout_alignBaseline="@+id/deckCB"
-            android:layout_alignBottom="@+id/deckCB"
-            android:layout_toRightOf="@+id/deckCB"
-            android:layout_toEndOf="@+id/deckCB"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp" />
+            android:layout_margin="25dp"/>
 
         <!--add values above here -->
 

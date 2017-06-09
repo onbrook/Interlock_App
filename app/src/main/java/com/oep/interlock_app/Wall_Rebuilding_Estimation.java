@@ -5,13 +5,17 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,7 +75,6 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         TextView glueOut = (TextView) findViewById(R.id.glue_out);
         TextView clipsOut = (TextView) findViewById(R.id.clips_out);
         TextView plantsOut = (TextView) findViewById(R.id.plants_out);
-        final TextView finalEstimate = (TextView) findViewById(R.id.final_out);
         //get the data that was filled out in the layouts
         Bundle extras = getIntent().getExtras();
         int locationIndex = extras.getInt("locationIndex");
@@ -86,8 +89,7 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         int plantsNum = extras.getInt("plantsNum");
         boolean glueChecked = extras.getBoolean("glueChecked");
         boolean clipsChecked = extras.getBoolean("clipsChecked");
-        //add data to the data list
-        //NOTE: the list must be in the same order as the data in the Google Sheet
+
         data.add(heightInput);
         data.add(lengthInput);
         data.add(baseShiftIndex);
@@ -125,7 +127,7 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
                 rootsOut.setText("None");
                 break;
             case 1:
-                roomOut.setText("Some");
+                rootsOut.setText("Some");
                 break;
             case 2:
                 rootsOut.setText("Moderately");
@@ -165,6 +167,7 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
                 if(success) {
                     int hours = totalHours.intValue();
                     int minute = doubleToInt((totalHours - hours) * 60);
+                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.home_FAB);
                     if (accurate) {
                         if (minute <= 7)
                             minute = 0;
@@ -187,7 +190,14 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
                                 hoursStr = "hours";
                                 break;
                         }
-                        finalEstimate.setText("Final Estimate: " + hours + " "+hoursStr+" and " + minute + " minutes.");
+                        Snackbar snackbar = Snackbar.make(fab, "Final Estimate: " + hours + " "+hoursStr+" and " + minute + " minutes.", Snackbar.LENGTH_INDEFINITE);
+                        View mView = snackbar.getView();
+                        TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        else
+                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        snackbar.show();
                     } else {
                         if (minute >= 30)
                             hours++;
@@ -200,8 +210,14 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
                                 hoursStr = "hours";
                                 break;
                         }
-                        Toast.makeText(activity, "Attention: this estimation is likely not very accurate.", Toast.LENGTH_LONG).show();
-                        finalEstimate.setText("Final Estimate: " + hours + " "+hoursStr+".");
+                        Snackbar snackbar = Snackbar.make(fab, "Final Estimate: " + hours + " "+hoursStr+".", Snackbar.LENGTH_INDEFINITE);
+                        View mView = snackbar.getView();
+                        TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        else
+                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        snackbar.show();
                     }
                 }
             }
@@ -223,27 +239,29 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = null;
                 if(position==0){
-                    startActivity(new Intent(Wall_Rebuilding_Estimation.this, AboutPage.class));
+                    intent = new Intent(Wall_Rebuilding_Estimation.this, AboutPage.class);
                 }
                 else if(position==1){
-                    startActivity(new Intent(Wall_Rebuilding_Estimation.this, HelpPage.class));
+                    intent = new Intent(Wall_Rebuilding_Estimation.this, HelpPage.class);
                 }
                 else if(position==2){
-                    startActivity(new Intent(Wall_Rebuilding_Estimation.this, HomeScreen.class));
+                    intent = new Intent(Wall_Rebuilding_Estimation.this, HomeScreen.class);
                 }
                 else if(position==3){
-                    startActivity(new Intent(Wall_Rebuilding_Estimation.this, EstimationPage.class));
+                    intent = new Intent(Wall_Rebuilding_Estimation.this, EstimationPage.class);
                 }
                 else if(position==4){
-                    startActivity(new Intent(Wall_Rebuilding_Estimation.this, DatabaseManagement.class));
+                    intent = new Intent(Wall_Rebuilding_Estimation.this, DatabaseManagement.class);
                 }
                 else if(position==5){
-                    startActivity(new Intent(Wall_Rebuilding_Estimation.this, EnterDatabaseIdActivity.class));
+                    intent = new Intent(Wall_Rebuilding_Estimation.this, EnterDatabaseIdActivity.class);
                 }
                 else if(position==6){//this will only be true if the user is owner
-                    startActivity(new Intent(Wall_Rebuilding_Estimation.this, ActivityDatabaseAccounts.class));
+                    intent = new Intent(Wall_Rebuilding_Estimation.this, ActivityDatabaseAccounts.class);
                 }
+                ILDialog.showExitDialogSave(activity, intent, wallRebuildingSheet, data);
             }
         });
 

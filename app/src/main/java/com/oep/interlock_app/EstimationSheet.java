@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -95,6 +96,10 @@ class EstimationSheet {
 
     static final String USER_TYPE_OWNER = "owner";
     static final String USER_TYPE_EMPLOYEE = "employee";
+
+    static final int NO_ERROR = -1;
+    static final int UNKNOWN_ERROR = 0;
+    static final int NO_GOOGLE_PLAY_SERVICES_ERROR = 1;
 
     private int sheetId;
     private String sheetName;
@@ -200,8 +205,9 @@ class EstimationSheet {
         currentProcess = CREATE_DATABASE_PROCESS;
         currentListener = listener;
         if (! isGooglePlayServicesAvailable()){
+            currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
-            listener.whenFinished(false);
+            listener.whenFinished(false, NO_GOOGLE_PLAY_SERVICES_ERROR);
         }
         else if (googleAccountCredential.getSelectedAccountName() == null) {
             chooseAccount();
@@ -212,10 +218,9 @@ class EstimationSheet {
         else{
             TaskCreateDatabase taskCreateDatabase = new TaskCreateDatabase(new CreateDatabaseListener() {
                 @Override
-                public void whenFinished(boolean success) {
+                public void whenFinished(boolean success, int errorId) {
                     currentProcess = NO_PROCESS;
-
-                    listener.whenFinished(success);
+                    listener.whenFinished(success, errorId);
                 }
             });
             taskCreateDatabase.execute();
@@ -230,6 +235,7 @@ class EstimationSheet {
         currentEmails = emails;
         currentListener = listener;
         if (! isGooglePlayServicesAvailable()){
+            currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
             listener.whenFinished(false);
         }
@@ -259,6 +265,7 @@ class EstimationSheet {
         currentPermission = permission;
         currentListener = listener;
         if (! isGooglePlayServicesAvailable()){
+            currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
             listener.whenFinished(false);
         }
@@ -287,6 +294,7 @@ class EstimationSheet {
         currentProcess = GET_PERMISSIONS_PROCESS;
         currentListener = listener;
         if (! isGooglePlayServicesAvailable()){
+            currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
             listener.whenFinished(false, null);
         }
@@ -316,7 +324,8 @@ class EstimationSheet {
         currentDatabaseId = databaseId;
         if (! isGooglePlayServicesAvailable()){
             acquireGooglePlayServices();
-            listener.whenFinished(false);
+            currentProcess = NO_PROCESS;
+            listener.whenFinished(false, NO_GOOGLE_PLAY_SERVICES_ERROR);
         }
         else if (googleAccountCredential.getSelectedAccountName() == null) {
             chooseAccount();
@@ -327,9 +336,9 @@ class EstimationSheet {
         else{
             TaskCheckDatabaseIdValidity taskCheckDatabaseIdValidity = new TaskCheckDatabaseIdValidity(databaseId, new CheckDatabaseIdValidityListener() {
                 @Override
-                public void whenFinished(boolean validId) {
+                public void whenFinished(boolean validId, int errorId) {
                     currentProcess = NO_PROCESS;
-                    listener.whenFinished(validId);
+                    listener.whenFinished(validId, errorId);
                 }
             });
             taskCheckDatabaseIdValidity.execute();
@@ -404,6 +413,7 @@ class EstimationSheet {
         currentEstimationData = data;
         currentListener = addEstimationListener;
         if (! isGooglePlayServicesAvailable()){
+            currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
             addEstimationListener.whenFinished(false);
         }
@@ -438,6 +448,7 @@ class EstimationSheet {
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
         currentProcess = REMOVE_ESTIMATION_PROCESS;
         if (! isGooglePlayServicesAvailable()){
+            currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
             removeEstimationListener.whenFinished(false);
         }
@@ -469,6 +480,7 @@ class EstimationSheet {
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
         currentProcess = REMOVE_ESTIMATION_PROCESS;
         if (! isGooglePlayServicesAvailable()){
+            currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
             setActualTimeListener.whenFinished(false);
         }
@@ -626,6 +638,7 @@ class EstimationSheet {
             builder.setNegativeButton("CANCEL",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            currentProcess = NO_PROCESS;
                             dialog.dismiss();
                         }
                     });
@@ -811,7 +824,7 @@ class EstimationSheet {
      * @return true if Google Play Services is available and up to
      *     date on this device; false otherwise.
      */
-    private boolean isGooglePlayServicesAvailable() {
+    boolean isGooglePlayServicesAvailable() {
         GoogleApiAvailability apiAvailability =
                 GoogleApiAvailability.getInstance();
         final int connectionStatusCode =
@@ -823,7 +836,7 @@ class EstimationSheet {
      * Attempt to resolve a missing, out-of-date, invalid or disabled Google
      * Play Services installation via a user dialog, if possible.
      */
-    private void acquireGooglePlayServices() {
+    void acquireGooglePlayServices() {
         GoogleApiAvailability apiAvailability =
                 GoogleApiAvailability.getInstance();
         final int connectionStatusCode =
@@ -875,13 +888,17 @@ class EstimationSheet {
          */
         @Override
         protected Void doInBackground(Void... params) {
+            boolean canceled = false;
+            String databaseId = "";
             try {
-                String databaseId = createDatabase();
-                saveDatabaseId(databaseId);
+                databaseId = createDatabase();
             } catch (Exception e) {
+                canceled = true;
                 lastError = e;
                 cancel(true);
             }
+            if(!canceled)
+                saveDatabaseId(databaseId);
             return null;
         }
 
@@ -954,7 +971,7 @@ class EstimationSheet {
         @Override
         protected void onPostExecute(Void output) {
             progressDialog.dismiss();
-            createDatabaseListener.whenFinished(true);
+            createDatabaseListener.whenFinished(true, NO_ERROR);
         }
 
         @Override
@@ -965,17 +982,19 @@ class EstimationSheet {
                     showGooglePlayServicesAvailabilityErrorDialog(
                             ((GooglePlayServicesAvailabilityIOException) lastError)
                                     .getConnectionStatusCode());
+                    createDatabaseListener.whenFinished(false, NO_GOOGLE_PLAY_SERVICES_ERROR);
                 } else if (lastError instanceof UserRecoverableAuthIOException) {
                     activity.startActivityForResult(
                             ((UserRecoverableAuthIOException) lastError).getIntent(),
                             REQUEST_AUTHORIZATION);
                 } else {
                     lastError.printStackTrace();
+                    createDatabaseListener.whenFinished(false, UNKNOWN_ERROR);
                 }
             } else {
                 System.err.println("Request to create Spreadsheet canceled.");
+                createDatabaseListener.whenFinished(false, UNKNOWN_ERROR);
             }
-            createDatabaseListener.whenFinished(false);
         }
     }
 
@@ -1289,14 +1308,7 @@ class EstimationSheet {
                         || sheetTitle.equals(JOINT_FILL_SHEET_NAME)
                         || sheetTitle.equals(INTERLOCK_RELAYING_SHEET_NAME)))
                     return false;
-            }/*
-            try {
-                // Try doing something to check if user has edit access
-                driveService.files().get(databaseId).execute().setName(DATABASE_TITLE);
-            } catch (Exception e){
-                valid = false;
-            }*/
-            //driveService.files().get(databaseId).execute().getOwnedByMe();
+            }
             try {
                 String role = driveService.permissions().get(databaseId, driveService.about().get().execute().getPermissionId()).execute().getRole();
                 switch (role) {
@@ -1310,50 +1322,7 @@ class EstimationSheet {
             } catch (IOException e){
                 setUserType(USER_TYPE_EMPLOYEE);
             }
-                //check if file is in drive
-                //driveService.files().get(databaseId).execute();
-
-            //Boolean ownedByMe = driveService.files().get(databaseId).execute().getOwnedByMe();
-            //if(ownedByMe == null || !ownedByMe)
-            //    setUserType(USER_TYPE_EMPLOYEE);
-            //else
-            //    setUserType(USER_TYPE_OWNER);
-
-            //return true;
-//return driveService.files().get(databaseId).execute().getCapabilities().getCanEdit();
-            //if(valid)
-                //valid = file.getEditable();
             return true;
-
-            //return true;
-
-            //System.out.println("Editable: "+file.getEditable());
-            //String userType = USER_TYPE_EMPLOYEE;
-
-            //List<User> owners = file.getOwners();
-            //for(User owner : owners) {
-                //if (owner.getEmailAddress().equals(googleAccountCredential.getSelectedAccount().name))
-                    //userType = USER_TYPE_OWNER;
-            //}
-
-            //setUserType(userType);
-
-            // If it gets here without throwing an exception, the ID is good
-/*
-            File file = driveService.files().get(databaseId).execute().getHasAugmentedPermissions();
-            Boolean ownedByMe = file.getOwnedByMe();
-            if (ownedByMe == null)
-                // File not found - do not have access
-                return false;
-            else if (ownedByMe) {
-                // User owns file
-                setUserType(USER_TYPE_OWNER); // Salnn email: smckenzie@virtuallearningapps.ca
-                return true;
-            } else {
-                // Have access but do not own
-                setUserType(USER_TYPE_EMPLOYEE);
-                return true;
-            }*/
         }
 
 
@@ -1366,7 +1335,7 @@ class EstimationSheet {
         @Override
         protected void onPostExecute(Boolean output) {
             progressDialog.dismiss();
-            listener.whenFinished(output);
+            listener.whenFinished(output, NO_ERROR);
         }
 
         @Override
@@ -1377,17 +1346,19 @@ class EstimationSheet {
                     showGooglePlayServicesAvailabilityErrorDialog(
                             ((GooglePlayServicesAvailabilityIOException) lastError)
                                     .getConnectionStatusCode());
+                    listener.whenFinished(false, NO_GOOGLE_PLAY_SERVICES_ERROR);
                 } else if (lastError instanceof UserRecoverableAuthIOException) {
                     activity.startActivityForResult(
                             ((UserRecoverableAuthIOException) lastError).getIntent(),
-                            REQUEST_AUTHORIZATION);
+                            REQUEST_AUTHORIZATION); // wait until re-called
                 } else {
                     lastError.printStackTrace();
+                    listener.whenFinished(false, UNKNOWN_ERROR);
                 }
             } else {
                 System.err.println("Request to get permissions canceled.");
+                listener.whenFinished(false, UNKNOWN_ERROR);
             }
-            listener.whenFinished(false);
         }
     }
 
@@ -1946,7 +1917,7 @@ interface CreateDatabaseListener extends Listener {
      * Called when the currently running process if finished.
      * @param success whether the process was successful or not.
      */
-    void whenFinished(boolean success);
+    void whenFinished(boolean success, int errorId);
 }
 
 interface AddPermissionsListener extends Listener {
@@ -1977,7 +1948,7 @@ interface CheckDatabaseIdValidityListener extends Listener {
     /**
      * Called when the currently running process if finished.
      */
-    void whenFinished(boolean validId);
+    void whenFinished(boolean validId, int errorId);
 }
 
 interface GetDataListener extends Listener {

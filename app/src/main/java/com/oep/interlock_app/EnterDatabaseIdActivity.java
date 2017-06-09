@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
 import com.oep.owenslaptop.interlock_app.R;
 
 import java.io.FileOutputStream;
@@ -55,7 +56,7 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                     saveId(input);
                     estimationSheet.startCheckingDatabaseIdValidity(input, new CheckDatabaseIdValidityListener() {
                         @Override
-                        public void whenFinished(boolean validId) {
+                        public void whenFinished(boolean validId, int errorId) {
                             if (validId) { // ID is correct
                                 saveId(input);
                                 if(estimationSheet.isUserOwner())
@@ -64,7 +65,9 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                                     // Go back to home
                                     startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                             } else {
-                                showDialog("Invalid ID", "You do not have access to this database or it does not exist.");
+                                if(errorId != EstimationSheet.NO_GOOGLE_PLAY_SERVICES_ERROR)
+                                    showDialog("Invalid ID", "You do not have access to this database or it does not exist.");
+                                // else caught in TaskCheckDatabaseIdValidity or startCheckingDatabaseIdValidity
                             }
                         }
                     });
@@ -121,6 +124,12 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed(){
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_new_database, menu);
@@ -129,13 +138,31 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item){
         //create new database
+        final Activity activity = this;
         if(item.getItemId() == R.id.new_database)
             estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
                 @Override
-                public void whenFinished(boolean success) {
-                if(success){
-                    startActivity(getIntent().setClass(getApplicationContext(), AddDatabasePermissionsActivity.class));
-                }
+                public void whenFinished(boolean success, int errorId) {
+                    if(success){
+                        startActivity(getIntent().setClass(getApplicationContext(), AddDatabasePermissionsActivity.class));
+                    } else
+                        if(errorId != EstimationSheet.NO_GOOGLE_PLAY_SERVICES_ERROR) {
+                            //show error dialog
+                            AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+
+                            alertDialog.setTitle("Error");
+                            alertDialog.setMessage("An error has occurred when trying to create " +
+                                    "the database.");
+
+                            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                                        }
+                                    });
+                            alertDialog.show();
+                        }
                 }
             });
         else
@@ -188,12 +215,12 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
     private void addDrawerItems(){
         // Only have the "Database Permissions" if the user owns the database
         EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
-        if(estimationSheet.isUserOwner()) {
+        if(estimationSheet.doesUserHaveRole() && estimationSheet.isUserOwner()) {
             String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
-            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+            mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         } else {
             String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup" };
-            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+            mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         }
         mDrawerList.setAdapter(mAdapter);
     }

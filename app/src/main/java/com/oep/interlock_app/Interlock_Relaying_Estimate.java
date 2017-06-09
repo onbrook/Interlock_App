@@ -37,7 +37,7 @@ public class Interlock_Relaying_Estimate extends AppCompatActivity {
             } catch (NullPointerException ex) {
                 //back button not supported
             }
-        }
+        }/*
         final TextView output = (TextView)findViewById(R.id.output);
 
         output.setText("Width: " + Interlock_Relaying.widthOut + "\n" +
@@ -52,7 +52,7 @@ public class Interlock_Relaying_Estimate extends AppCompatActivity {
                 Interlock_Relaying_ToJob.locOut + "\n" +
                 Interlock_Relaying_ToJob.moveOut + "\n" +
                 Interlock_Relaying_ToJob.accOut);
-                //estimate here
+                //estimate here*/
 
         //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);

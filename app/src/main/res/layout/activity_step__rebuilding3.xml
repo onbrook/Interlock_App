@@ -7,89 +7,110 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
         <!--add values below here -->
 
         <TextView
-            android:id="@+id/titleTV"
+            android:id="@+id/headlineTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Step Rebuilding"
-            android:textSize="18sp"
+            android:text="@string/complications_title"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.039"
-            app:layout_constraintVertical_bias="0.017"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
 
-        <TextView
-            android:id="@+id/gettingJobTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="21dp"
-            android:text=" - Potential Problems"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.031"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.089"
-            android:layout_marginStart="21dp"
-            android:layout_below="@+id/titleTV"
-            android:layout_alignLeft="@+id/titleTV"
-            android:layout_alignStart="@+id/titleTV" />
-
-        <TextView
-            android:id="@+id/stepsGluedTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/gettingJobTV"
-            android:layout_alignStart="@+id/gettingJobTV"
-            android:layout_below="@+id/gettingJobTV"
-            android:layout_marginTop="14dp"
-            android:text="Steps Glued?" />
-
-        <Spinner
-            android:id="@+id/stepsGluedSp"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            style="@style/no_outline_spinner"
-            android:entries="@array/steps_glued"
-            android:layout_below="@+id/stepsGluedTV"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_below="@+id/headlineTextView"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/scroll_view"
+            android:layout_above="@+id/stepRebuildingFAB">
 
-        <TextView
-            android:id="@+id/treeRootsTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tree roots moving steps?"
-            android:layout_below="@+id/stepsGluedSp"
-            android:layout_alignLeft="@+id/stepsGluedTV"
-            android:layout_alignStart="@+id/stepsGluedTV"
-            android:layout_marginTop="22dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/stepsGluedTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Steps Glued" />
+
+                <Spinner
+                    android:id="@+id/stepsGluedSp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    style="@style/no_outline_spinner"
+                    android:entries="@array/steps_glued"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
+
+                <TextView
+                    android:id="@+id/treeRootsTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tree roots moving steps"
+                    android:layout_marginTop="10dp"/>
+
+                <SeekBar
+                    android:id="@+id/treeRootsSB"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:max="2"
+                    android:progress="1"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:id="@+id/rootsValueDisplayTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp" />
+
+                <TextView
+                    android:id="@+id/clipsLineTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Other"
+                    android:layout_below="@+id/rootsValueDisplayTV"
+                    android:layout_marginTop="10dp" />
+
+                <CheckBox
+                    android:id="@+id/clipsCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Clips"/>
+
+                <CheckBox
+                    android:id="@+id/hardLineCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Hard Line"/>
+            </LinearLayout>
+        </ScrollView>
 
 
         <android.support.design.widget.FloatingActionButton
@@ -103,61 +124,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"/>
-
-        <SeekBar
-            android:id="@+id/treeRootsSB"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/treeRootsTV"
-            android:layout_alignStart="@+id/treeRootsTV"
-            android:layout_below="@+id/treeRootsTV"
-            android:layout_marginLeft="14dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="24dp"
-            android:max="2"
-            android:progress="1" />
-
-        <TextView
-            android:id="@+id/rootsValueDisplayTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/treeRootsSB"
-            android:layout_alignStart="@+id/treeRootsSB"
-            android:layout_below="@+id/treeRootsSB"
-            android:layout_marginTop="11dp" />
-
-        <TextView
-            android:id="@+id/clipsLineTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Are there?"
-            android:layout_below="@+id/rootsValueDisplayTV"
-            android:layout_alignLeft="@+id/treeRootsTV"
-            android:layout_alignStart="@+id/treeRootsTV"
-            android:layout_marginTop="34dp" />
-
-        <CheckBox
-            android:id="@+id/clipsCB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Clips?"
-            android:layout_below="@+id/clipsLineTV"
-            android:layout_alignLeft="@+id/clipsLineTV"
-            android:layout_alignStart="@+id/clipsLineTV" />
-
-        <CheckBox
-            android:id="@+id/hardLineCB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Hard Line?"
-            android:layout_below="@+id/clipsCB"
-            android:layout_alignLeft="@+id/clipsCB"
-            android:layout_alignStart="@+id/clipsCB" />
-
+            android:layout_margin="25dp"/>
         <!--add values above here -->
 
     </RelativeLayout>

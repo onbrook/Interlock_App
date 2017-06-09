@@ -1,23 +1,24 @@
 package com.oep.interlock_app;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioButton;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.oep.owenslaptop.interlock_app.R;
+
+import static com.oep.interlock_app.ViewValidity.*;
 
 /*
  *By: Peter Lewis
@@ -25,68 +26,84 @@ import com.oep.owenslaptop.interlock_app.R;
  */
 
 public class Wall_Rebuilding2 extends AppCompatActivity {
-
-    EditText heightInput;
-    EditText lengthInput;
-    CheckBox lineCheckBox;
-    RadioButton straightRadioButton;
-    RadioButton curvedRadioButton;
-    View[] views = new View[2];
+    // getting to the job layout Views
+    private Spinner locationSpinner;
 
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+    SeekBar accessibilitySeekBar;
+    SeekBar maneuverSeekBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wall_rebuilding_layout);
+
+        setContentView(R.layout.wall_rebuilding_tojob);
+        // getting to the job layout Views
+        locationSpinner = (Spinner) findViewById(R.id.location_spinner);
+        accessibilitySeekBar = (SeekBar) findViewById(R.id.accessibility_seek_bar);
+        final TextView accessibilityTextView = (TextView) findViewById(R.id.accessibility_tv);
+        maneuverSeekBar = (SeekBar) findViewById(R.id.maneuver_seek_bar);
+        final TextView maneuverTextView = (TextView) findViewById(R.id.maneuver_tv);
+
         //setup back button in title bar
         try {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }catch (NullPointerException npex){
+        }catch (NullPointerException e){
             try {
                 getActionBar().setDisplayHomeAsUpEnabled(true);
             }catch(NullPointerException ex){
                 //back button not supported
             }
         }
-        //layout Views
-        heightInput = (EditText) findViewById(R.id.height_input);
-        lengthInput = (EditText) findViewById(R.id.length_input);
-        lineCheckBox = (CheckBox) findViewById(R.id.hard_line_CheckBox);
-        straightRadioButton = (RadioButton) findViewById(R.id.wallStraight_radioButton);
-        curvedRadioButton = (RadioButton) findViewById(R.id.wallCurved_radioButton);
+        //spinner listeners
+        locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-        views[0] = heightInput;
-        views[1] = lengthInput;
-        //EditText listeners
-        heightInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                ViewValidity.removeOutline(v);
-                return !ViewValidity.isViewValid(v);//keep up keyboard
+            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
+                int index = locationSpinner.getSelectedItemPosition();
+                if(index != 0)
+                    updateViewValidity(locationSpinner);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                int index = locationSpinner.getSelectedItemPosition();
+                if(index != 0)
+                    updateViewValidity(locationSpinner);
             }
         });
-        heightInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        //Seek Bar Listeners
+        accessibilitySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                ViewValidity.removeOutline(v);
+            public void onStopTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // update angleTV
+                accessibilityTextView.setText(getResources().getStringArray(R.array.accessibility)[progress]);
             }
         });
-        lengthInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        maneuverSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                ViewValidity.removeOutline(v);
-                return !ViewValidity.isViewValid(v);//keep up keyboard
-            }
-        });
-        lengthInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onStopTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                ViewValidity.removeOutline(v);
+            public void onStartTrackingTouch(SeekBar seekBar) {/* do nothing*/}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // update angleTV
+                maneuverTextView.setText(getResources().getStringArray(R.array.maneuver)[progress]);
             }
         });
 
@@ -103,51 +120,53 @@ public class Wall_Rebuilding2 extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        final Activity activity = this;
+
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = null;
                 if(position==0){
-                    startActivity(new Intent(Wall_Rebuilding2.this, AboutPage.class));
+                    intent = new Intent(Wall_Rebuilding2.this, AboutPage.class);
                 }
                 else if(position==1){
-                    startActivity(new Intent(Wall_Rebuilding2.this, HelpPage.class));
+                    intent = new Intent(Wall_Rebuilding2.this, HelpPage.class);
                 }
                 else if(position==2){
-                    startActivity(new Intent(Wall_Rebuilding2.this, HomeScreen.class));
+                    intent = new Intent(Wall_Rebuilding2.this, HomeScreen.class);
                 }
                 else if(position==3){
-                    startActivity(new Intent(Wall_Rebuilding2.this, EstimationPage.class));
+                    intent = new Intent(Wall_Rebuilding2.this, EstimationPage.class);
                 }
                 else if(position==4){
-                    startActivity(new Intent(Wall_Rebuilding2.this, DatabaseManagement.class));
+                    intent = new Intent(Wall_Rebuilding2.this, DatabaseManagement.class);
                 }
                 else if(position==5){
-                    startActivity(new Intent(Wall_Rebuilding2.this, EnterDatabaseIdActivity.class));
+                    intent = new Intent(Wall_Rebuilding2.this, EnterDatabaseIdActivity.class);
                 }
                 else if(position==6){//this will only be true if the user is owner
-                    startActivity(new Intent(Wall_Rebuilding2.this, ActivityDatabaseAccounts.class));
+                    intent = new Intent(Wall_Rebuilding2.this, ActivityDatabaseAccounts.class);
                 }
+                ILDialog.showExitDialogWarning(activity, intent);
             }
         });
     }
 
     public void fabClicked(View view){
-        if (ViewValidity.areViewsValid(views)) {
-            //start activity (getIntent to save extras)
-            Intent intent = getIntent();
-            //update class
-            intent.setClass(getApplicationContext(), Wall_Rebuilding3.class);
+        if(isViewValid(locationSpinner)) {
+            //create a new intent (you do not get the current one because we do not need any
+            // information from the home screen)
+            Intent intent = new Intent(getApplicationContext(), Wall_Rebuilding3.class);
+            //this removes the animation
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //extras--for passing data
-            intent.putExtra("heightInput", Double.parseDouble(heightInput.getText().toString()));
-            intent.putExtra("lengthInput", Double.parseDouble(lengthInput.getText().toString()));
-            intent.putExtra("lineChecked", lineCheckBox.isChecked());
-            if(straightRadioButton.isChecked())
-                intent.putExtra("straightCurvedNum", 0);
-            else
-                intent.putExtra("straightCurvedNum", 1);
+            intent.putExtra("locationIndex", locationSpinner.getSelectedItemPosition());
+            intent.putExtra("accessIndex", accessibilitySeekBar.getProgress());
+            intent.putExtra("maneuverIndex", maneuverSeekBar.getProgress());
+            //start activity
             startActivity(intent);
         }else
-            ViewValidity.updateViewValidity(views);
+            updateViewValidity(locationSpinner);
     }
 
     //called when the back button in the title bas is pressed

@@ -7,130 +7,142 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
         <!--add values below here -->
 
         <TextView
-            android:id="@+id/pageTitle"
-            android:layout_width="280dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="28dp"
             android:text="Getting to job / Complications"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/easeTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Ease of access:"
             android:textStyle="bold"
+            android:id="@+id/pageTitle"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/pageTitle"
-            android:layout_alignLeft="@+id/pageTitle"
-            android:layout_alignStart="@+id/pageTitle" />
+            android:id="@+id/scroll_view"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_above="@+id/nextBtn">
 
-        <TextView
-            android:id="@+id/accDisplay"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/easeTxt"
-            android:layout_alignStart="@+id/easeTxt"
-            android:layout_below="@+id/easeTxt"
-            android:layout_marginTop="45dp"
-            android:text="Very accessible"
-            android:textAllCaps="false" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/locationTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/accSlider"
-            android:layout_alignStart="@+id/accSlider"
-            android:layout_below="@+id/accSlider"
-            android:layout_marginTop="31dp"
-            android:text="Job location:"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/easeTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ease of access"/>
 
-        <SeekBar
-            android:id="@+id/accSlider"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:max="3"
-            android:progress="0"
-            android:layout_marginBottom="21dp"
-            android:layout_alignBottom="@+id/accDisplay"
-            android:layout_alignLeft="@+id/accDisplay"
-            android:layout_alignStart="@+id/accDisplay" />
+                <SeekBar
+                    android:id="@+id/accSlider"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="3"
+                    android:progress="0"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:id="@+id/accDisplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/easeTxt"
+                    android:layout_alignStart="@+id/easeTxt"
+                    android:layout_below="@+id/easeTxt"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"
+                    android:text="Very accessible"
+                    android:textAllCaps="false" />
+
+                <TextView
+                    android:id="@+id/locationTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/accSlider"
+                    android:layout_alignStart="@+id/accSlider"
+                    android:layout_below="@+id/accSlider"
+                    android:layout_marginTop="10dp"
+                    android:text="Job location:"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/locationSpin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:entries="@array/job_location"
+                    android:layout_below="@+id/locationTxt"
+                    android:layout_alignLeft="@+id/locationTxt"
+                    android:layout_alignStart="@+id/locationTxt"
+                    style="@style/no_outline_spinner"/>
+
+                <TextView
+                    android:id="@+id/roomToMoveTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Room to move"
+                    android:layout_marginTop="10dp"/>
+
+                <SeekBar
+                    android:id="@+id/moveSlider"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="3"
+                    android:progress="0"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:id="@+id/moveDisplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/moveSlider"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"
+                    android:text="Lots of room to move" />
+            </LinearLayout>
+        </ScrollView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/nextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/accSlider"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/accSlider"
-            android:layout_marginBottom="27dp"
             android:clickable="true"
-            app:elevation="0dp"
             app:fabSize="normal"
-            app:srcCompat="@drawable/right_arrow" />
-
-        <Spinner
-            android:id="@+id/locationSpin"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:entries="@array/job_location"
-            android:layout_below="@+id/locationTxt"
-            android:layout_alignLeft="@+id/locationTxt"
-            android:layout_alignStart="@+id/locationTxt" />
-
-        <TextView
-            android:id="@+id/roomToMoveTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/locationSpin"
-            android:layout_alignStart="@+id/locationSpin"
-            android:layout_centerVertical="true"
-            android:text="Room to move:"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/moveDisplay"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/moveSlider"
-            android:layout_alignStart="@+id/moveSlider"
-            android:layout_below="@+id/moveSlider"
-            android:text="Lots of room to move" />
-
-        <SeekBar
-            android:id="@+id/moveSlider"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:max="3"
-            android:progress="0"
-            android:layout_marginTop="9dp"
-            android:layout_below="@+id/roomToMoveTxt"
-            android:layout_alignLeft="@+id/roomToMoveTxt"
-            android:layout_alignStart="@+id/roomToMoveTxt" />
+            app:srcCompat="@drawable/right_arrow"
+            android:onClick="fabClicked"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="25dp"/>
 
         <!--add values above here -->
 

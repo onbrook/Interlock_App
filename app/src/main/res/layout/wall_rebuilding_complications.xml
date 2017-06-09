@@ -12,16 +12,12 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
@@ -32,41 +28,51 @@
             android:layout_height="wrap_content"
             android:text="@string/complications_title"
             android:textStyle="bold"
-            android:drawablePadding="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:id="@+id/headlineTextView"/>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
             android:layout_below="@+id/headlineTextView"
-            android:id="@+id/scroll_view">
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/scroll_view"
+            android:layout_above="@+id/wall_rebuilding_FAB">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Amount that the base has shifted"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginStart="32dp"
                     android:id="@+id/baseShift_tv"/>
 
                 <SeekBar
                     android:id="@+id/base_shift_seek_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
-                    android:max="3"/>
+                    android:max="3"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="64dp"
-                    android:layout_marginStart="64dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"
                     android:id="@+id/base_shift_text_view"
                     android:text="@string/none"/>
 
@@ -74,25 +80,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Roots moving the wall"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginStart="32dp"/>
+                    android:layout_marginTop="10dp"/>
 
                 <SeekBar
                     android:id="@+id/roots_seek_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
-                    android:max="3"/>
+                    android:max="3"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="64dp"
-                    android:layout_marginStart="64dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"
                     android:id="@+id/roots_tv"
                     android:text="@string/none"/>
 
@@ -100,25 +106,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Plants behind the wall"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginStart="32dp"/>
+                    android:layout_marginTop="10dp"/>
 
                 <SeekBar
                     android:id="@+id/plants_seek_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
                     android:layout_marginTop="10dp"
-                    android:max="3"/>
+                    android:max="3"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="64dp"
-                    android:layout_marginStart="64dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"
                     android:id="@+id/plants_tv"
                     android:text="@string/none"/>
 
@@ -127,16 +133,12 @@
                     android:layout_height="wrap_content"
                     android:text="Other"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginStart="32dp"
                     android:id="@+id/other_tv"/>
 
                 <CheckBox
                     android:id="@+id/glue_CheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginStart="32dp"
                     android:layout_marginTop="10dp"
                     android:text="Wall properly glued"/>
 
@@ -144,8 +146,6 @@
                     android:id="@+id/clips_CheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginStart="32dp"
                     android:layout_marginTop="10dp"
                     android:text="Clips in the wall"/>
             </LinearLayout>
@@ -162,7 +162,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"/>
+            android:layout_margin="25dp"/>
 
         <!--add values above here -->
 

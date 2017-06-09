@@ -50,7 +50,6 @@ public class CleaningSealingEstimation extends AppCompatActivity {
         TextView stainPercentOut = (TextView) findViewById(R.id.stain_percent_out);
         TextView ageOut = (TextView) findViewById(R.id.age_out);
         TextView otherCompOut = (TextView) findViewById(R.id.comp_out);
-        TextView finalOut = (TextView) findViewById(R.id.final_out);
         // get the data that was filled out in the layouts and put it in the TextViews
         Bundle extras = getIntent().getExtras();
         double heightDouble = extras.getDouble("height_double");
@@ -83,7 +82,6 @@ public class CleaningSealingEstimation extends AppCompatActivity {
         }
         int otherCompNum = extras.getInt("other_comp_num");
         otherCompOut.setText(getResources().getStringArray(R.array.amount_increasing)[otherCompNum]);
-        finalOut.setText("Final Estimate: 0 hours and 0 minuets");
 
         //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);

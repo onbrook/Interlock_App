@@ -7,16 +7,12 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
@@ -25,26 +21,34 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Potential Issues"
+            android:text="@string/complications_title"
             android:textStyle="bold"
-            android:drawablePadding="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:id="@+id/headlineTextView"/>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/headlineTextView"
-            android:layout_above="@+id/wall_rebuilding_FAB">
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/scroll_view"
+            android:layout_above="@+id/fab">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Stains"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="32dp"
                     android:id="@+id/stains_headline_tv"/>
 
                 <CheckBox
@@ -52,24 +56,26 @@
                     android:layout_height="wrap_content"
                     android:text="Are there stains?"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginLeft="8dp"
                     android:id="@+id/stain_checkBox"/>
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="40dp"
                     android:entries="@array/stain_type"
                     android:id="@+id/stain_spinner"
-                    style="@style/no_outline_spinner"/>
+                    style="@style/no_outline_spinner"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Amount covered"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginLeft="20dp"
                     android:id="@+id/stains_percent_headline_tv"/>
 
                 <SeekBar
@@ -78,13 +84,16 @@
                     android:id="@+id/percent_stain_seekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="48dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginLeft="28dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="72dp"
+                    android:layout_marginLeft="52dp"
                     android:id="@+id/percent_stain_tv"
                     android:text="None"/>
 
@@ -93,7 +102,6 @@
                     android:layout_height="wrap_content"
                     android:text="Extent of other Complications"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="32dp"
                     android:id="@+id/other_headline_tv"/>
 
                 <SeekBar
@@ -102,13 +110,16 @@
                     android:id="@+id/other_comp_seekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="64dp"
+                    android:layout_marginLeft="32dp"
                     android:id="@+id/other_comp_tv"
                     android:text="No other complications"/>
 
@@ -118,21 +129,20 @@
                     android:layout_height="wrap_content"
                     android:text="Other"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="32dp"
                     android:id="@+id/age_headline_tv"/>
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginLeft="8dp"
                     android:id="@+id/old_check_box"
                     android:text="Job older than 2 years"/>
             </LinearLayout>
         </ScrollView>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/wall_rebuilding_FAB"
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -142,7 +152,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"/>
+            android:layout_margin="25dp"/>
 
 
         <!--add values above here -->

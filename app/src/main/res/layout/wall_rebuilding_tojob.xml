@@ -11,17 +11,12 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
-        tools:context=".MainActivity"
         android:background="#ffffffff">
 
         <!--add values below here -->
@@ -32,15 +27,22 @@
             android:layout_height="wrap_content"
             android:text="@string/to_job_title"
             android:textStyle="bold"
-            android:drawablePadding="20dp"
             android:id="@+id/headlineTextView"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/headlineTextView"
             android:id="@+id/scroll_view"
-            android:layout_margin="20dp">
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_above="@+id/wall_rebuilding_FAB">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,43 +52,41 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/location_title"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginStart="32dp" />
+                    android:text="@string/location_title"/>
 
                 <Spinner
                     android:id="@+id/location_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginStart="32dp"
                     android:entries="@array/location"
                     android:layout_marginTop="10dp"
-                    style="@style/no_outline_spinner"/>
+                    style="@style/no_outline_spinner"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/accessibility_title"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginStart="32dp"/>
+                    android:layout_marginTop="10dp"/>
 
                 <SeekBar
                     android:id="@+id/accessibility_seek_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
-                    android:max="2"/>
+                    android:max="2"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="64dp"
-                    android:layout_marginStart="64dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"
                     android:id="@+id/accessibility_tv"
                     android:text="@string/hard_to_access"/>
 
@@ -94,25 +94,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/maneuver_title"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginStart="32dp"/>
+                    android:layout_marginTop="10dp"/>
 
                 <SeekBar
                     android:id="@+id/maneuver_seek_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
-                    android:max="2"/>
+                    android:max="2"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="64dp"
-                    android:layout_marginStart="64dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"
                     android:id="@+id/maneuver_tv"
                     android:text="@string/little_room"/>
             </LinearLayout>
@@ -130,7 +130,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"/>
+            android:layout_margin="25dp"/>
 
         <!--add values above here -->
 

@@ -7,16 +7,12 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
@@ -27,9 +23,9 @@
             android:layout_height="wrap_content"
             android:text="@string/estimation_title"
             android:textStyle="bold"
-            android:drawablePadding="20dp"
             android:id="@+id/headlineTextView"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -37,9 +33,12 @@
             android:layout_below="@+id/headlineTextView"
             android:layout_above="@+id/home_FAB"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:id="@+id/scroll_view">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -261,15 +260,6 @@
             </RelativeLayout>
         </ScrollView>
 
-        <TextView
-            android:id="@+id/final_out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Final Estimate: Unknown"
-            android:layout_marginTop="32dp"
-            android:layout_below="@+id/scroll_view"/>
-
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/home_FAB"
             android:layout_width="wrap_content"
@@ -281,7 +271,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"/>
+            android:layout_margin="25dp"/>
 
         <!--add values above here -->
 

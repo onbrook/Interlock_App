@@ -7,95 +7,119 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Wall_Rebuilding">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
         <!--add values below here -->
 
         <TextView
-            android:id="@+id/titleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Joint fill Replacment"
-            android:textSize="18sp"
+            android:text="@string/project_info"
             android:textStyle="bold"
-            android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/gettingJobTV"
-            android:layout_alignStart="@+id/gettingJobTV"
-            android:layout_marginTop="15dp" />
+            android:id="@+id/headlineTextView"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
 
-        <TextView
-            android:id="@+id/gettingJobTV"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" - About the Project"
-            android:textStyle="bold"
-            android:layout_below="@+id/titleTV"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="17dp" />
+            android:layout_below="@+id/headlineTextView"
+            android:id="@+id/scroll_view"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp">
 
-        <TextView
-            android:id="@+id/widthTxt"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/gettingJobTV"
-            android:layout_alignStart="@+id/gettingJobTV"
-            android:layout_below="@+id/gettingJobTV"
-            android:layout_marginTop="27dp"
-            android:text="Size of the job (Width):"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/widtInput"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/widthTxt"
-            android:layout_alignStart="@+id/widthTxt"
-            android:layout_below="@+id/widthTxt"
-            android:layout_marginTop="13dp"
-            android:ems="10"
-            android:hint="Width (ft)"
-            android:inputType="numberDecimal"
-            android:layout_alignRight="@+id/gettingJobTV"
-            android:layout_alignEnd="@+id/gettingJobTV" />
+                <TextView
+                    android:id="@+id/widthTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dimensions_title"/>
 
-        <TextView
-            android:id="@+id/lenTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/widtInput"
-            android:layout_alignStart="@+id/widtInput"
-            android:layout_below="@+id/widtInput"
-            android:layout_marginTop="23dp"
-            android:text="Size of the job (Length):"
-            android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/widtInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="@string/width_hint"
+                    android:inputType="numberDecimal"
+                    style="@style/no_outline_edit_text"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
 
-        <EditText
-            android:id="@+id/lenInput"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/lenTxt"
-            android:layout_alignStart="@+id/lenTxt"
-            android:layout_below="@+id/lenTxt"
-            android:layout_marginTop="18dp"
-            android:ems="10"
-            android:hint="Length (ft)"
-            android:inputType="numberDecimal"
-            android:layout_alignRight="@+id/gettingJobTV"
-            android:layout_alignEnd="@+id/gettingJobTV" />
+                <EditText
+                    android:id="@+id/lenInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="@string/length_hint"
+                    android:inputType="numberDecimal"
+                    style="@style/no_outline_edit_text"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
+
+
+                <TextView
+                    android:id="@+id/patternTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Interlock Pattern"/>
+
+                <Spinner
+                    android:id="@+id/patternSp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/pattern"
+                    android:layout_below="@+id/patternTV"
+                    android:layout_marginTop="10dp"
+                    style="@style/no_outline_spinner"/>
+
+                <TextView
+                    android:id="@+id/sizeJointTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Size of Joints" />
+
+                <SeekBar
+                    android:id="@+id/sizeJointsSB"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:max="4"
+                    android:progress="2" />
+
+                <TextView
+                    android:id="@+id/sizeDisplayTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+
 
 
         <android.support.design.widget.FloatingActionButton
@@ -109,56 +133,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"/>
-
-
-        <TextView
-            android:id="@+id/patternTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lenInput"
-            android:layout_marginTop="18dp"
-            android:text="Interlock Pattern:"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/patternSp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:entries="@array/pattern"
-            android:layout_below="@+id/patternTV"
-            android:layout_marginTop="17dp" />
-
-        <TextView
-            android:id="@+id/sizeJointTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/patternSp"
-            android:layout_marginTop="26dp"
-            android:text="Size of Joints:" />
-
-        <SeekBar
-            android:id="@+id/sizeJointsSB"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/stepRebuildingFAB"
-            android:layout_alignLeft="@+id/lenInput"
-            android:layout_alignStart="@+id/lenInput"
-            android:max="4"
-            android:progress="2" />
-
-        <TextView
-            android:id="@+id/sizeDisplayTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/sizeJointsSB"
-            android:layout_alignStart="@+id/sizeJointsSB"
-            android:layout_alignTop="@+id/stepRebuildingFAB" />
+            android:layout_margin="25dp"/>
 
         <!--add values above here -->
 

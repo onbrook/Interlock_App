@@ -12,83 +12,94 @@ android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Project Info"
+            android:text="@string/project_info"
             android:textStyle="bold"
-            android:drawablePadding="20dp"
-            android:id="@+id/headlineTextView"/>
+            android:id="@+id/headlineTextView"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dimensions_title"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="32dp"
             android:layout_below="@+id/headlineTextView"
-            android:id="@+id/dimensions_tv"/>
+            android:id="@+id/scroll_view"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_above="@+id/wall_rebuilding_FAB">
 
-        <EditText
-            android:id="@+id/height_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/dimensions_tv"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
-            android:hint="@string/height_hint"
-            android:inputType="numberDecimal"
-            style="@style/no_outline_edit_text"/>
-
-        <EditText
-            android:id="@+id/length_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/height_input"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
-            android:inputType="numberDecimal"
-            android:hint="@string/length_hint"
-            style="@style/no_outline_edit_text"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/angle_title"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="32dp"
-            android:layout_below="@+id/length_input"
-            android:id="@+id/angle_headline_tv"/>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_below="@id/angle_headline_tv"
-            android:layout_marginTop="10dp"
-            android:id="@+id/angle_rg">
-
-            <RadioButton
-                android:id="@+id/angle_horizontal_radio_button"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/horizontal"
-                android:checked="true"/>
+                android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/angle_vertical_radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/vertical" />
-        </RadioGroup>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dimensions_title"/>
+
+                <EditText
+                    android:id="@+id/height_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:hint="@string/height_hint"
+                    android:inputType="numberDecimal"
+                    style="@style/no_outline_edit_text"/>
+
+                <EditText
+                    android:id="@+id/length_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/length_hint"
+                    style="@style/no_outline_edit_text"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/angle_title"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/length_input"
+                    android:id="@+id/angle_headline_tv"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/angle_headline_tv"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/angle_rg">
+
+                    <RadioButton
+                        android:id="@+id/angle_horizontal_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/horizontal"
+                        android:checked="true"/>
+
+                    <RadioButton
+                        android:id="@+id/angle_vertical_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/vertical" />
+                </RadioGroup>
+            </LinearLayout>
+        </ScrollView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/wall_rebuilding_FAB"
@@ -101,7 +112,7 @@ android:layout_height="match_parent">
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"/>
+            android:layout_margin="25dp"/>
 
     </RelativeLayout>
 

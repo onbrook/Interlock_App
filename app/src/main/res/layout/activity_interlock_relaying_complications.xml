@@ -7,174 +7,186 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oep.interlock_app.Wall_Rebuilding2">
+    tools:context="com.oep.interlock_app.Interlock_Relaying_Complications">
 
     <!-- The first child in the layout is for the main Activity UI-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:paddingTop="@dimen/fab_margin"
-        android:paddingBottom="@dimen/fab_margin"
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
         <!--add values below here -->
 
         <TextView
-            android:id="@+id/pageTitle"
-            android:layout_width="280dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="38dp"
-            android:text="Interlock Relaying - Complications"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="@string/complications_title"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:id="@+id/headlineTextView"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/headlineTextView"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/scroll_view"
+            android:layout_above="@+id/nextBtn">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Amount interlock has sunk"/>
+
+                <SeekBar
+                    android:id="@+id/sunkAmtSlider"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:max="4"/>
+
+                <TextView
+                    android:id="@+id/sunkDisplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/jointFillTxt"
+                    android:layout_alignStart="@+id/jointFillTxt"
+                    android:layout_below="@+id/sunkAmtSlider"
+                    android:text="Hasn't sunk"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp"/>
+
+                <TextView
+                    android:id="@+id/jointFillTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Joint fill hardness"
+                    android:layout_below="@+id/sunkAmtSlider"
+                    android:layout_alignLeft="@+id/sunkAmtSlider"
+                    android:layout_alignStart="@+id/sunkAmtSlider"
+                    android:layout_marginTop="10dp"/>
+
+                <SeekBar
+                    android:id="@+id/jointFillSlider"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:max="4"/>
+
+                <TextView
+                    android:id="@+id/jointFillDisplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/jointFillTxt"
+                    android:layout_alignStart="@+id/jointFillTxt"
+                    android:layout_below="@+id/jointFillSlider"
+                    android:text="Not very hard"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp" />
+
+                <TextView
+                    android:id="@+id/paverSizeTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Size of pavers:"
+                    android:layout_below="@+id/jointFillDisplay"
+                    android:layout_alignLeft="@+id/jointFillDisplay"
+                    android:layout_alignStart="@+id/jointFillDisplay" />
+
+                <SeekBar
+                    android:id="@+id/paverSlider"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:max="2"/>
+
+                <TextView
+                    android:id="@+id/paversDisplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Small Paver Size"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp" />
+
+                <TextView
+                    android:id="@+id/weedTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Weeds in the interlock:"
+                    android:layout_below="@+id/paverSlider"
+                    android:layout_alignLeft="@+id/paverSlider"
+                    android:layout_alignStart="@+id/paverSlider" />
+
+                <SeekBar
+                    android:id="@+id/weedSlider"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/weedTxt"
+                    android:layout_alignStart="@+id/weedTxt"
+                    android:layout_below="@+id/weedTxt"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:max="4"
+                    android:progress="0" />
+
+                <TextView
+                    android:id="@+id/weedDisplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/weedSlider"
+                    android:layout_alignStart="@+id/weedSlider"
+                    android:layout_below="@+id/weedSlider"
+                    android:text="No weeds"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="32dp" />
+            </LinearLayout>
+        </ScrollView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/nextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:clickable="true"
-            app:elevation="0dp"
             app:fabSize="normal"
             app:srcCompat="@drawable/right_arrow"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="22dp"
-            android:layout_marginEnd="22dp" />
-
-        <TextView
-            android:id="@+id/sunkTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/pageTitle"
-            android:layout_alignStart="@+id/pageTitle"
-            android:layout_below="@+id/pageTitle"
-            android:layout_marginTop="17dp"
-            android:text="Amount interlock has sunk:"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/jointFillTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Joint fill hardness:"
-            android:textStyle="bold"
-            android:layout_below="@+id/sunkAmtSlider"
-            android:layout_alignLeft="@+id/sunkAmtSlider"
-            android:layout_alignStart="@+id/sunkAmtSlider"
-            android:layout_marginTop="25dp" />
-
-        <TextView
-            android:id="@+id/paverSizeTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            android:text="Size of pavers:"
-            android:textStyle="bold"
-            android:layout_below="@+id/jointFillDisplay"
-            android:layout_alignLeft="@+id/jointFillDisplay"
-            android:layout_alignStart="@+id/jointFillDisplay" />
-
-        <SeekBar
-            android:id="@+id/sunkAmtSlider"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/sunkTxt"
-            android:layout_alignStart="@+id/sunkTxt"
-            android:layout_below="@+id/sunkTxt"
-            android:layout_marginTop="9dp"
-            android:max="4"
-            android:progress="0" />
-
-        <TextView
-            android:id="@+id/sunkDisplay"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/jointFillTxt"
-            android:layout_alignStart="@+id/jointFillTxt"
-            android:layout_below="@+id/sunkAmtSlider"
-            android:text="Hasn't sunk"
-            android:textAlignment="viewStart" />
-
-        <SeekBar
-            android:id="@+id/jointFillSlider"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/jointFillDisplay"
-            android:layout_alignStart="@+id/jointFillDisplay"
-            android:layout_below="@+id/jointFillTxt"
-            android:layout_marginTop="10dp"
-            android:max="4"
-            android:progress="0" />
-
-        <TextView
-            android:id="@+id/jointFillDisplay"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/jointFillTxt"
-            android:layout_alignStart="@+id/jointFillTxt"
-            android:layout_below="@+id/jointFillSlider"
-            android:text="Not very hard" />
-
-        <TextView
-            android:id="@+id/weedTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:text="Weeds in the interlock:"
-            android:textStyle="bold"
-            android:layout_below="@+id/paverSlider"
-            android:layout_alignLeft="@+id/paverSlider"
-            android:layout_alignStart="@+id/paverSlider" />
-
-        <TextView
-            android:id="@+id/weedDisplay"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/weedSlider"
-            android:layout_alignStart="@+id/weedSlider"
-            android:layout_below="@+id/weedSlider"
-            android:text="No weeds" />
-
-        <SeekBar
-            android:id="@+id/weedSlider"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/weedTxt"
-            android:layout_alignStart="@+id/weedTxt"
-            android:layout_below="@+id/weedTxt"
-            android:layout_marginTop="9dp"
-            android:max="4"
-            android:progress="0" />
-
-        <SeekBar
-            android:id="@+id/paverSlider"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/paverSizeTxt"
-            android:layout_alignStart="@+id/paverSizeTxt"
-            android:layout_centerVertical="true"
-            android:max="2"
-            android:progress="0" />
-
-        <TextView
-            android:id="@+id/paversDisplay"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/paverSlider"
-            android:layout_alignStart="@+id/paverSlider"
-            android:layout_below="@+id/paverSlider"
-            android:text="Small Paver Size" />
+            android:layout_marginRight="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="25dp" />
 
         <!--add values above here -->
 

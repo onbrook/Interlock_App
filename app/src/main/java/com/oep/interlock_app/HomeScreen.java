@@ -1,5 +1,8 @@
 package com.oep.interlock_app;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -37,6 +40,7 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        final Activity activity = this;
         //check if the user is new and if so, go to correct activity
         final EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
         if(!estimationSheet.doesUserHaveRole()) {
@@ -46,7 +50,26 @@ public class HomeScreen extends AppCompatActivity {
             if (isUserOwner) {
                 estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
                     @Override
-                    public void whenFinished(boolean success) {/* do nothing*/}
+                    public void whenFinished(boolean success, int errorId) {
+                        if(!success)
+                            if(errorId != EstimationSheet.NO_GOOGLE_PLAY_SERVICES_ERROR) {
+                                //show error dialog
+                                AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+
+                                alertDialog.setTitle("Error");
+                                alertDialog.setMessage("An error has occurred when trying to create " +
+                                        "the database.");
+
+                                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                                startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                                            }
+                                        });
+                                alertDialog.show();
+                            }
+                    }
                 });
             } else {
                 startActivityForResult(new Intent(getApplicationContext(), EnterDatabaseIdActivity.class), EstimationSheet.REQUEST_GET_DATABASE_ID);

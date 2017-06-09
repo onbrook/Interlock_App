@@ -1,11 +1,4 @@
 <resources>
-    <string name="app_name">Interlock App</string>
-    <string name="wall_rebuilding_title">Wall Rebuilding</string>
-    <string name="height_hint">Height</string>
-    <string name="layout_title">Layout of job</string>
-    <string name="length_hint">Length</string>
-    <string name="complications_title">Complications</string>
-    <string name="to_job_title">Getting to the job</string>
     <array name="location">
         <item>Choose one</item>
         <item>Front yard</item>
@@ -34,50 +27,50 @@
         <item>Lots</item>
     </array>
     <array name="stain_type">
-        <item>Stain Type</item>
+        <item>Choose one</item>
         <item>Efflorecnence</item>
         <item>Rust</item>
         <item>General Dirt</item>
     </array>
     <array name="pattern_type">
-        <item>Pattern Type</item>
+        <item>Choose one</item>
         <item>Modular</item>
         <item>Linear</item>
     </array>
     <array name="job_shape_relay">
-        <item>Shape of the job</item>
+        <item>Choose one</item>
         <item>Rectangular</item>
         <item>Circular</item>
         <item>Long + thin</item>>
         <item>Other</item>
     </array>
     <array name="paver_size">
-        <item>Size of pavers</item>
+        <item>Choose one</item>
         <item>Small</item>
         <item>Big</item>
     </array>
     <array name="job_location">
-        <item>Job Location</item>
+        <item>Choose one</item>
         <item>Front yard</item>
         <item>Backyard</item>
         <item>Side</item>
         <item>Other</item>
     </array>
     <array name="size_job_l">
-        <item>Size of the job (l)</item>
+        <item>Choose one</item>
         <item>Shorter</item>
         <item>Average</item>
         <item>Longer</item>
     </array>
     <array name="size_job_h">
-        <item>Size of the job (h)</item>
+        <item>Choose one</item>
         <item>Lower</item>
         <item>Average</item>
         <item>Higher</item>
         <item>Over 4 feet</item>
     </array>
     <array name="steps_glued">
-        <item>Steps Glued?</item>
+        <item>Choose one</item>
         <item>Yes</item>
         <item>No</item>
         <item>Over-Glued</item>
@@ -94,7 +87,7 @@
         <item>Modular</item>
     </array>
     <array name="job_types">
-        <item>Select a job type</item>
+        <item>Choose one</item>
         <item>Step Rebuilding</item>
         <item>Cleaning and Sealing</item>
         <item>Fill Joint Replacement</item>
@@ -103,6 +96,14 @@
     </array>
 
 
+    <string name="app_name">Interlock App</string>
+    <string name="wall_rebuilding_title">Wall Rebuilding</string>
+    <string name="height_hint">Height</string>
+    <string name="width_hint">Width</string>
+    <string name="layout_title">Layout of job</string>
+    <string name="length_hint">Length</string>
+    <string name="complications_title">Complications</string>
+    <string name="to_job_title">Getting to the job</string>
     <string name="title_activity_step__rebuilding2">Step_Rebuilding2</string>
     <string name="estimation_title">Estimation</string>
     <string name="cleaning_sealing_title">Cleaning and Sealing</string>
@@ -121,4 +122,6 @@
     <string name="curved">Curved</string>
     <string name="horizontal">Horizontal</string>
     <string name="vertical">Vertical</string>
+    <string name="shape">Shape</string>
+    <string name="project_info">Project Info</string>
 </resources>
