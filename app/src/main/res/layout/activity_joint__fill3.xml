@@ -37,7 +37,6 @@
             android:layout_marginLeft="48dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:id="@+id/scroll_view"
             android:layout_above="@+id/wall_rebuilding_FAB">
 
             <LinearLayout

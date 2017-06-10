@@ -536,7 +536,7 @@ class EstimationSheet {
             throw new NullPointerException("The data '"+userType+"'  which is in the user type file is not valid.");
     }
 
-    void setUserType(String userType){
+    void setUserType(String userType){System.err.println("user type being set to "+userType);
         if(!(userType.equals(USER_TYPE_OWNER) || userType.equals(USER_TYPE_EMPLOYEE)))
             throw new IllegalArgumentException("Cannot save userType '"+userType+"'. Invalid userType.");
         else{

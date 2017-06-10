@@ -37,7 +37,6 @@
             android:layout_marginLeft="48dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:id="@+id/scroll_view"
             android:layout_above="@+id/stepRebuildingFAB">
 
             <LinearLayout
@@ -46,7 +45,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/sJHeightTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dimensions_title"/>
@@ -70,7 +68,6 @@
                     style="@style/no_outline_edit_text"/>
 
                 <TextView
-                    android:id="@+id/stepsTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/shape"
@@ -79,7 +76,6 @@
                 <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/curvedStraightRBG"
                     android:layout_marginTop="10dp">
 
                     <RadioButton
@@ -90,7 +86,6 @@
                         android:checked="true"/>
 
                     <RadioButton
-                        android:id="@+id/straightRB"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -98,7 +93,6 @@
                 </RadioGroup>
 
                 <TextView
-                    android:id="@+id/bShiftTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Amount base Shifted:"

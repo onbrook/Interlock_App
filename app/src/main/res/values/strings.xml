@@ -15,11 +15,6 @@
         <item>Some room</item>
         <item>Lots of room</item>
     </array>
-    <array name="wall_shape">
-        <item>Choose one</item>
-        <item>Curved</item>
-        <item>Straight</item>
-    </array>
     <array name="amount_increasing">
         <item>None</item>
         <item>Little</item>
@@ -44,11 +39,6 @@
         <item>Long + thin</item>>
         <item>Other</item>
     </array>
-    <array name="paver_size">
-        <item>Choose one</item>
-        <item>Small</item>
-        <item>Big</item>
-    </array>
     <array name="job_location">
         <item>Choose one</item>
         <item>Front yard</item>
@@ -56,43 +46,16 @@
         <item>Side</item>
         <item>Other</item>
     </array>
-    <array name="size_job_l">
-        <item>Choose one</item>
-        <item>Shorter</item>
-        <item>Average</item>
-        <item>Longer</item>
-    </array>
-    <array name="size_job_h">
-        <item>Choose one</item>
-        <item>Lower</item>
-        <item>Average</item>
-        <item>Higher</item>
-        <item>Over 4 feet</item>
-    </array>
     <array name="steps_glued">
         <item>Choose one</item>
         <item>Yes</item>
         <item>No</item>
         <item>Over-Glued</item>
     </array>
-    <array name="sizeJoint">
-        <item>Choose one</item>
-        <item>Large</item>
-        <item>Average</item>
-        <item>Small</item>
-    </array>
     <array name="pattern">
         <item>Choose one</item>
         <item>Linear</item>
         <item>Modular</item>
-    </array>
-    <array name="job_types">
-        <item>Choose one</item>
-        <item>Step Rebuilding</item>
-        <item>Cleaning and Sealing</item>
-        <item>Fill Joint Replacement</item>
-        <item>Interlock Relaying</item>
-        <item>Wall Rebuilding</item>
     </array>
 
     <!-- this is the code that has the categories for the help menu -->
@@ -110,11 +73,9 @@
     <string name="wall_rebuilding_title">Wall Rebuilding</string>
     <string name="height_hint">Height</string>
     <string name="width_hint">Width</string>
-    <string name="layout_title">Layout of job</string>
     <string name="length_hint">Length</string>
     <string name="complications_title">Complications</string>
     <string name="to_job_title">Getting to the job</string>
-    <string name="title_activity_step__rebuilding2">Step_Rebuilding2</string>
     <string name="estimation_title">Estimation</string>
     <string name="cleaning_sealing_title">Cleaning and Sealing</string>
     <string name="dimensions_title">Dimensions (in feet)</string>
@@ -135,7 +96,6 @@
     <string name="aboutContent">This app is used to create estimates for different Interlock installations.  It takes the previous data and uses it to create new estimates and then saves those as well to keep improving its accuracy.  It also allows the user to create a new database and to add users to allow for access.</string>
     <string name="creatorSting">Creators:  \n- Owen Brook \n- Ethan McIntyre \n- Peter Lewis</string>
 
-    <style name="aboutString">This app is used to create estimates for different Interlock installations.  It takes the previous data and uses it to create new estimates and then saves those as well to keep improving its accuracy.  It also allows the user to create a new database and to add users to allow for access. </style>
     <string name="shape">Shape</string>
     <string name="project_info">Project Info</string>
 </resources>

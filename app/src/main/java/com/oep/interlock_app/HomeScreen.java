@@ -40,9 +40,12 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_home_screen);
+
         final Activity activity = this;
         //check if the user is new and if so, go to correct activity
         final EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         if(!estimationSheet.doesUserHaveRole()) {
             startActivityForResult(new Intent(getApplicationContext(), SetUserTypeActivity.class), EstimationSheet.REQUEST_GET_DATABASE_ID);
         } else if (!estimationSheet.isDatabaseIdSaved()) {
@@ -51,14 +54,15 @@ public class HomeScreen extends AppCompatActivity {
                 estimationSheet.startCreatingDatabase(new CreateDatabaseListener() {
                     @Override
                     public void whenFinished(boolean success, int errorId) {
-                        if(!success)
-                            if(errorId != EstimationSheet.NO_GOOGLE_PLAY_SERVICES_ERROR) {
+                        if(!success) {
+                            if (errorId != EstimationSheet.NO_GOOGLE_PLAY_SERVICES_ERROR) {
                                 //show error dialog
                                 AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
 
                                 alertDialog.setTitle("Error");
                                 alertDialog.setMessage("An error has occurred when trying to create " +
-                                        "the database.");
+                                        "a database. Pleas try again later. Until then, Interlock" +
+                                        " App is unable to be used.");
 
                                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                                         new DialogInterface.OnClickListener() {
@@ -69,6 +73,9 @@ public class HomeScreen extends AppCompatActivity {
                                         });
                                 alertDialog.show();
                             }
+                            // prevent user from navigating
+                            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                        }
                     }
                 });
             } else {
@@ -76,8 +83,6 @@ public class HomeScreen extends AppCompatActivity {
             }
         }else
             isUserOwner = estimationSheet.isUserOwner();
-
-        setContentView(R.layout.activity_home_screen);
         setTitle("Home");
 
         //setting up the buttons
@@ -93,7 +98,6 @@ public class HomeScreen extends AppCompatActivity {
 
         //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
 
         addDrawerItems();
@@ -142,7 +146,7 @@ public class HomeScreen extends AppCompatActivity {
         // Only have the "Database Permissions" if the user owns the database
         EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
         ArrayAdapter<String> mAdapter;
-        if(estimationSheet.isUserOwner()) {
+        if(isUserOwner) {
             String[] osArray = {"Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         } else {

@@ -88,7 +88,7 @@ public class HelpPage extends AppCompatActivity {
         // Apply the adapter to the spinner
 
         //adding the data
-        AddProduct();
+        addProducts();
 
         //get reference to the ExpandableListView
         expandableListView = (ExpandableListView) findViewById(R.id.myList);
@@ -119,7 +119,7 @@ public class HelpPage extends AppCompatActivity {
     };
 
     //load some initial data into out list
-    private void AddProduct(){
+    private void addProducts(){
 
         //this is where we add the information
         String commonError, createEstimate, setUpNewDa, useExDa, addPermish, dataMan;

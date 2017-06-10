@@ -53,7 +53,6 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                     Toast.makeText(EnterDatabaseIdActivity.this, "Please enter an ID", Toast.LENGTH_SHORT).show();
                 else{
                     // Check if id is valid
-                    saveId(input);
                     estimationSheet.startCheckingDatabaseIdValidity(input, new CheckDatabaseIdValidityListener() {
                         @Override
                         public void whenFinished(boolean validId, int errorId) {

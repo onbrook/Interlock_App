@@ -37,7 +37,6 @@
             android:layout_marginLeft="48dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:id="@+id/scroll_view"
             android:layout_above="@+id/fab">
 
             <LinearLayout
@@ -48,8 +47,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Stains"
-                    android:id="@+id/stains_headline_tv"/>
+                    android:text="Stains" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -101,8 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Extent of other Complications"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/other_headline_tv"/>
+                    android:layout_marginTop="10dp" />
 
                 <SeekBar
                     style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
@@ -128,8 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Other"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/age_headline_tv"/>
+                    android:layout_marginTop="10dp" />
 
                 <CheckBox
                     android:layout_width="wrap_content"

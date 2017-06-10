@@ -42,7 +42,6 @@
             android:layout_marginLeft="48dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:id="@+id/scroll_view"
             android:layout_above="@+id/wall_rebuilding_FAB">
 
             <LinearLayout
@@ -53,8 +52,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Amount that the base has shifted"
-                    android:id="@+id/baseShift_tv"/>
+                    android:text="Amount that the base has shifted" />
 
                 <SeekBar
                     android:id="@+id/base_shift_seek_bar"
