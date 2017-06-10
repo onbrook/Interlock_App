@@ -193,7 +193,10 @@ public class CleaningSealing2 extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //extras--for passing data
             intent.putExtra("stain_checked", stainCheckBox.isChecked());
-            intent.putExtra("old", oldCheckBox.isChecked());//make max is 2
+            intent.putExtra("stain_type_index", -1);
+            intent.putExtra("stain_type_str", "none");
+            intent.putExtra("stain_amount", -1);
+            intent.putExtra("old", oldCheckBox.isChecked());
             intent.putExtra("other_comp_num", otherCompSeekBar.getProgress());
             //start activity
             startActivity(intent);

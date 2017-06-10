@@ -3,6 +3,7 @@ package com.oep.interlock_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,6 +25,8 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class Interlock_Relaying_Estimate extends AppCompatActivity {
 
@@ -66,8 +69,8 @@ public class Interlock_Relaying_Estimate extends AppCompatActivity {
         TextView roomOut = (TextView) findViewById(R.id.room_out);
 
         //fill views
-        heightOut.setText(Interlock_Relaying.widthOut);
-        lengthOut.setText(Interlock_Relaying.lengthOut);
+        heightOut.setText(Interlock_Relaying.widthOut + "ft");
+        lengthOut.setText(Interlock_Relaying.lengthOut + "ft");
         patternOut.setText(Interlock_Relaying.ptrnOut);
         shapeOut.setText(Interlock_Relaying.shapeOut);
         edgingOut.setText(Interlock_Relaying.edgeOut);
@@ -251,5 +254,20 @@ public class Interlock_Relaying_Estimate extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), HomeScreen.class));
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        estimationSheet.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(
+                requestCode, permissions, grantResults, estimationSheet);
     }
 }

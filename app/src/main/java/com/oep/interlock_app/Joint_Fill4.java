@@ -3,6 +3,7 @@ package com.oep.interlock_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,6 +23,8 @@ import com.oep.owenslaptop.interlock_app.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class Joint_Fill4 extends AppCompatActivity {
 
@@ -83,6 +86,8 @@ public class Joint_Fill4 extends AppCompatActivity {
         dataSet.add(Joint_Fill2.whatArrSt);
         dataSet.add(Joint_Fill3.weedJointSt);
         dataSet.add(Joint_Fill3.hardJointSt);
+
+        estimationSheet = new EstimationSheet(EstimationSheet.JOINT_FILL_ID, this);
 
         // make estimation
         estimationSheet.startEstimation(dataSet, new EstimationListener() {
@@ -250,5 +255,20 @@ public class Joint_Fill4 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        estimationSheet.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(
+                requestCode, permissions, grantResults, estimationSheet);
     }
 }

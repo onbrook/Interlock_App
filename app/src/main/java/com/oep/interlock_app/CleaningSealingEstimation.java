@@ -3,6 +3,7 @@ package com.oep.interlock_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,6 +23,8 @@ import com.oep.owenslaptop.interlock_app.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /*
  *By: Peter Lewis
@@ -75,11 +78,12 @@ public class CleaningSealingEstimation extends AppCompatActivity {
         else
             System.err.println("invalid angle id. the angle id is "+angleId);
         boolean stainChecked = extras.getBoolean("stain_checked");
+        int stainTypeIndex = extras.getInt("stain_type_index");
+        String stainTypeStr = extras.getString("stain_type_str");
+        int stainAmount = extras.getInt("stain_amount");
         if(stainChecked) {
             stainOut.setText("Yes");
-            String stainTypeStr = extras.getString("stain_type_str");
             stainTypeOut.setText(stainTypeStr);
-            int stainAmount = extras.getInt("stain_amount");
             stainPercentOut.setText(getResources().getStringArray(R.array.amount_increasing)[stainAmount]);
         }else {// stain not checked
             stainOut.setText("No");
@@ -100,6 +104,8 @@ public class CleaningSealingEstimation extends AppCompatActivity {
         data.add(lengthDouble);
         data.add(angleId);
         data.add(stainChecked);
+        data.add(stainTypeIndex);
+        data.add(stainAmount);
         data.add(old);
         data.add(otherCompNum);
 
@@ -262,5 +268,20 @@ public class CleaningSealingEstimation extends AppCompatActivity {
             }
         };
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        estimationSheet.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(
+                requestCode, permissions, grantResults, estimationSheet);
     }
 }

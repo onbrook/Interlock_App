@@ -82,9 +82,10 @@ class EstimationSheet {
 
     private static final int COLUMN_ESTIMATION_ID = 0;
     private static final int COLUMN_DATE = 1;
-    private static final int COLUMN_ACTUAL_TIME = 2;
-    private static final int COLUMN_ARIA1 = 3;
-    private static final int COLUMN_ARIA2 = 4;
+    private static final int COLUMN_ESTIMATED_TIME = 2;
+    private static final int COLUMN_ACTUAL_TIME = 3;
+    private static final int COLUMN_ARIA1 = 4;
+    private static final int COLUMN_ARIA2 = 5;
 
     private int currentProcess = NO_PROCESS;
     private int currentHeldProcess = NO_PROCESS;
@@ -113,6 +114,7 @@ class EstimationSheet {
     private List<Permission> currentPermissions;
     private Permission currentPermission;
     private String currentDatabaseId;
+    private Double currentEstimatedTime;
     private int variableNum;
     private int nextEstimationId = 0;
     private List<List<Object>> pastEstimationData;
@@ -369,6 +371,7 @@ class EstimationSheet {
                             public void whenFinished(boolean success, boolean accurate, Double estimatedHours) {
                                 currentProcess = NO_PROCESS;
                                 progressDialog.dismiss();
+                                currentEstimatedTime = estimatedHours;
                                 estimationListener.whenFinished(success, accurate, estimatedHours);
                             }
                         };
@@ -377,8 +380,9 @@ class EstimationSheet {
                     } else {
                         //abort startEstimation; an error has occurred
                         progressDialog.dismiss();
-                        estimationListener.whenFinished(false, false, null);
                         currentProcess = NO_PROCESS;
+                        currentEstimatedTime = -1.0;
+                        estimationListener.whenFinished(false, false, null);
                     }
                 }
             };
@@ -404,12 +408,6 @@ class EstimationSheet {
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
         currentProcess = ADD_ESTIMATION_PROCESS;
 
-        // Add estimation id, date, and empty space (for where the actual time will be) to data
-        data.add(0, nextEstimationId);
-        data.add(1,new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance(
-                TimeZone.getTimeZone("America/Montreal")).getTime()));
-        data.add(2, "");
-
         currentEstimationData = data;
         currentListener = addEstimationListener;
         if (! isGooglePlayServicesAvailable()){
@@ -424,6 +422,14 @@ class EstimationSheet {
             showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to save data.", RETRY_ACTION);
         }
         else{
+
+            // Add estimation id, date, and empty space (for where the actual time will be) to data
+            data.add(0, nextEstimationId);
+            data.add(1,new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance(
+                    TimeZone.getTimeZone("America/Montreal")).getTime()));
+            data.add(2, currentEstimatedTime);
+            data.add(3, "");
+
             progressDialog.setMessage("Storing data...");
             List<List<Object>> preparedData = new ArrayList<>();
             preparedData.add(data);
@@ -1530,14 +1536,14 @@ class EstimationSheet {
             List<List<Object>> usableDataSets = new ArrayList<>();
 
             for (int row = 0; row < oldDataSets.size(); row++) {
-                System.out.println("row: "+row);
                 List<Object> dataSet = oldDataSets.get(row);
                 boolean dataSetValid = true;  // Flag
 
-                for (int itemNum = dataSet.size() - 1; itemNum > 4; itemNum--) {  // start at the end
+                for (int itemNum = dataSet.size() - 1; itemNum > 5; itemNum--) {  // start at the end
                     // if all of the items in this row (data set) are not all equal to the items in the
                     // newDataSet (excluding the two aria variables and actual time), then...
-                    if (!dataSet.get(itemNum).equals(newDataSet.get(itemNum - 3))) {
+                    Log.v("EstimationSheet", "row: "+row+"   itemNum: "+itemNum);
+                    if (!dataSet.get(itemNum).equals(newDataSet.get(itemNum - 4))) {
                         // This row of data (data set) cannot be used for the estimation while using
                         // this many variables
                         dataSetValid = false;
@@ -1659,7 +1665,7 @@ class EstimationSheet {
                     showDialog("There is no data from this job yet. The estimation cannot be made.", "No data", OK_ACTION);
                 getDataListener.whenFinished(false, null);
             } else if (output.size() < 2 && currentHeldProcess == GET_ESTIMATED_TIME_PROCESS){
-                showDialog("There is not enough data from this job yet to get an estimation.", "No data", OK_ACTION);
+                showDialog("There is not enough data from this job yet to get an estimation.", "Not enough data", OK_ACTION);
                 getDataListener.whenFinished(false, output);
             } else
                 getDataListener.whenFinished(true, output);

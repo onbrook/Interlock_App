@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.oep.owenslaptop.interlock_app.R;
 
@@ -33,54 +35,6 @@ public class Interlock_Relaying extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
-
-    public static boolean pageOneCheck(EditText len, EditText wid,
-                                       Spinner ptrn, Spinner shape){
-        //clearing all outlines
-        removeOutline(len);
-        removeOutline(wid);
-        removeOutline(ptrn);
-        removeOutline(shape);
-        int falseCheck = 0;
-
-        //checking all elements
-        if(!TextUtils.isEmpty(String.valueOf(len.getText()))){
-            if(Double.parseDouble(String.valueOf((len.getText()))) == 0){
-                setupOutline(len);
-                falseCheck = 1;
-            }
-        }else if(TextUtils.isEmpty(String.valueOf(len.getText()))){
-            setupOutline(len);
-            falseCheck = 1;
-        }
-
-        if(!TextUtils.isEmpty(String.valueOf(wid.getText()))){
-            if(Double.parseDouble(String.valueOf(wid.getText())) == 0){
-                setupOutline(wid);
-                falseCheck = 1;
-            }
-        }else if(TextUtils.isEmpty(String.valueOf(wid.getText()))){
-            setupOutline(wid);
-            falseCheck = 1;
-        }
-
-        if(String.valueOf(ptrn.getSelectedItem()).equals("Pattern Type")){
-            setupOutline(ptrn);
-            falseCheck = 1;
-        }
-        if(String.valueOf(shape.getSelectedItem()).equals("Shape of the job")){
-            setupOutline(shape);
-            falseCheck = 1;
-        }
-
-
-        if (falseCheck == 1){
-            return false;
-        }else{
-            return true;
-        }
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,31 +56,72 @@ public class Interlock_Relaying extends AppCompatActivity {
         final Spinner jobShape = (Spinner)findViewById(R.id.jobShapeSpin);
         final CheckBox edgeCheck = (CheckBox)findViewById(R.id.edgeCheck);
 
+        width.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                ViewValidity.removeOutline(v);
+                return !ViewValidity.isViewValid(v);//keep up keyboard
+            }
+        });
+
+        length.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                ViewValidity.removeOutline(v);
+                return !ViewValidity.isViewValid(v);//keep up keyboard
+            }
+        });
+
+        patternTypeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(ViewValidity.isViewValid(patternTypeSpin))
+                    ViewValidity.removeOutline(patternTypeSpin);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {/* do nothing */}
+        });
+
+        jobShape.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(ViewValidity.isViewValid(jobShape))
+                    ViewValidity.removeOutline(jobShape);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {/* do nothing */}
+        });
+
+        final View[] viewsToCheck = {width, length, patternTypeSpin, jobShape};
+
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean check = pageOneCheck(length, width, patternTypeSpin, jobShape);
                 //add function to check for current layout
-                if(check == true){
+                if(ViewValidity.areViewsValid(viewsToCheck)){
                     //saving all necessary variables
-                    widthOut = String.valueOf(width.getText()) + "ft.";
-                    lengthOut = String.valueOf(length.getText()) + "ft.";
+                    widthOut = String.valueOf(width.getText());
+                    lengthOut = String.valueOf(length.getText());
                     ptrnOut = String.valueOf(patternTypeSpin.getSelectedItem());
                     shapeOut = String.valueOf(jobShape.getSelectedItem());
                     if(edgeCheck.isChecked()){
-                        edgeOut = "Edging: Yes";
+                        edgeOut = "Yes";
                     }else{
-                        edgeOut = "Edging: No";
+                        edgeOut = "No";
                     }
                     Intent nextPg = getIntent();
                     nextPg.setClass(getApplicationContext(), Interlock_Relaying_Complications.class);
 
                     startActivity(nextPg);
                 }else{
-                    System.out.print("Error");
+                    ViewValidity.updateViewValidity(viewsToCheck);
                 }
             }
         });
+
+
 
         //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);

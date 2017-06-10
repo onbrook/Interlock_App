@@ -151,9 +151,10 @@ public class Wall_Rebuilding2 extends AppCompatActivity {
 
     public void fabClicked(View view){
         if(isViewValid(locationSpinner)) {
-            //create a new intent (you do not get the current one because we do not need any
-            // information from the home screen)
-            Intent intent = new Intent(getApplicationContext(), Wall_Rebuilding3.class);
+            //start activity (getIntent to save extras)
+            Intent intent = getIntent();
+            //update class
+            intent.setClass(getApplicationContext(), Wall_Rebuilding_Estimation.class);
             //this removes the animation
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //extras--for passing data

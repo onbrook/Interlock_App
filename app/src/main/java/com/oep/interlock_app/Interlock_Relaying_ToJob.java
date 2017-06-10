@@ -31,19 +31,6 @@ public class Interlock_Relaying_ToJob extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
 
-    public static boolean pageCheck(Spinner location){
-        //clearing all outlines
-        ViewValidity.removeOutline(location);
-
-        if(String.valueOf(location.getSelectedItem()).equals("Job Location")){
-            ViewValidity.setupOutline(location);
-            return false;
-        }else{
-            return true;
-        }
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,20 +101,30 @@ public class Interlock_Relaying_ToJob extends AppCompatActivity {
             }
         });
 
+        locationSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(ViewValidity.isViewValid(locationSpin))
+                    ViewValidity.removeOutline(locationSpin);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {/* do nothing */}
+        });
+
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean check = pageCheck(locationSpin);
-                if(check == true){
+                if(ViewValidity.isViewValid(locationSpin)){
                     Intent nextPg = getIntent();
                     nextPg.setClass(getApplicationContext(), Interlock_Relaying_Estimate.class);
                     //saving data to extras
-                    accOut = "The job is... " + String.valueOf(accDisplay.getText()).toLowerCase();
-                    moveOut = "There is... " + String.valueOf(moveDisplay.getText()).toLowerCase();
-                    locOut = "Job location: " + String.valueOf(locationSpin.getSelectedItem());
+                    accOut = String.valueOf(accDisplay.getText()).toLowerCase();
+                    moveOut = String.valueOf(moveDisplay.getText()).toLowerCase();
+                    locOut = String.valueOf(locationSpin.getSelectedItem());
                     startActivity(nextPg);
                 }else{
-                    System.out.print("Error");
+                    ViewValidity.updateViewValidity(locationSpin);
                 }
             }
         });

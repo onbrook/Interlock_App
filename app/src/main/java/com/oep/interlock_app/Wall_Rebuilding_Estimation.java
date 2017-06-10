@@ -103,6 +103,7 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         data.add(lineChecked);
         data.add(glueChecked);
         data.add(clipsChecked);
+
         //put data into the TextViews
         locationOut.setText(getResources().getStringArray(R.array.location)[locationIndex]);
         accessibilityOut.setText(getResources().getStringArray(R.array.accessibility)[accessIndex]);
