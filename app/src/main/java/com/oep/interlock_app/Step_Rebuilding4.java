@@ -177,24 +177,21 @@ public class Step_Rebuilding4 extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = null;
                 if(position==0){
-                    intent = new Intent(Step_Rebuilding4.this, AboutPage.class);
+                    intent = new Intent(Step_Rebuilding4.this, HomeScreen.class);
                 }
                 else if(position==1){
                     intent = new Intent(Step_Rebuilding4.this, HelpPage.class);
                 }
                 else if(position==2){
-                    intent = new Intent(Step_Rebuilding4.this, HomeScreen.class);
-                }
-                else if(position==3){
                     intent = new Intent(Step_Rebuilding4.this, EstimationPage.class);
                 }
-                else if(position==4){
+                else if(position==3){
                     intent = new Intent(Step_Rebuilding4.this, DatabaseManagement.class);
                 }
-                else if(position==5){
+                else if(position==4){
                     intent = new Intent(Step_Rebuilding4.this, EnterDatabaseIdActivity.class);
                 }
-                else if(position==6){//this will only be true if the user is owner
+                else if(position==5){//this will only be true if the user is owner
                     intent = new Intent(Step_Rebuilding4.this, ActivityDatabaseAccounts.class);
                 }
                 // Check if the user is sure that they want to leave before saving
@@ -233,10 +230,10 @@ public class Step_Rebuilding4 extends AppCompatActivity {
         EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
         ArrayAdapter<String> mAdapter;
         if(estimationSheet.isUserOwner()) {
-            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
+            String[] osArray = {"Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         } else {
-            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup" };
+            String[] osArray = { "Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup" };
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         }
         mDrawerList.setAdapter(mAdapter);

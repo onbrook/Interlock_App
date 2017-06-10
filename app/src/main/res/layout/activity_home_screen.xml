@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
@@ -22,19 +22,54 @@
             android:id="@+id/mainTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:text="Home Screen"
+            android:textSize="18dp"
+            android:textStyle="bold"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="59dp"
-            android:text="Title Here" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp" />
+
+        <ImageView
+            android:id="@+id/iconImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_below="@+id/mainTitle"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/aboutContentTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:text="@string/aboutContent"
+            android:layout_below="@+id/iconImage"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/creatorTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/creatorSting"
+            android:layout_alignTop="@+id/estimatePageBtn"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:id="@+id/estimatePageBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Estimate Page"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="190dp"
-            android:text="Estimate Page" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="24dp" />
 
     </RelativeLayout>
 
@@ -43,7 +78,7 @@
         android:id="@+id/navList"
         android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_gravity="left|start"
         android:background="#ffeeeeee"/>
 
 </android.support.v4.widget.DrawerLayout>

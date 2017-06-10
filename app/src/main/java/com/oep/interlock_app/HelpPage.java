@@ -1,5 +1,9 @@
 package com.oep.interlock_app;
 
+/* Help Page ViewList animation:
+ *    https://www.codeproject.com/Articles/1151814/Android-ExpandablelistView-Tutorial-with-Android-C
+ */
+
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,8 +21,6 @@ import java.util.LinkedHashMap;
 
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.Toast;
-
 
 import com.oep.owenslaptop.interlock_app.R;
 
@@ -58,24 +60,21 @@ public class HelpPage extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position==0){
-                    startActivity(new Intent(HelpPage.this, AboutPage.class));
+                    startActivity(new Intent(HelpPage.this, HomeScreen.class));
                 }
                 else if(position==1){
                     startActivity(new Intent(HelpPage.this, HelpPage.class));
                 }
                 else if(position==2){
-                    startActivity(new Intent(HelpPage.this, HomeScreen.class));
-                }
-                else if(position==3){
                     startActivity(new Intent(HelpPage.this, EstimationPage.class));
                 }
-                else if(position==4){
+                else if(position==3){
                     startActivity(new Intent(HelpPage.this, DatabaseManagement.class));
                 }
-                else if(position==5){
+                else if(position==4){
                     startActivity(new Intent(HelpPage.this, EnterDatabaseIdActivity.class));
                 }
-                else if(position==6){//this will only be true if the user is owner
+                else if(position==5){//this will only be true if the user is owner
                     startActivity(new Intent(HelpPage.this, ActivityDatabaseAccounts.class));
                 }
             }
@@ -124,18 +123,23 @@ public class HelpPage extends AppCompatActivity {
 
         //this is where we add the information
         String commonError, createEstimate, setUpNewDa, useExDa, addPermish, dataMan;
-        commonError = "NCAOY";
-        createEstimate = "To create an estimate navigate to the create estimate page and then select the " +
-                "job that you are wanting to get a time estimate for.  Navigate through the pages, and enter the" +
-                " asked for data as accurately as possible.  At the end you will be provided with the estimated " +
-                "time which is projected from the old job history.";
-        setUpNewDa = "NCAOY";
-        useExDa = "To use an existing database you will need to be sent an invitation from the database manager " +
-                "(the one who set it up) and then enter that id into the text entry box. ";
-        addPermish = "Adding permissions only applies to the database owner.  To allow others to access your database " +
-                "(which you would want for those in the same company) go to the permissions page and enter in the email" +
-                " for the person you are wanting to invite.  ";
-        dataMan = "NCAOY";
+
+        commonError = "Why does it need access to my contacts \n - It uses the contacts to manage the database in your or your employer's Google Drive." +
+                "\n\nWhy can’t an estimation be made when there is no data on the database? \n - This app uses only the data from the database to get the estimation. There is no other data that it has to use.";
+
+        createEstimate = "To create a new estimate navigate, you will need to navigate to the “New Estimation” page.  From there you will need to then select the job that you are wanting the time estimate for.  Navigate through the pages that follow, and enter the requested data as accurately as possible.  On the final page you will be provided with all the data you added and the estimated time which is projected from the job history.";
+
+        setUpNewDa = "To setup a new database, go into “Database Setup” and tap the menu (three dots) in the top left action bar. Then there is an option to " +
+                "“Create a database”, tap on that and, once you give the app permission to access your Google Drive via contacts, the database will be created. You are then taken " +
+                "to a page where you can enter the Gmail addresses of people who you would like to edit your database. It is recommended that only employers create databases and that employees use their employer's database.";
+
+        useExDa = "To use an existing database you will need to be sent an invitation from the database manager (the one who set it up) and " +
+                "then enter that id into the text entry box in “Database Setup”.";
+
+        addPermish = "Adding permissions only applies to the database owner.  To allow others to access your database (which you would want for those in the same company)" +
+                " go to the permissions page and enter in the email for the person you are wanting to invite.  ";
+
+        dataMan = "To either add the actual time to the database, or to delete an estimate, navigate to the database management page  ??";
 
         addProduct("Common errors and questions",commonError);
         addProduct("Create an estimate",createEstimate);
@@ -181,10 +185,10 @@ public class HelpPage extends AppCompatActivity {
         // Only have the "Database Permissions" if the user owns the database
         EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
         if(estimationSheet.isUserOwner()) {
-            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
+            String[] osArray = {"Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         } else {
-            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup" };
+            String[] osArray = { "Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup" };
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         }
         mDrawerList.setAdapter(mAdapter);

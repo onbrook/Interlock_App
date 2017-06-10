@@ -94,24 +94,21 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if(position==0){
-                        startActivity(new Intent(EnterDatabaseIdActivity.this, AboutPage.class));
+                        startActivity(new Intent(EnterDatabaseIdActivity.this, HomeScreen.class));
                     }
                     else if(position==1){
                         startActivity(new Intent(EnterDatabaseIdActivity.this, HelpPage.class));
                     }
                     else if(position==2){
-                        startActivity(new Intent(EnterDatabaseIdActivity.this, HomeScreen.class));
-                    }
-                    else if(position==3){
                         startActivity(new Intent(EnterDatabaseIdActivity.this, EstimationPage.class));
                     }
-                    else if(position==4){
+                    else if(position==3){
                         startActivity(new Intent(EnterDatabaseIdActivity.this, DatabaseManagement.class));
                     }
-                    else if(position==5){
+                    else if(position==4){
                         startActivity(new Intent(EnterDatabaseIdActivity.this, EnterDatabaseIdActivity.class));
                     }
-                    else if(position==6){//this will only be true if the user is owner
+                    else if(position==5){//this will only be true if the user is owner
                         startActivity(new Intent(EnterDatabaseIdActivity.this, ActivityDatabaseAccounts.class));
                     }
                 }
@@ -216,11 +213,11 @@ public class EnterDatabaseIdActivity extends AppCompatActivity {
         // Only have the "Database Permissions" if the user owns the database
         EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
         if(estimationSheet.doesUserHaveRole() && estimationSheet.isUserOwner()) {
-            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
-            mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
+            String[] osArray = {"Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
+            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         } else {
-            String[] osArray = { "About", "Help!", "Home Screen", "New Estimation", "Database Management", "Database Setup" };
-            mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
+            String[] osArray = { "Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup" };
+            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         }
         mDrawerList.setAdapter(mAdapter);
     }

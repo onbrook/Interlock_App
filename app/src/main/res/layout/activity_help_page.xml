@@ -19,7 +19,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:paddingRight="16dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="18dp"
             android:layout_marginTop="18dp" />
 
     </RelativeLayout>
