@@ -104,7 +104,7 @@
             android:label="Help Page" />
         <activity
             android:name="com.oep.interlock_app.DatabaseManagement"
-            android:label="Database Managment" />
+            android:label="Database Management" />
         <activity
             android:name="com.oep.interlock_app.ActivityDatabaseAccounts"
             android:label="Accounts"/>

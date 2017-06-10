@@ -31,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/headlineTextView"
-            android:layout_above="@+id/home_FAB"
             android:layout_marginTop="15dp"
             android:layout_marginStart="48dp"
             android:layout_marginLeft="48dp"
@@ -137,6 +136,7 @@
                     android:text="Room:" />
 
                 <TextView
+                    android:id="@+id/height_out"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_width="wrap_content"
@@ -156,6 +156,7 @@
                     android:layout_alignTop="@+id/length_title" />
 
                 <TextView
+                    android:id="@+id/pattern_out"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_width="wrap_content"
@@ -175,6 +176,7 @@
                     android:layout_alignTop="@+id/shape_title" />
 
                 <TextView
+                    android:id="@+id/edging_out"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_width="wrap_content"
@@ -184,6 +186,7 @@
                     android:layout_alignTop="@+id/edging_title" />
 
                 <TextView
+                    android:id="@+id/sunk_amt_out"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_width="wrap_content"
@@ -193,6 +196,7 @@
                     android:layout_alignTop="@+id/sunk_amt_title" />
 
                 <TextView
+                    android:id="@+id/joint_hardness_out"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_width="wrap_content"
@@ -202,6 +206,7 @@
                     android:layout_alignParentRight="true" />
 
                 <TextView
+                    android:id="@+id/paver_size_out"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_width="wrap_content"
@@ -211,6 +216,7 @@
                     android:layout_alignParentRight="true"/>
 
                 <TextView
+                    android:id="@+id/weeds_out"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_width="wrap_content"
@@ -252,18 +258,21 @@
             </RelativeLayout>
         </ScrollView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/home_FAB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            app:fabSize="normal"
-            app:srcCompat="@drawable/check_mark"
-            android:onClick="fabClicked"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="25dp"/>
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/coordinator_layout">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/home_FAB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:fabSize="normal"
+                app:srcCompat="@drawable/check_mark"
+                android:onClick="fabClicked"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="25dp"/>
+        </android.support.design.widget.CoordinatorLayout>
 
         <!--add values above here -->
 

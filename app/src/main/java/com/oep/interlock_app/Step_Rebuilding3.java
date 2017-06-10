@@ -1,5 +1,6 @@
 package com.oep.interlock_app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -127,27 +128,31 @@ public class Step_Rebuilding3 extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        final Activity activity = this;
+
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = null;
                 if(position==0){
-                    startActivity(new Intent(Step_Rebuilding3.this, HomeScreen.class));
+                    intent = new Intent(getApplicationContext(), HomeScreen.class);
                 }
                 else if(position==1){
-                    startActivity(new Intent(Step_Rebuilding3.this, HelpPage.class));
+                    intent = new Intent(getApplicationContext(), HelpPage.class);
                 }
                 else if(position==2){
-                    startActivity(new Intent(Step_Rebuilding3.this, EstimationPage.class));
+                    intent = new Intent(getApplicationContext(), EstimationPage.class);
                 }
                 else if(position==3){
-                    startActivity(new Intent(Step_Rebuilding3.this, DatabaseManagement.class));
+                    intent = new Intent(getApplicationContext(), DatabaseManagement.class);
                 }
                 else if(position==4){
-                    startActivity(new Intent(Step_Rebuilding3.this, EnterDatabaseIdActivity.class));
+                    intent = new Intent(getApplicationContext(), EnterDatabaseIdActivity.class);
                 }
                 else if(position==5){//this will only be true if the user is owner
-                    startActivity(new Intent(Step_Rebuilding3.this, ActivityDatabaseAccounts.class));
+                    intent = new Intent(getApplicationContext(), ActivityDatabaseAccounts.class);
                 }
+                ILDialog.showExitDialogWarning(activity, intent);
             }
         });
     }

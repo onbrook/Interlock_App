@@ -1,6 +1,11 @@
 package com.oep.interlock_app;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +20,9 @@ import android.widget.TextView;
 
 import com.oep.owenslaptop.interlock_app.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  *By: Peter Lewis
  *Date: May 11, 2017
@@ -23,10 +31,11 @@ import com.oep.owenslaptop.interlock_app.R;
 public class CleaningSealingEstimation extends AppCompatActivity {
 
     private ListView mDrawerList;
-    private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+    private List<Object> data = new ArrayList<>();
+    private EstimationSheet estimationSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +51,9 @@ public class CleaningSealingEstimation extends AppCompatActivity {
                 //back button not supported
             }
         }
+
+        estimationSheet = new EstimationSheet(EstimationSheet.CLEANING_SEALING_ID, this);
+
         // get TextViews
         TextView dimensionsOut = (TextView) findViewById(R.id.dimensions_out);
         TextView angleOut = (TextView) findViewById(R.id.angle_out);
@@ -83,6 +95,79 @@ public class CleaningSealingEstimation extends AppCompatActivity {
         int otherCompNum = extras.getInt("other_comp_num");
         otherCompOut.setText(getResources().getStringArray(R.array.amount_increasing)[otherCompNum]);
 
+        //package data for estimation
+        data.add(heightDouble);
+        data.add(lengthDouble);
+        data.add(angleId);
+        data.add(stainChecked);
+        data.add(old);
+        data.add(otherCompNum);
+
+        // make estimation
+        estimationSheet.startEstimation(data, new EstimationListener() {
+            @Override
+            public void whenFinished(boolean success, boolean accurate, Double estimatedHours) {
+                if(success) {
+                    int hours = estimatedHours.intValue();
+                    Double doubleMin = ((estimatedHours - hours) * 60);
+                    int minute = doubleMin.intValue();
+                    if (accurate) {
+                        if (minute <= 7)
+                            minute = 0;
+                        else if (minute <= 22)
+                            minute = 15;
+                        else if (minute <= 37)
+                            minute = 30;
+                        else if (minute <= 52)
+                            minute = 45;
+                        else {
+                            minute = 0;
+                            hours++;
+                        }
+                        String hoursStr;
+                        switch(hours){
+                            case 1:
+                                hoursStr = "hour";
+                                break;
+                            default:
+                                hoursStr = "hours";
+                                break;
+                        }
+                        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+" and " + minute + " minutes.", Snackbar.LENGTH_INDEFINITE);
+                        View mView = snackbar.getView();
+                        TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        else
+                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        snackbar.show();
+                    } else {
+                        if (minute >= 30)
+                            hours++;
+                        String hoursStr;
+                        switch(hours){
+                            case 1:
+                                hoursStr = "hour";
+                                break;
+                            default:
+                                hoursStr = "hours";
+                                break;
+                        }
+                        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+".", Snackbar.LENGTH_INDEFINITE);
+                        View mView = snackbar.getView();
+                        TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        else
+                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        snackbar.show();
+                    }
+                }
+            }
+        });
+
         //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -96,33 +181,42 @@ public class CleaningSealingEstimation extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        final Activity activity = this;
+
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = null;
                 if(position==0){
-                    startActivity(new Intent(CleaningSealingEstimation.this, HomeScreen.class));
+                    intent = new Intent(getApplicationContext(), HomeScreen.class);
                 }
                 else if(position==1){
-                    startActivity(new Intent(CleaningSealingEstimation.this, HelpPage.class));
+                    intent = new Intent(getApplicationContext(), HelpPage.class);
                 }
                 else if(position==2){
-                    startActivity(new Intent(CleaningSealingEstimation.this, EstimationPage.class));
+                    intent = new Intent(getApplicationContext(), EstimationPage.class);
                 }
                 else if(position==3){
-                    startActivity(new Intent(CleaningSealingEstimation.this, DatabaseManagement.class));
+                    intent = new Intent(getApplicationContext(), DatabaseManagement.class);
                 }
                 else if(position==4){
-                    startActivity(new Intent(CleaningSealingEstimation.this, EnterDatabaseIdActivity.class));
+                    intent = new Intent(getApplicationContext(), EnterDatabaseIdActivity.class);
                 }
                 else if(position==5){//this will only be true if the user is owner
-                    startActivity(new Intent(CleaningSealingEstimation.this, ActivityDatabaseAccounts.class));
+                    intent = new Intent(getApplicationContext(), ActivityDatabaseAccounts.class);
                 }
+                ILDialog.showExitDialogSave(activity, intent, estimationSheet, data);
             }
         });
     }
 
     public void fabClicked(View fab){
-        startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+        estimationSheet.startAddingEstimation(data, new AddEstimationListener() {
+            @Override
+            public void whenFinished(boolean success) {
+                startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+            }
+        });
     }
 
     //called when the back button in the title bas is pressed
@@ -138,6 +232,7 @@ public class CleaningSealingEstimation extends AppCompatActivity {
     private void addDrawerItems(){
         // Only have the "Database Permissions" if the user owns the database
         EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
+        ArrayAdapter<String> mAdapter;
         if(estimationSheet.isUserOwner()) {
             String[] osArray = {"Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);

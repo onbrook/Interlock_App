@@ -649,6 +649,39 @@ class EstimationSheet {
         builder.create().show();
     }
 
+    private void showDialog(String message, String title, int action){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        if(action == OK_ACTION)
+            builder.setPositiveButton("OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+        else if(action == RETRY_ACTION) {
+            builder.setPositiveButton("RETRY",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            resumeProcess();
+                        }
+                    });
+            builder.setNegativeButton("CANCEL",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            currentProcess = NO_PROCESS;
+                            dialog.dismiss();
+                        }
+                    });
+        }
+        else
+            throw new IllegalArgumentException("'"+action+"' is an invalid action. Please use one of the given actions which are in the format <ACTION>_ACTION.");
+
+        builder.create().show();
+    }
+
     private void resumeProcess(){
         switch (currentProcess) {
             case GET_DATA_PROCESS:
@@ -1621,12 +1654,12 @@ class EstimationSheet {
             //progressDialog.dismiss();
             if (output == null || output.size() < 1) {
                 if(currentProcess == GET_DATA_PROCESS && currentHeldProcess != GET_ESTIMATED_TIME_PROCESS)
-                    showErrorDialog("There is no data from this job yet.", OK_ACTION);
+                    showDialog("There is no data from this job yet.", "No data", OK_ACTION);
                 else if(currentHeldProcess == GET_ESTIMATED_TIME_PROCESS)
-                    showErrorDialog("There is no data from this job yet. The estimation cannot be made.", OK_ACTION);
+                    showDialog("There is no data from this job yet. The estimation cannot be made.", "No data", OK_ACTION);
                 getDataListener.whenFinished(false, null);
             } else if (output.size() < 2 && currentHeldProcess == GET_ESTIMATED_TIME_PROCESS){
-                showErrorDialog("There is not enough data from this job yet to get an estimation.", OK_ACTION);
+                showDialog("There is not enough data from this job yet to get an estimation.", "No data", OK_ACTION);
                 getDataListener.whenFinished(false, output);
             } else
                 getDataListener.whenFinished(true, output);

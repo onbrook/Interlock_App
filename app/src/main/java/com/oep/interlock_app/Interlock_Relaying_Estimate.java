@@ -1,6 +1,11 @@
 package com.oep.interlock_app;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +22,9 @@ import com.oep.owenslaptop.interlock_app.R;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Interlock_Relaying_Estimate extends AppCompatActivity {
 
     private ListView mDrawerList;
@@ -24,6 +32,8 @@ public class Interlock_Relaying_Estimate extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+    private List<Object> data = new ArrayList<>();
+    private EstimationSheet estimationSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,22 +47,116 @@ public class Interlock_Relaying_Estimate extends AppCompatActivity {
             } catch (NullPointerException ex) {
                 //back button not supported
             }
-        }/*
-        final TextView output = (TextView)findViewById(R.id.output);
+        }
 
-        output.setText("Width: " + Interlock_Relaying.widthOut + "\n" +
-                "Length: " + Interlock_Relaying.lengthOut + "\n" +
-                "Pattern: " + Interlock_Relaying.ptrnOut + "\n" +
-                "Shape: " + Interlock_Relaying.shapeOut + "\n" +
-                Interlock_Relaying.edgeOut + "\n" +
-                "The interlock... " + Interlock_Relaying_Complications.sunkOut + "\n" +
-                "The interlock is... " + Interlock_Relaying_Complications.paveSizeOut + "\n" +
-                "There are... " + Interlock_Relaying_Complications.weedOut + "\n" +
-                "The joint fill is... " + Interlock_Relaying_Complications.fillOut + "\n" +
-                Interlock_Relaying_ToJob.locOut + "\n" +
-                Interlock_Relaying_ToJob.moveOut + "\n" +
-                Interlock_Relaying_ToJob.accOut);
-                //estimate here*/
+        estimationSheet = new EstimationSheet(EstimationSheet.INTERLOCK_RELAYING_ID, this);
+
+        //get views
+        TextView heightOut = (TextView) findViewById(R.id.height_out);
+        TextView lengthOut = (TextView) findViewById(R.id.length_out);
+        TextView patternOut = (TextView) findViewById(R.id.pattern_out);
+        TextView shapeOut = (TextView) findViewById(R.id.shape_out);
+        TextView edgingOut =(TextView) findViewById(R.id.edging_out);
+        TextView sunkAmtOut = (TextView) findViewById(R.id.sunk_amt_out);
+        TextView jointHardnessOut = (TextView) findViewById(R.id.joint_hardness_out);
+        TextView paverSizeOut = (TextView) findViewById(R.id.paver_size_out);
+        TextView weedsOut = (TextView) findViewById(R.id.weeds_out);
+        TextView accessibilityOut = (TextView) findViewById(R.id.accessibility_out);
+        TextView locationOut = (TextView) findViewById(R.id.location_out);
+        TextView roomOut = (TextView) findViewById(R.id.room_out);
+
+        //fill views
+        heightOut.setText(Interlock_Relaying.widthOut);
+        lengthOut.setText(Interlock_Relaying.lengthOut);
+        patternOut.setText(Interlock_Relaying.ptrnOut);
+        shapeOut.setText(Interlock_Relaying.shapeOut);
+        edgingOut.setText(Interlock_Relaying.edgeOut);
+        sunkAmtOut.setText(Interlock_Relaying_Complications.sunkOut);
+        jointHardnessOut.setText(Interlock_Relaying_Complications.fillOut);
+        paverSizeOut.setText(Interlock_Relaying_Complications.paveSizeOut);
+        weedsOut.setText(Interlock_Relaying_Complications.weedOut);
+        accessibilityOut.setText(Interlock_Relaying_ToJob.accOut);
+        locationOut.setText(Interlock_Relaying_ToJob.locOut);
+        roomOut.setText(Interlock_Relaying_ToJob.moveOut);
+
+        // package data for estimation
+        data.add(Double.parseDouble(Interlock_Relaying.widthOut));
+        data.add(Double.parseDouble(Interlock_Relaying.lengthOut));
+        data.add(Interlock_Relaying.ptrnOut);
+        data.add(Interlock_Relaying.shapeOut);
+        data.add(Interlock_Relaying.edgeOut);
+        data.add(Interlock_Relaying_Complications.sunkOut);
+        data.add(Interlock_Relaying_Complications.fillOut);
+        data.add(Interlock_Relaying_Complications.paveSizeOut);
+        data.add(Interlock_Relaying_Complications.weedOut);
+        data.add(Interlock_Relaying_ToJob.accOut);
+        data.add(Interlock_Relaying_ToJob.locOut);
+        data.add(Interlock_Relaying_ToJob.moveOut);
+
+        //make estimation
+        estimationSheet.startEstimation(data, new EstimationListener() {
+            @Override
+            public void whenFinished(boolean success, boolean accurate, Double estimatedHours) {
+                if(success) {
+                    int hours = estimatedHours.intValue();
+                    Double doubleMin = ((estimatedHours - hours) * 60);
+                    int minute = doubleMin.intValue();
+                    if (accurate) {
+                        if (minute <= 7)
+                            minute = 0;
+                        else if (minute <= 22)
+                            minute = 15;
+                        else if (minute <= 37)
+                            minute = 30;
+                        else if (minute <= 52)
+                            minute = 45;
+                        else {
+                            minute = 0;
+                            hours++;
+                        }
+                        String hoursStr;
+                        switch(hours){
+                            case 1:
+                                hoursStr = "hour";
+                                break;
+                            default:
+                                hoursStr = "hours";
+                                break;
+                        }
+                        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+" and " + minute + " minutes.", Snackbar.LENGTH_INDEFINITE);
+                        View mView = snackbar.getView();
+                        TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        else
+                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        snackbar.show();
+                    } else {
+                        if (minute >= 30)
+                            hours++;
+                        String hoursStr;
+                        switch(hours){
+                            case 1:
+                                hoursStr = "hour";
+                                break;
+                            default:
+                                hoursStr = "hours";
+                                break;
+                        }
+                        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+".", Snackbar.LENGTH_INDEFINITE);
+                        View mView = snackbar.getView();
+                        TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        else
+                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        snackbar.show();
+                    }
+                }
+            }
+        });
 
         //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);
@@ -67,27 +171,31 @@ public class Interlock_Relaying_Estimate extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        final Activity activity = this;
+
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = null;
                 if(position==0){
-                    startActivity(new Intent(Interlock_Relaying_Estimate.this, HomeScreen.class));
+                    intent = new Intent(getApplicationContext(), HomeScreen.class);
                 }
                 else if(position==1){
-                    startActivity(new Intent(Interlock_Relaying_Estimate.this, HelpPage.class));
+                    intent = new Intent(getApplicationContext(), HelpPage.class);
                 }
                 else if(position==2){
-                    startActivity(new Intent(Interlock_Relaying_Estimate.this, EstimationPage.class));
+                    intent = new Intent(getApplicationContext(), EstimationPage.class);
                 }
                 else if(position==3){
-                    startActivity(new Intent(Interlock_Relaying_Estimate.this, DatabaseManagement.class));
+                    intent = new Intent(getApplicationContext(), DatabaseManagement.class);
                 }
                 else if(position==4){
-                    startActivity(new Intent(Interlock_Relaying_Estimate.this, EnterDatabaseIdActivity.class));
+                    intent = new Intent(getApplicationContext(), EnterDatabaseIdActivity.class);
                 }
                 else if(position==5){//this will only be true if the user is owner
-                    startActivity(new Intent(Interlock_Relaying_Estimate.this, ActivityDatabaseAccounts.class));
+                    intent = new Intent(getApplicationContext(), ActivityDatabaseAccounts.class);
                 }
+                ILDialog.showExitDialogSave(activity, intent, estimationSheet, data);
             }
         });
     }
@@ -107,10 +215,10 @@ public class Interlock_Relaying_Estimate extends AppCompatActivity {
         EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
         if(estimationSheet.isUserOwner()) {
             String[] osArray = {"Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
-            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+            mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         } else {
             String[] osArray = { "Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup" };
-            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+            mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         }
         mDrawerList.setAdapter(mAdapter);
     }
@@ -134,5 +242,14 @@ public class Interlock_Relaying_Estimate extends AppCompatActivity {
             }
         };
         mDrawerToggle.syncState();
+    }
+
+    public void fabClicked(View view){
+        estimationSheet.startAddingEstimation(data, new AddEstimationListener() {
+            @Override
+            public void whenFinished(boolean success) {
+                startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+            }
+        });
     }
 }

@@ -111,22 +111,22 @@ public class Wall_Rebuilding extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = null;
                 if(position==0){
-                    intent = new Intent(Wall_Rebuilding.this, HomeScreen.class);
+                    intent = new Intent(getApplicationContext(), HomeScreen.class);
                 }
                 else if(position==1){
-                    intent = new Intent(Wall_Rebuilding.this, HelpPage.class);
+                    intent = new Intent(getApplicationContext(), HelpPage.class);
                 }
                 else if(position==2){
-                    intent = new Intent(Wall_Rebuilding.this, EstimationPage.class);
+                    intent = new Intent(getApplicationContext(), EstimationPage.class);
                 }
                 else if(position==3){
-                    intent = new Intent(Wall_Rebuilding.this, DatabaseManagement.class);
+                    intent = new Intent(getApplicationContext(), DatabaseManagement.class);
                 }
                 else if(position==4){
-                    intent = new Intent(Wall_Rebuilding.this, EnterDatabaseIdActivity.class);
+                    intent = new Intent(getApplicationContext(), EnterDatabaseIdActivity.class);
                 }
                 else if(position==5){//this will only be true if the user is owner
-                    intent = new Intent(Wall_Rebuilding.this, ActivityDatabaseAccounts.class);
+                    intent = new Intent(getApplicationContext(), ActivityDatabaseAccounts.class);
                 }
                 ILDialog.showExitDialogWarning(activity, intent);
             }

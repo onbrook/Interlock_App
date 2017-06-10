@@ -53,7 +53,6 @@
             android:clickable="true"
             app:fabSize="normal"
             app:srcCompat="@mipmap/add"
-            android:onClick="fabClicked"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"

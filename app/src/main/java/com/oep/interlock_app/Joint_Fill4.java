@@ -1,6 +1,11 @@
 package com.oep.interlock_app;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,13 +20,17 @@ import android.widget.TextView;
 
 import com.oep.owenslaptop.interlock_app.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Joint_Fill4 extends AppCompatActivity {
 
     private ListView mDrawerList;
-    private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+    private EstimationSheet estimationSheet;
+    final List<Object> dataSet = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +72,83 @@ public class Joint_Fill4 extends AppCompatActivity {
         weedJointTV.setText(Joint_Fill3.weedJointSt);
         hardJointTV.setText(Joint_Fill3.hardJointSt);
 
+        //package data for estimation
+        dataSet.add(Double.parseDouble(Joint_Fill.widInputSt));
+        dataSet.add(Double.parseDouble(Joint_Fill.lenInputSt));
+        dataSet.add(Joint_Fill.sizeJointSt);
+        dataSet.add(Joint_Fill.patternSt);
+        dataSet.add(Joint_Fill2.locationSt);
+        dataSet.add(Joint_Fill2.easeSt);
+        dataSet.add(Joint_Fill2.roomManSt);
+        dataSet.add(Joint_Fill2.whatArrSt);
+        dataSet.add(Joint_Fill3.weedJointSt);
+        dataSet.add(Joint_Fill3.hardJointSt);
+
+        // make estimation
+        estimationSheet.startEstimation(dataSet, new EstimationListener() {
+            @Override
+            public void whenFinished(boolean success, boolean accurate, Double estimatedHours) {
+                if(success) {
+                    int hours = estimatedHours.intValue();
+                    Double doubleMin = ((estimatedHours - hours) * 60);
+                    int minute = doubleMin.intValue();
+                    if (accurate) {
+                        if (minute <= 7)
+                            minute = 0;
+                        else if (minute <= 22)
+                            minute = 15;
+                        else if (minute <= 37)
+                            minute = 30;
+                        else if (minute <= 52)
+                            minute = 45;
+                        else {
+                            minute = 0;
+                            hours++;
+                        }
+                        String hoursStr;
+                        switch(hours){
+                            case 1:
+                                hoursStr = "hour";
+                                break;
+                            default:
+                                hoursStr = "hours";
+                                break;
+                        }
+                        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+" and " + minute + " minutes.", Snackbar.LENGTH_INDEFINITE);
+                        View mView = snackbar.getView();
+                        TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        else
+                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        snackbar.show();
+                    } else {
+                        if (minute >= 30)
+                            hours++;
+                        String hoursStr;
+                        switch(hours){
+                            case 1:
+                                hoursStr = "hour";
+                                break;
+                            default:
+                                hoursStr = "hours";
+                                break;
+                        }
+                        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+".", Snackbar.LENGTH_INDEFINITE);
+                        View mView = snackbar.getView();
+                        TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        else
+                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        snackbar.show();
+                    }
+                }
+            }
+        });
+
         //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -76,27 +162,34 @@ public class Joint_Fill4 extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        final Activity activity = this;
+
+        estimationSheet = new EstimationSheet(EstimationSheet.JOINT_FILL_ID, this);
+
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = null;
                 if(position==0){
-                    startActivity(new Intent(Joint_Fill4.this, HomeScreen.class));
+                    intent = new Intent(Joint_Fill4.this, HomeScreen.class);
                 }
                 else if(position==1){
-                    startActivity(new Intent(Joint_Fill4.this, HelpPage.class));
+                    intent = new Intent(Joint_Fill4.this, HelpPage.class);
                 }
                 else if(position==2){
-                    startActivity(new Intent(Joint_Fill4.this, EstimationPage.class));
+                    intent = new Intent(Joint_Fill4.this, EstimationPage.class);
                 }
                 else if(position==3){
-                    startActivity(new Intent(Joint_Fill4.this, DatabaseManagement.class));
+                    intent = new Intent(Joint_Fill4.this, DatabaseManagement.class);
                 }
                 else if(position==4){
-                    startActivity(new Intent(Joint_Fill4.this, EnterDatabaseIdActivity.class));
+                    intent = new Intent(Joint_Fill4.this, EnterDatabaseIdActivity.class);
                 }
                 else if(position==5){//this will only be true if the user is owner
-                    startActivity(new Intent(Joint_Fill4.this, ActivityDatabaseAccounts.class));
+                    intent = new Intent(Joint_Fill4.this, ActivityDatabaseAccounts.class);
                 }
+                // Check if the user is sure that they want to leave before saving
+                ILDialog.showExitDialogSave(activity, intent, estimationSheet, dataSet);
             }
         });
     }
@@ -113,6 +206,7 @@ public class Joint_Fill4 extends AppCompatActivity {
     private void addDrawerItems(){
         // Only have the "Database Permissions" if the user owns the database
         EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
+        ArrayAdapter<String> mAdapter;
         if(estimationSheet.isUserOwner()) {
             String[] osArray = {"Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
@@ -145,15 +239,16 @@ public class Joint_Fill4 extends AppCompatActivity {
     }
 
     //when the FAB is clicked
-    public void fabClicked(View view){
-        //create a new intent (you do not get the current one because we do not need any
-        // information from the home screen)
-        Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-        //this removes the animation
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        //extras--for passing data
-        //start activity
-        startActivity(intent);
-
+    public void fabClicked(View view) {
+        estimationSheet.startAddingEstimation(dataSet, new AddEstimationListener() {
+            @Override
+            public void whenFinished(boolean success) {
+                //create a new intent (you do not get the current one because we do not need any
+                // information from the home screen)
+                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                //start activity
+                startActivity(intent);
+            }
+        });
     }
 }

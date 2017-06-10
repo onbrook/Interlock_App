@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
@@ -101,7 +102,6 @@ public class Step_Rebuilding4 extends AppCompatActivity {
                     int hours = estimatedHours.intValue();
                     Double doubleMin = ((estimatedHours - hours) * 60);
                     int minute = doubleMin.intValue();
-                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.stepRebuildingFAB);
                     if (accurate) {
                         if (minute <= 7)
                             minute = 0;
@@ -124,7 +124,8 @@ public class Step_Rebuilding4 extends AppCompatActivity {
                                 hoursStr = "hours";
                                 break;
                         }
-                        Snackbar snackbar = Snackbar.make(fab, "Final Estimate: " + hours + " "+hoursStr+" and " + minute + " minutes.", Snackbar.LENGTH_INDEFINITE);
+                        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+" and " + minute + " minutes.", Snackbar.LENGTH_INDEFINITE);
                         View mView = snackbar.getView();
                         TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -144,7 +145,8 @@ public class Step_Rebuilding4 extends AppCompatActivity {
                                 hoursStr = "hours";
                                 break;
                         }
-                        Snackbar snackbar = Snackbar.make(fab, "Final Estimate: " + hours + " "+hoursStr+".", Snackbar.LENGTH_INDEFINITE);
+                        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+".", Snackbar.LENGTH_INDEFINITE);
                         View mView = snackbar.getView();
                         TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
