@@ -18,8 +18,6 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.oep.owenslaptop.interlock_app.R;
-
 import static com.oep.interlock_app.ViewValidity.isViewValid;
 import static com.oep.interlock_app.ViewValidity.updateViewValidity;
 

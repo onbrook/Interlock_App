@@ -11,15 +11,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.view.MenuItem;
-import com.oep.owenslaptop.interlock_app.R;
-import org.w3c.dom.Text;
-import static com.google.example.easypermissions.R.styleable.MenuItem;
 
 public class Interlock_Relaying_Complications extends AppCompatActivity {
 

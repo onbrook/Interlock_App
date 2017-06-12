@@ -20,12 +20,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.oep.owenslaptop.interlock_app.R;
-
-import static com.oep.interlock_app.ViewValidity.removeOutline;
-import static com.oep.interlock_app.ViewValidity.setupOutline;
-import static com.oep.interlock_app.ViewValidity.updateViewValidity;
-
 public class Interlock_Relaying extends AppCompatActivity {
 
     public static String widthOut, lengthOut, ptrnOut, shapeOut, edgeOut;

@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 
-import com.oep.owenslaptop.interlock_app.R;
-
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class SetUserTypeActivity extends AppCompatActivity {

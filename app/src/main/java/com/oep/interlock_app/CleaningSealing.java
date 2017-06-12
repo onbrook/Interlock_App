@@ -15,12 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.oep.owenslaptop.interlock_app.R;
-
-import static com.oep.interlock_app.ViewValidity.updateViewValidity;
 
 /*
  *By: Peter Lewis

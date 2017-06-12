@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.oep.owenslaptop.interlock_app.R;
-
 public class MyListAdapter extends BaseExpandableListAdapter {
 
     private Context context;

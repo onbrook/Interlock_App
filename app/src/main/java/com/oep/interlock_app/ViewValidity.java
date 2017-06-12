@@ -4,8 +4,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.oep.owenslaptop.interlock_app.R;
-
 import java.util.ArrayList;
 import java.util.List;
 

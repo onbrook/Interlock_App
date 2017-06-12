@@ -22,8 +22,6 @@ import java.util.LinkedHashMap;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 
-import com.oep.owenslaptop.interlock_app.R;
-
 public class HelpPage extends AppCompatActivity {
 
     private ListView mDrawerList;

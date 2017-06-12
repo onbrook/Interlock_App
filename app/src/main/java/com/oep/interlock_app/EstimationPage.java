@@ -13,8 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.oep.owenslaptop.interlock_app.R;
-
 public class EstimationPage extends AppCompatActivity {
 
     private ListView mDrawerList;

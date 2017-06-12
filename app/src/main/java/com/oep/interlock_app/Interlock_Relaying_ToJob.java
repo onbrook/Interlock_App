@@ -17,8 +17,6 @@ import android.widget.Spinner;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.oep.owenslaptop.interlock_app.R;
-
 import org.w3c.dom.Text;
 
 public class Interlock_Relaying_ToJob extends AppCompatActivity {

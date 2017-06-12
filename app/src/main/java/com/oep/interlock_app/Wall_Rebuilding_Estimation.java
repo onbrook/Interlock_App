@@ -1,6 +1,7 @@
 package com.oep.interlock_app;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,7 +17,6 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,11 +24,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.oep.owenslaptop.interlock_app.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
@@ -222,6 +220,16 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
                             textView.setGravity(Gravity.CENTER_HORIZONTAL);
                         snackbar.show();
                     }
+                    Calendar alarm = Calendar.getInstance();
+
+                    //alarm.add(Calendar.DATE, 7);
+                    alarm.add(Calendar.SECOND, 30);
+
+                    Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 001, intent, 0);
+
+                    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, alarm.getTimeInMillis(), pendingIntent);
                 }
             }
         });

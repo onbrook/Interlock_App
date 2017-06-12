@@ -19,10 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.oep.owenslaptop.interlock_app.R;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 

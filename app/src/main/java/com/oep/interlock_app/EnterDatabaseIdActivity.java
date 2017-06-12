@@ -21,9 +21,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
-import com.oep.owenslaptop.interlock_app.R;
-
 import java.io.FileOutputStream;
 
 import pub.devrel.easypermissions.EasyPermissions;

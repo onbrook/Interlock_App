@@ -19,14 +19,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.oep.owenslaptop.interlock_app.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
-
-import static com.oep.interlock_app.ViewValidity.updateViewValidity;
 
 public class Step_Rebuilding4 extends AppCompatActivity {
 

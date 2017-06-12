@@ -18,8 +18,6 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.oep.owenslaptop.interlock_app.R;
-
 /*
  *By: Peter Lewis
  *Date: April 30, 2017

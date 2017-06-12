@@ -13,13 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.oep.owenslaptop.interlock_app.R;
-
-import static com.oep.interlock_app.ViewValidity.updateViewValidity;
 
 public class Joint_Fill3 extends AppCompatActivity {
     /*

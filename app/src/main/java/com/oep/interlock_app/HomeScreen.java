@@ -14,10 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-
-import com.oep.owenslaptop.interlock_app.R;
 
 public class HomeScreen extends AppCompatActivity {
 

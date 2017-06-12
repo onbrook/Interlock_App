@@ -17,22 +17,15 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.oep.owenslaptop.interlock_app.R;
-
-import static com.oep.interlock_app.ViewValidity.updateViewValidity;
-
 public class Step_Rebuilding2 extends AppCompatActivity {
 
     //setting up the spinners and the array
     private View[] views = new View[1];
     private Spinner locationSp;
-    private RadioButton longTRB;
-    private SeekBar roomMarSB, easeAccSB;
     public static String locationSt, easeAccSt, roomManSt;
     private TextView roomManDisplayTV, easeDisplayTV;
 
     private ListView mDrawerList;
-    private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
@@ -55,8 +48,8 @@ public class Step_Rebuilding2 extends AppCompatActivity {
 
         //setting up the GUI componenets
         locationSp = (Spinner) findViewById(R.id.locationSp);
-        roomMarSB = (SeekBar) findViewById(R.id.roomManSB);
-        easeAccSB = (SeekBar) findViewById(R.id.easeSB);
+        SeekBar roomMarSB = (SeekBar) findViewById(R.id.roomManSB);
+        SeekBar easeAccSB = (SeekBar) findViewById(R.id.easeSB);
         easeDisplayTV = (TextView) findViewById(R.id.easeDisplayTV);
         roomManDisplayTV = (TextView) findViewById(R.id.roomDisplayTV);
 
@@ -227,6 +220,7 @@ public class Step_Rebuilding2 extends AppCompatActivity {
     private void addDrawerItems(){
         // Only have the "Database Permissions" if the user owns the database
         EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
+        ArrayAdapter<String> mAdapter;
         if(estimationSheet.isUserOwner()) {
             String[] osArray = {"Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
