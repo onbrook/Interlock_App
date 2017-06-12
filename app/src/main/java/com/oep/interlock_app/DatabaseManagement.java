@@ -24,33 +24,39 @@ public class DatabaseManagement extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+    //string to be used to display information on job on edit page
+    public static String editorJobType, editorJobData, editorJobEstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database_management);
-
         final ListView estDisplay = (ListView)findViewById(R.id.estDisplay);
         final EditText estSearchInput = (EditText)findViewById(R.id.estSearch);
         final Button searchBtn = (Button)findViewById(R.id.idSearchBtn);
+        final ArrayList estList = new ArrayList<>();
 
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList testList = new ArrayList<String>();
-                ArrayAdapter adapter;
-                if(TextUtils.isEmpty((CharSequence) estSearchInput)){
-                    //display all jobs if no id has been entered
-                    for(int i = 0; i < 50; i++){
-                        testList.add("New Item - " + String.valueOf(i));
-                    }
+                estList.clear();
+                //code to add data from sheet could go here
+                ArrayAdapter<String> adapter =
+                        new ArrayAdapter<String>(DatabaseManagement.this, android.R.layout.simple_list_item_1, estList);
+                estDisplay.setAdapter(adapter);
+            }
+        });
 
-                }else{
-                    //display jobs with entered id
-                }
+        estDisplay.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //get selected item id + location, take user to next page to edit selected job
+                Intent editPage = new Intent(getApplicationContext(), DatabaseEditor.class);
+                editorJobData = String.valueOf(estDisplay.getItemAtPosition((int) id));
+                startActivity(editPage);
             }
         });
 

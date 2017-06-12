@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.oep.interlock_app.HomeScreen"
+        <activity
+            android:name="com.oep.interlock_app.HomeScreen"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,23 +30,23 @@
         </service>
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying"
-            android:label="Interlock Relaying"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:label="Interlock Relaying" />
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying_Complications"
-            android:label="Interlock Relaying"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:label="Interlock Relaying" />
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying_ToJob"
-            android:label="Interlock Relaying"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:label="Interlock Relaying" />
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying_Estimate"
             android:configChanges="orientation|screenSize"
             android:label="Interlock Relaying" />
         <activity
             android:name="com.oep.interlock_app.Step_Rebuilding"
-            android:label="Step Rebuilding"/>
+            android:label="Step Rebuilding" />
         <activity
             android:name="com.oep.interlock_app.Step_Rebuilding2"
             android:label="Step Rebuilding" />
@@ -113,7 +114,8 @@
             android:label="Database Management" />
         <activity
             android:name="com.oep.interlock_app.ActivityDatabaseAccounts"
-            android:label="Accounts"/>
+            android:label="Accounts" />
+        <activity android:name="com.oep.interlock_app.DatabaseEditor"></activity>
     </application>
 
 </manifest>
