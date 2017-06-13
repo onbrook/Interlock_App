@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.oep.interlock_app.HomeScreen"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,91 +26,119 @@
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying"
             android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:label="Interlock Relaying" />
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying_Complications"
             android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:label="Interlock Relaying" />
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying_ToJob"
             android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:label="Interlock Relaying" />
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying_Estimate"
             android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:label="Interlock Relaying" />
         <activity
             android:name="com.oep.interlock_app.Step_Rebuilding"
+            android:screenOrientation="portrait"
             android:label="Step Rebuilding" />
         <activity
             android:name="com.oep.interlock_app.Step_Rebuilding2"
+            android:screenOrientation="portrait"
             android:label="Step Rebuilding" />
         <activity
             android:name="com.oep.interlock_app.Step_Rebuilding3"
+            android:screenOrientation="portrait"
             android:label="Step Rebuilding" />
         <activity
             android:name="com.oep.interlock_app.Step_Rebuilding4"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize"
             android:label="Step Rebuilding" />
         <activity
             android:name="com.oep.interlock_app.Wall_Rebuilding2"
+            android:screenOrientation="portrait"
             android:label="@string/wall_rebuilding_title" />
         <activity
             android:name="com.oep.interlock_app.Wall_Rebuilding"
+            android:screenOrientation="portrait"
             android:label="@string/wall_rebuilding_title" />
         <activity
             android:name="com.oep.interlock_app.Wall_Rebuilding3"
+            android:screenOrientation="portrait"
             android:label="@string/wall_rebuilding_title" />
         <activity
             android:name="com.oep.interlock_app.Wall_Rebuilding_Estimation"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize"
             android:label="@string/wall_rebuilding_title" />
         <activity
             android:name="com.oep.interlock_app.Joint_Fill"
+            android:screenOrientation="portrait"
             android:label="@string/joint_fill_title" />
         <activity
             android:name="com.oep.interlock_app.Joint_Fill2"
+            android:screenOrientation="portrait"
             android:label="@string/joint_fill_title" />
         <activity
             android:name="com.oep.interlock_app.Joint_Fill3"
+            android:screenOrientation="portrait"
             android:label="@string/joint_fill_title" />
         <activity
             android:name="com.oep.interlock_app.Joint_Fill4"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize"
             android:label="@string/joint_fill_title" />
         <activity
             android:name="com.oep.interlock_app.CleaningSealing"
+            android:screenOrientation="portrait"
             android:label="@string/cleaning_sealing_title" />
         <activity
             android:name="com.oep.interlock_app.CleaningSealing2"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize"
             android:label="@string/cleaning_sealing_title" />
         <activity
             android:name="com.oep.interlock_app.CleaningSealingEstimation"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize"
             android:label="@string/cleaning_sealing_title" />
         <activity
             android:name="com.oep.interlock_app.SetUserTypeActivity"
+            android:screenOrientation="portrait"
             android:label="Setup Interlock App" />
         <activity
             android:name="com.oep.interlock_app.AddDatabasePermissionsActivity"
+            android:screenOrientation="portrait"
             android:label="Database Access" />
         <activity
             android:name="com.oep.interlock_app.EnterDatabaseIdActivity"
+            android:screenOrientation="portrait"
             android:label="Setup Interlock App" />
         <activity
             android:name="com.oep.interlock_app.EstimationPage"
+            android:screenOrientation="portrait"
             android:label="Estimation Page" />
         <activity
             android:name="com.oep.interlock_app.HelpPage"
+            android:screenOrientation="portrait"
             android:label="Help Page" />
         <activity
             android:name="com.oep.interlock_app.DatabaseManagement"
+            android:screenOrientation="portrait"
             android:label="Database Management" />
         <activity
             android:name="com.oep.interlock_app.ActivityDatabaseAccounts"
+            android:screenOrientation="portrait"
             android:label="Accounts" />
-        <activity android:name="com.oep.interlock_app.DatabaseEditor"></activity>
+        <activity
+            android:name="com.oep.interlock_app.DatabaseEditor"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
