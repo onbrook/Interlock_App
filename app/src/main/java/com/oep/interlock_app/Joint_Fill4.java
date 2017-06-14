@@ -1,6 +1,8 @@
 package com.oep.interlock_app;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -20,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
@@ -251,6 +254,17 @@ public class Joint_Fill4 extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                 //start activity
                 startActivity(intent);
+                if(success){
+                    //add alarm for in 7 days
+                    Calendar alarm = Calendar.getInstance();
+                    alarm.add(Calendar.DATE, 7);
+
+                    Intent alarmIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 001, alarmIntent, 0);
+
+                    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, alarm.getTimeInMillis(), pendingIntent);
+                }
             }
         });
     }

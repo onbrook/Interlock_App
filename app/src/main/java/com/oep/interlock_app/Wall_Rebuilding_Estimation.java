@@ -193,10 +193,7 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
                         Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+" and " + minute + " minutes.", Snackbar.LENGTH_INDEFINITE);
                         View mView = snackbar.getView();
                         TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                        else
-                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         snackbar.show();
                     } else {
                         if (minute >= 30)
@@ -214,22 +211,9 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
                         Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+".", Snackbar.LENGTH_INDEFINITE);
                         View mView = snackbar.getView();
                         TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                        else
-                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         snackbar.show();
                     }
-                    Calendar alarm = Calendar.getInstance();
-
-                    //alarm.add(Calendar.DATE, 7);
-                    alarm.add(Calendar.SECOND, 30);
-
-                    Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 001, intent, 0);
-
-                    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, alarm.getTimeInMillis(), pendingIntent);
                 }
             }
         });
@@ -284,6 +268,17 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
             @Override
             public void whenFinished(boolean success) {
                 startActivity(new Intent(Wall_Rebuilding_Estimation.this, HomeScreen.class));
+                if(success){
+                    //add alarm for in 7 days
+                    Calendar alarm = Calendar.getInstance();
+                    alarm.add(Calendar.DATE, 7);
+
+                    Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 001, intent, 0);
+
+                    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, alarm.getTimeInMillis(), pendingIntent);
+                }
             }
         });
     }

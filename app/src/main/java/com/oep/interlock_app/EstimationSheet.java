@@ -29,7 +29,10 @@ import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.Permission;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
-import com.google.api.services.sheets.v4.model.ClearValuesRequest;
+import com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest;
+import com.google.api.services.sheets.v4.model.DeleteDimensionRequest;
+import com.google.api.services.sheets.v4.model.DimensionRange;
+import com.google.api.services.sheets.v4.model.Request;
 import com.google.api.services.sheets.v4.model.Sheet;
 import com.google.api.services.sheets.v4.model.SheetProperties;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
@@ -80,12 +83,12 @@ class EstimationSheet {
     private static final int GET_PERMISSIONS_PROCESS = 8;
     private static final int CHECK_DATABASE_ID_VALIDITY_PROCESS = 9;
 
-    private static final int COLUMN_ESTIMATION_ID = 0;
-    private static final int COLUMN_DATE = 1;
-    private static final int COLUMN_ESTIMATED_TIME = 2;
-    private static final int COLUMN_ACTUAL_TIME = 3;
-    private static final int COLUMN_ARIA1 = 4;
-    private static final int COLUMN_ARIA2 = 5;
+    static final int COLUMN_ESTIMATION_ID = 0;
+    static final int COLUMN_DATE = 1;
+    static final int COLUMN_ESTIMATED_TIME = 2;
+    static final int COLUMN_ACTUAL_TIME = 3;
+    static final int COLUMN_ARIA1 = 4;
+    static final int COLUMN_ARIA2 = 5;
 
     private int currentProcess = NO_PROCESS;
     private int currentHeldProcess = NO_PROCESS;
@@ -104,20 +107,19 @@ class EstimationSheet {
 
     private int sheetId;
     private String sheetName;
-    private String properSheetName;
     private Activity activity;
     private Listener currentListener;
     private List<Object> currentEstimationData;
     private int currentEstimationId;
-    private int currentActualTime;
+    private Double currentActualTime;
     private List<String> currentEmails;
-    private List<Permission> currentPermissions;
+    private boolean currentShowNoDataDialog;
+    private boolean currentShowProgressDialog;
     private Permission currentPermission;
     private String currentDatabaseId;
     private Double currentEstimatedTime;
-    private int variableNum;
     private int nextEstimationId = 0;
-    private List<List<Object>> pastEstimationData;
+    private List<List<Object>> pastEstimationData = null;
 
     private static final int OK_ACTION = 0;
     private static final int RETRY_ACTION = 1;
@@ -151,44 +153,69 @@ class EstimationSheet {
         switch (sheetId){
             case ID_NOT_APPLICABLE:
                 sheetName = "";
-                properSheetName = "";
-                variableNum = -1;
                 break;
             case WALL_REBUILDING_ID:
                 sheetName = WALL_REBUILDING_SHEET_NAME;
-                properSheetName = "Wall Rebuilding";
-                variableNum = 11;
                 break;
             case CLEANING_SEALING_ID:
                 sheetName = CLEANING_SEALING_SHEET_NAME;
-                properSheetName = "Cleaning and Sealing";
-                variableNum = 7;
                 break;
             case STEP_REBUILDING_ID:
                 sheetName = STEP_REBUILDING_SHEET_NAME;
-                properSheetName = "Step Rebuilding";
-                //TODO change this to be the actual number of variables
-                variableNum = -1;
                 break;
             case JOINT_FILL_ID:
                 sheetName = JOINT_FILL_SHEET_NAME;
-                properSheetName = "Joint Fill";
-                //TODO change this to be the actual number of variables
-                variableNum = -1;
                 break;
             case INTERLOCK_RELAYING_ID:
                 sheetName = INTERLOCK_RELAYING_SHEET_NAME;
-                properSheetName = "Interlock Relaying";
-                //TODO change this to be the actual number of variables
-                variableNum = -1;
                 break;
             default:
                 throw new IllegalArgumentException("'"+sheetId+"' is an invalid sheet ID. Use one of the given IDs with 'EstimationSheet.<SHEET_NAME>_ID'.");
         }
 
+
+
         //set up progress dialog
         progressDialog = new ProgressDialog(activity);
         progressDialog.setCanceledOnTouchOutside(false);
+
+        // Initialize credentials and sheetsService object.
+        googleAccountCredential = GoogleAccountCredential.usingOAuth2(
+                this.activity.getApplicationContext(), Arrays.asList(SCOPES))
+                .setBackOff(new ExponentialBackOff());
+    }
+
+    EstimationSheet(int sheetId, Activity activity, ProgressDialog progressDialog){
+        this.sheetId = sheetId;
+        this.activity = activity;
+
+        switch (sheetId){
+            case ID_NOT_APPLICABLE:
+                sheetName = "";
+                break;
+            case WALL_REBUILDING_ID:
+                sheetName = WALL_REBUILDING_SHEET_NAME;
+                break;
+            case CLEANING_SEALING_ID:
+                sheetName = CLEANING_SEALING_SHEET_NAME;
+                break;
+            case STEP_REBUILDING_ID:
+                sheetName = STEP_REBUILDING_SHEET_NAME;
+                break;
+            case JOINT_FILL_ID:
+                sheetName = JOINT_FILL_SHEET_NAME;
+                break;
+            case INTERLOCK_RELAYING_ID:
+                sheetName = INTERLOCK_RELAYING_SHEET_NAME;
+                break;
+            default:
+                throw new IllegalArgumentException("'"+sheetId+"' is an invalid sheet ID. Use one of the given IDs with 'EstimationSheet.<SHEET_NAME>_ID'.");
+        }
+
+
+
+        //set up progress dialog
+        this.progressDialog = progressDialog;
 
         // Initialize credentials and sheetsService object.
         googleAccountCredential = GoogleAccountCredential.usingOAuth2(
@@ -363,8 +390,6 @@ class EstimationSheet {
                     //finished getting data from Sheets
                     currentProcess = GET_ESTIMATED_TIME_PROCESS;
                     currentHeldProcess = NO_PROCESS;
-                    //progressDialog.dismiss();
-                    //showErrorDialog("An estimation cannot be made yet because the code for it is still being worked on.", OK_ACTION);
                     if (success) {
                         EstimationListener estimationListener1 = new EstimationListener() {
                             @Override
@@ -388,7 +413,7 @@ class EstimationSheet {
             };
             currentListener = getDataGetDataListener;
             try{
-                getData(getDataGetDataListener);
+                getData(true, true, getDataGetDataListener);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -425,7 +450,7 @@ class EstimationSheet {
 
             // Add estimation id, date, and empty space (for where the actual time will be) to data
             data.add(0, nextEstimationId);
-            data.add(1,new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance(
+            data.add(1,new SimpleDateFormat("MM/dd/yyyy").format(Calendar.getInstance(
                     TimeZone.getTimeZone("America/Montreal")).getTime()));
             data.add(2, currentEstimatedTime);
             data.add(3, "");
@@ -449,23 +474,39 @@ class EstimationSheet {
      * Removes the given estimation from the Google Sheet.
      * @param estimationId the ID of the estimation to remove
      */
-    void startRemovingEstimation(int estimationId, final RemoveEstimationListener removeEstimationListener){
+    void startRemovingEstimation(final int estimationId, final RemoveEstimationListener removeEstimationListener){
+        if(pastEstimationData == null) {
+            GetDataListener getDataListener = new GetDataListener() {
+                @Override
+                public void whenFinished(boolean success, List<List<Object>> output) {
+                    removeEstimation(estimationId, output, removeEstimationListener);
+                }
+            };
+            currentListener = getDataListener;
+            getData(false, true, getDataListener);
+        } else{
+            removeEstimation(estimationId, pastEstimationData, removeEstimationListener);
+        }
+    }
+
+    private void removeEstimation(final int estimationId, List<List<Object>> data, final RemoveEstimationListener removeEstimationListener){
         if(currentProcess != NO_PROCESS && currentProcess != REMOVE_ESTIMATION_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
         currentProcess = REMOVE_ESTIMATION_PROCESS;
-        if (! isGooglePlayServicesAvailable()){
+        currentEstimationId = estimationId;
+        pastEstimationData = data;
+        currentListener = removeEstimationListener;
+        if (!isGooglePlayServicesAvailable()) {
             currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
             removeEstimationListener.whenFinished(false);
-        }
-        else if (googleAccountCredential.getSelectedAccountName() == null) {
+        } else if (googleAccountCredential.getSelectedAccountName() == null) {
             chooseAccount();
-        }
-        else if (! isDeviceOnline()) {
+        } else if (!isDeviceOnline()) {
             showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to remove data from the database.", RETRY_ACTION);
-        }
-        else{
-            TaskRemoveEstimation taskRemoveEstimation = new TaskRemoveEstimation(estimationId, new RemoveEstimationListener() {
+        } else {
+
+            TaskRemoveEstimation taskRemoveEstimation = new TaskRemoveEstimation(estimationId, data, new RemoveEstimationListener() {
                 @Override
                 public void whenFinished(boolean success) {
                     currentProcess = NO_PROCESS;
@@ -481,10 +522,28 @@ class EstimationSheet {
      * @param estimationId Id of the estimation that is to have the time changed.
      * @param totalHours How long the job took in hours.
      */
-    void startSettingActualTime(int estimationId, double totalHours, final SetActualTimeListener setActualTimeListener){
-        if(currentProcess != NO_PROCESS && currentProcess != REMOVE_ESTIMATION_PROCESS)
+    void startSettingActualTime(final int estimationId, final double totalHours, final SetActualTimeListener setActualTimeListener){
+        if(pastEstimationData == null) {
+            GetDataListener getDataListener = new GetDataListener() {
+                @Override
+                public void whenFinished(boolean success, List<List<Object>> output) {
+                    setActualTime(estimationId, totalHours, output, setActualTimeListener);
+                }
+            };
+            currentListener = getDataListener;
+            getData(false, true, getDataListener);
+        } else{
+            setActualTime(estimationId, totalHours, pastEstimationData, setActualTimeListener);
+        }
+    }
+
+    private void setActualTime(int estimationId, double totalHours, List<List<Object>> data, final SetActualTimeListener setActualTimeListener){
+        if(currentProcess != NO_PROCESS && currentProcess != SET_TIME_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
-        currentProcess = REMOVE_ESTIMATION_PROCESS;
+        currentProcess = SET_TIME_PROCESS;
+        currentEstimationId = estimationId;
+        currentActualTime = totalHours;
+        currentListener = setActualTimeListener;
         if (! isGooglePlayServicesAvailable()){
             currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
@@ -497,7 +556,7 @@ class EstimationSheet {
             showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to save the actual time a job took.", RETRY_ACTION);
         }
         else{
-            TaskSetActualTime taskSetActualTime = new TaskSetActualTime(totalHours, estimationId, new SetActualTimeListener() {
+            TaskSetActualTime taskSetActualTime = new TaskSetActualTime(totalHours, estimationId, data, new SetActualTimeListener() {
                 @Override
                 public void whenFinished(boolean success) {
                     currentProcess = NO_PROCESS;
@@ -512,14 +571,116 @@ class EstimationSheet {
      * Hides the progress dialog when finished getting data
      * @param getDataListener for when finished
      */
-    void startGettingData(final GetDataListener getDataListener){
-        getData(new GetDataListener() {
+
+    void startGettingAllData(final GetDataListener getDataListener){
+        final ProgressDialog pd = new ProgressDialog(activity);
+        pd.setCanceledOnTouchOutside(false);
+        new EstimationSheet(WALL_REBUILDING_ID, activity, pd).getData(false, true, new GetDataListener() {
             @Override
-            public void whenFinished(boolean success, List<List<Object>> output) {
-                progressDialog.dismiss();
-                getDataListener.whenFinished(success, output);
+            public void whenFinished(final boolean WRSuccess, final List<List<Object>> WROutput) {
+                new EstimationSheet(CLEANING_SEALING_ID, activity, pd).getData(false, false, new GetDataListener() {
+                    @Override
+                    public void whenFinished(final boolean CSSuccess, final List<List<Object>> CSOutput) {
+                        new EstimationSheet(STEP_REBUILDING_ID, activity, pd).getData(false, false, new GetDataListener() {
+                            @Override
+                            public void whenFinished(final boolean SRSuccess, final List<List<Object>> SROutput) {
+                                new EstimationSheet(JOINT_FILL_ID, activity, pd).getData(false, false, new GetDataListener() {
+                                    @Override
+                                    public void whenFinished(final boolean JFSuccess, final List<List<Object>> JFOutput) {
+                                        new EstimationSheet(INTERLOCK_RELAYING_ID, activity, pd).getData(false, false, new GetDataListener() {
+                                            @Override
+                                            public void whenFinished(final boolean IRSuccess, final List<List<Object>> IROutput) {
+                                                List<List<Object>> output = new ArrayList<>();
+                                                if(WRSuccess){
+                                                    for(List<Object> estimation : WROutput){
+                                                        estimation.set(COLUMN_ESTIMATION_ID, WALL_REBUILDING_SHEET_NAME+estimation.get(COLUMN_ESTIMATION_ID));
+                                                        output.add(estimation);
+                                                    }
+                                                }
+                                                if(CSSuccess){
+                                                    for(List<Object> estimation : CSOutput){
+                                                        estimation.set(COLUMN_ESTIMATION_ID, CLEANING_SEALING_SHEET_NAME+estimation.get(COLUMN_ESTIMATION_ID));
+                                                        output.add(estimation);
+                                                    }
+                                                }
+                                                if(SRSuccess){
+                                                    for(List<Object> estimation : SROutput){
+                                                        estimation.set(COLUMN_ESTIMATION_ID, STEP_REBUILDING_SHEET_NAME+estimation.get(COLUMN_ESTIMATION_ID));
+                                                        output.add(estimation);
+                                                    }
+                                                }
+                                                if(JFSuccess){
+                                                    for(List<Object> estimation : JFOutput){
+                                                        estimation.set(COLUMN_ESTIMATION_ID, JOINT_FILL_SHEET_NAME+estimation.get(COLUMN_ESTIMATION_ID));
+                                                        output.add(estimation);
+                                                    }
+                                                }
+                                                if(IRSuccess){
+                                                    for(List<Object> estimation : IROutput){
+                                                        estimation.set(COLUMN_ESTIMATION_ID, INTERLOCK_RELAYING_SHEET_NAME+estimation.get(COLUMN_ESTIMATION_ID));
+                                                        output.add(estimation);
+                                                    }
+                                                }
+                                                pd.dismiss();
+                                                getDataListener.whenFinished((WRSuccess || CSSuccess || SRSuccess || JFSuccess || IRSuccess), output);
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
             }
         });
+    }
+
+    static int getSheetIdFromFullEstimationId(String fullEstimationId){
+        if(fullEstimationId.contains(WALL_REBUILDING_SHEET_NAME)){
+            return WALL_REBUILDING_ID;
+        }else if (fullEstimationId.contains(CLEANING_SEALING_SHEET_NAME)){
+            return CLEANING_SEALING_ID;
+        }else if (fullEstimationId.contains(STEP_REBUILDING_SHEET_NAME)){
+            return STEP_REBUILDING_ID;
+        }else if (fullEstimationId.contains(JOINT_FILL_SHEET_NAME)){
+            return JOINT_FILL_ID;
+        }else if (fullEstimationId.contains(INTERLOCK_RELAYING_SHEET_NAME)){
+            return INTERLOCK_RELAYING_ID;
+        }else{
+            return ID_NOT_APPLICABLE;
+        }
+    }
+
+    static String getProperSheetNameFromFullEstimationId(String fullEstimationId){
+        if(fullEstimationId.contains(WALL_REBUILDING_SHEET_NAME)){
+            return "Wall Rebuilding";
+        }else if (fullEstimationId.contains(CLEANING_SEALING_SHEET_NAME)){
+            return "Cleaning and Sealing";
+        }else if (fullEstimationId.contains(STEP_REBUILDING_SHEET_NAME)){
+            return "Step Rebuilding";
+        }else if (fullEstimationId.contains(JOINT_FILL_SHEET_NAME)){
+            return "Joint Fill";
+        }else if (fullEstimationId.contains(INTERLOCK_RELAYING_SHEET_NAME)){
+            return "Interlock Relaying";
+        }else{
+            return "";
+        }
+    }
+
+    static int getSmallEstimationIdFromFullEstimationId(String fullEstimationId){
+        if(fullEstimationId.contains(WALL_REBUILDING_SHEET_NAME)){
+            return Integer.parseInt(fullEstimationId.replaceFirst(WALL_REBUILDING_SHEET_NAME, ""));
+        }else if (fullEstimationId.contains(CLEANING_SEALING_SHEET_NAME)){
+            return Integer.parseInt(fullEstimationId.replaceFirst(CLEANING_SEALING_SHEET_NAME, ""));
+        }else if (fullEstimationId.contains(STEP_REBUILDING_SHEET_NAME)){
+            return Integer.parseInt(fullEstimationId.replaceFirst(STEP_REBUILDING_SHEET_NAME, ""));
+        }else if (fullEstimationId.contains(JOINT_FILL_SHEET_NAME)){
+            return Integer.parseInt(fullEstimationId.replaceFirst(JOINT_FILL_SHEET_NAME, ""));
+        }else if (fullEstimationId.contains(INTERLOCK_RELAYING_SHEET_NAME)){
+            return Integer.parseInt(fullEstimationId.replaceFirst(INTERLOCK_RELAYING_SHEET_NAME, ""));
+        }else{
+            return -1;
+        }
     }
 
     boolean doesUserHaveRole(){
@@ -593,6 +754,8 @@ class EstimationSheet {
 
     private int getEstimationRowNum(int estimationId, List<List<Object>> data){
         //search through data with a binary search
+        if (data == null)
+            return -1;
         int low = 0;
         int high = data.size() - 1;
         int n = 0;
@@ -691,10 +854,10 @@ class EstimationSheet {
     private void resumeProcess(){
         switch (currentProcess) {
             case GET_DATA_PROCESS:
-                getData((GetDataListener) currentListener);
+                getData(currentShowNoDataDialog, currentShowProgressDialog, (GetDataListener) currentListener);
                 break;
             case GET_ESTIMATED_TIME_PROCESS:
-                getData((GetDataListener) currentListener);
+                getData(currentShowNoDataDialog, currentShowProgressDialog, (GetDataListener) currentListener);
                 break;
             case ADD_ESTIMATION_PROCESS:
                 startAddingEstimation(currentEstimationData, (AddEstimationListener) currentListener);
@@ -727,10 +890,13 @@ class EstimationSheet {
      * Does not hide progress dialog after finished
      * @param getDataListener for when process is finished
      */
-    private void getData(final GetDataListener getDataListener) {
+    private void getData(boolean showNoDataDialog, boolean showProgressDialog, final GetDataListener getDataListener) {
         if(currentProcess != NO_PROCESS && currentProcess != GET_DATA_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
         currentProcess = GET_DATA_PROCESS;
+        currentListener = getDataListener;
+        currentShowNoDataDialog = showNoDataDialog;
+        currentShowProgressDialog = showProgressDialog;
         if (! isGooglePlayServicesAvailable()){
             acquireGooglePlayServices();
             getDataListener.whenFinished(false, null);
@@ -742,7 +908,7 @@ class EstimationSheet {
             showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to get an data from the database.", RETRY_ACTION);
         }
         else{
-            TaskGetData taskGetData = new TaskGetData(new GetDataListener() {
+            TaskGetData taskGetData = new TaskGetData(showNoDataDialog, showProgressDialog, new GetDataListener() {
                 @Override
                 public void whenFinished(boolean success, List<List<Object>> output) {
                     currentProcess = NO_PROCESS;
@@ -1609,9 +1775,12 @@ class EstimationSheet {
         private com.google.api.services.sheets.v4.Sheets service = null;
         private Exception lastError = null;
         private GetDataListener getDataListener = null;
+        private boolean showNoDataDialog, showProgressDialog;
 
-        TaskGetData(GetDataListener getDataListener) {
+        TaskGetData(boolean showNoDataDialog, boolean showProgressDialog, GetDataListener getDataListener) {
             this.getDataListener = getDataListener;
+            this.showNoDataDialog = showNoDataDialog;
+            this.showProgressDialog = showProgressDialog;
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             service = new com.google.api.services.sheets.v4.Sheets.Builder(
@@ -1651,20 +1820,23 @@ class EstimationSheet {
 
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage("Collecting data...");
-            progressDialog.show();
+            if(showProgressDialog) {
+                progressDialog.setMessage("Collecting data...");
+                progressDialog.show();
+            }
         }
 
         @Override
         protected void onPostExecute(List<List<Object>> output) {
-            //progressDialog.dismiss();
             if (output == null || output.size() < 1) {
-                if(currentProcess == GET_DATA_PROCESS && currentHeldProcess != GET_ESTIMATED_TIME_PROCESS)
-                    showDialog("There is no data from this job yet.", "No data", OK_ACTION);
-                else if(currentHeldProcess == GET_ESTIMATED_TIME_PROCESS)
-                    showDialog("There is no data from this job yet. The estimation cannot be made.", "No data", OK_ACTION);
+                if(showNoDataDialog) {
+                    if (currentProcess == GET_DATA_PROCESS && currentHeldProcess != GET_ESTIMATED_TIME_PROCESS)
+                        showDialog("There is no data from this job yet.", "No data", OK_ACTION);
+                    else if (currentHeldProcess == GET_ESTIMATED_TIME_PROCESS)
+                        showDialog("There is no data from this job yet. The estimation cannot be made.", "No data", OK_ACTION);
+                }
                 getDataListener.whenFinished(false, null);
-            } else if (output.size() < 2 && currentHeldProcess == GET_ESTIMATED_TIME_PROCESS){
+            } else if (output.size() < 2 && currentHeldProcess == GET_ESTIMATED_TIME_PROCESS && showNoDataDialog) {
                 showDialog("There is not enough data from this job yet to get an estimation.", "Not enough data", OK_ACTION);
                 getDataListener.whenFinished(false, output);
             } else
@@ -1673,7 +1845,6 @@ class EstimationSheet {
 
         @Override
         protected void onCancelled() {
-            //progressDialog.dismiss();
             if (lastError != null) {
                 if (lastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -1784,10 +1955,12 @@ class EstimationSheet {
         private Exception lastError = null;
         private RemoveEstimationListener listener = null;
         private int estimationId;
+        private List<List<Object>> data;
 
-        TaskRemoveEstimation(int estimationId, RemoveEstimationListener removeEstimationListener) {
+        TaskRemoveEstimation(int estimationId, List<List<Object>> data, RemoveEstimationListener removeEstimationListener) {
             this.estimationId = estimationId;
             this.listener = removeEstimationListener;
+            this.data = data;
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             service = new com.google.api.services.sheets.v4.Sheets.Builder(
@@ -1811,16 +1984,30 @@ class EstimationSheet {
         }
 
         /**
-         * Append estimation data to the end of the Sheet
+         * Remove estimation data
          */
         private void removeEstimation() throws IOException {
-            int rowNum = getEstimationRowNum(estimationId, pastEstimationData);
+            //get spreadsheet
+            System.out.println("deleting...");
             String spreadsheetId = getDatabaseId();
-            String range = sheetName+"!"+rowNum+"A:"+rowNum+"Z";
-            ClearValuesRequest requestBody = new ClearValuesRequest();
+            Spreadsheet spreadsheet = this.service.spreadsheets().get(spreadsheetId).execute();
+            int rowNum = getEstimationRowNum(estimationId, data);
+            System.out.println("rowNum = "+rowNum);
+            DeleteDimensionRequest ddr = new DeleteDimensionRequest();
+            DimensionRange dr = new DimensionRange();
+            BatchUpdateSpreadsheetRequest content = new BatchUpdateSpreadsheetRequest();
+            dr.setDimension("ROWS")
+                    .setStartIndex(rowNum-1)
+                    .setEndIndex(rowNum)
+                    .setSheetId(spreadsheet.getSheets().get(sheetId).getProperties().getSheetId());
+            ddr.setRange(dr);
+            Request request = new Request();
+            request.setDeleteDimension(ddr);
+            List<Request> requests = new ArrayList<>();
+            requests.add(request);
+            content.setRequests(requests);
             // Remove data from Sheet
-            this.service.spreadsheets().values().clear(spreadsheetId, range, requestBody)
-                    .execute();
+            service.spreadsheets().batchUpdate(spreadsheetId, content).execute();
         }
 
 
@@ -1834,6 +2021,7 @@ class EstimationSheet {
         @Override
         protected void onPostExecute(Void param) {
             progressDialog.dismiss();
+            System.out.println("success");
             listener.whenFinished(true);
         }
 
@@ -1868,12 +2056,13 @@ class EstimationSheet {
         private List<List<Object>> data;
         private int estimationId;
 
-        TaskSetActualTime(double totalHours, int estimationId, SetActualTimeListener setActualTimeListener) {
+        TaskSetActualTime(double totalHours, int estimationId, List<List<Object>> data, SetActualTimeListener setActualTimeListener) {
             //put totalHours into a List
             List<List<Object>> lists = new ArrayList<>();
             List<Object> list = new ArrayList<>();
             list.add(totalHours);
             lists.add(list);
+            this.data = data;
 
             this.estimationId = estimationId;
             this.data = lists;
@@ -1905,7 +2094,7 @@ class EstimationSheet {
          */
         private void setDataWithApi() throws IOException {
             String spreadsheetId = getDatabaseId();
-            String range = sheetName+"!C"+getEstimationRowNum( estimationId, pastEstimationData)+":C";
+            String range = sheetName+"!D"+getEstimationRowNum(estimationId, pastEstimationData)+":D";
             ValueRange requestBody = new ValueRange();
             requestBody.setValues(data);
             requestBody.setMajorDimension("ROWS");

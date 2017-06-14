@@ -17,43 +17,38 @@
         android:paddingTop="@dimen/fab_margin"
         tools:context=".MainActivity">
 
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Tap an estimate to view info or modify"
+            android:visibility="invisible"
+            android:textStyle="bold" />
+
         <ListView
             android:id="@+id/estDisplay"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_below="@+id/estTxt"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/estSearch"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="10dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
         <EditText
             android:id="@+id/estSearch"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/estDisplay"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:ems="10"
-            android:hint="search by id (eg. 111)"
+            android:hint="search by date (eg. MM/dd/yyyy)"
             android:inputType="number"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/idSearchBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/estSearch"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="11dp"
-            android:text="Search for ID" />
-
-        <TextView
-            android:id="@+id/estTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="Tap an estimate to modify"
-            android:textStyle="bold" />
+            android:visibility="invisible"
+            android:imeOptions="actionDone" />
     </RelativeLayout>
 
     <!-- Side navigation drawer UI -->

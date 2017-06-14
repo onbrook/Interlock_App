@@ -25,9 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="com.oep.interlock_app.NotificationReceiver" android:enabled="true">
-            <intent-filter> <action android:name="NOTIFICATION_SERVICE" /></intent-filter>
-        </service>
+        <receiver android:name=".NotificationReceiver" >
+            <intent-filter>
+                <action android:name="NOTIFICATION_SERVICE" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name="com.oep.interlock_app.Interlock_Relaying"
             android:configChanges="orientation|screenSize"
@@ -96,12 +98,15 @@
             android:label="@string/cleaning_sealing_title" />
         <activity
             android:name="com.oep.interlock_app.SetUserTypeActivity"
+            android:configChanges="orientation|screenSize"
             android:label="Setup Interlock App" />
         <activity
             android:name="com.oep.interlock_app.AddDatabasePermissionsActivity"
+            android:configChanges="orientation|screenSize"
             android:label="Database Access" />
         <activity
             android:name="com.oep.interlock_app.EnterDatabaseIdActivity"
+            android:configChanges="orientation|screenSize"
             android:label="Setup Interlock App" />
         <activity
             android:name="com.oep.interlock_app.EstimationPage"
@@ -111,11 +116,16 @@
             android:label="Help Page" />
         <activity
             android:name="com.oep.interlock_app.DatabaseManagement"
+            android:configChanges="orientation|screenSize"
             android:label="Database Management" />
         <activity
             android:name="com.oep.interlock_app.ActivityDatabaseAccounts"
+            android:configChanges="orientation|screenSize"
             android:label="Accounts" />
-        <activity android:name="com.oep.interlock_app.DatabaseEditor"></activity>
+        <activity
+            android:name="com.oep.interlock_app.DatabaseEditor"
+            android:configChanges="orientation|screenSize"
+            android:label="Database Management"/>
     </application>
 
 </manifest>
