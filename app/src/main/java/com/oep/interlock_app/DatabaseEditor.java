@@ -40,6 +40,8 @@ public class DatabaseEditor extends AppCompatActivity {
     private EstimationSheet estimationSheet;
     private int smallEstimationId;
     private boolean userEditedDatabase = false;
+    final static int RESULT_DELETED = 0;
+    final static int RESULT_NA = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,19 +87,24 @@ public class DatabaseEditor extends AppCompatActivity {
         String fullEstimationId = new ArrayList<>(Arrays.asList((Object[]) data)).get(EstimationSheet.COLUMN_ESTIMATION_ID).toString();
         smallEstimationId = EstimationSheet.getSmallEstimationIdFromFullEstimationId(fullEstimationId);
         String date = new ArrayList<>(Arrays.asList((Object[]) data)).get(EstimationSheet.COLUMN_DATE).toString();
-        Double estimatedHours = Double.parseDouble((String) (new ArrayList<>(Arrays.asList((Object[]) data)).get(EstimationSheet.COLUMN_ESTIMATED_TIME)));
+        Double estimatedHours;
         Double actualTime;
         try {
             actualTime = Double.parseDouble((String) (new ArrayList<>(Arrays.asList((Object[]) data)).get(EstimationSheet.COLUMN_ACTUAL_TIME)));
         } catch (NumberFormatException e){
-            actualTime = null;
+            actualTime = -1.0;
+        }
+        try{
+            estimatedHours = Double.parseDouble((String) (new ArrayList<>(Arrays.asList((Object[]) data)).get(EstimationSheet.COLUMN_ESTIMATED_TIME)));
+        } catch (NumberFormatException e){
+            estimatedHours = -1.0;
         }
         String type = EstimationSheet.getProperSheetNameFromFullEstimationId(fullEstimationId);
 
         //fill text views
         Time time = new Time(actualTime);
         actualTimeTextView.setText(time.toString());
-        if(estimatedHours == -1){
+        if(estimatedHours == -1.0){
             estimatedTimeTextView.setText("No estimation made.");
         } else{
             time.setHours(estimatedHours);
@@ -131,6 +138,7 @@ public class DatabaseEditor extends AppCompatActivity {
                                         estimationSheet.startRemovingEstimation(smallEstimationId, new RemoveEstimationListener() {
                                             @Override
                                             public void whenFinished(boolean success) {
+                                                setResult(RESULT_DELETED);
                                                 finish();
                                             }
                                         });
@@ -170,6 +178,12 @@ public class DatabaseEditor extends AppCompatActivity {
         menuFab.setOnClickListener(onClickListener);
         deleteFab.setOnClickListener(onClickListener);
         timeFab.setOnClickListener(onClickListener);
+    }
+
+    @Override
+    public void onBackPressed(){
+        setResult(RESULT_NA);
+        finish();
     }
 
     public void animateFAB(){
@@ -289,7 +303,7 @@ public class DatabaseEditor extends AppCompatActivity {
 
 
         public String toString(){
-            if(hours == null || hours == -1)
+            if(hours == -1.0)
                 return "Unknown";
             else if (getIntHours() == 1)
                 return getIntHours()+" hour, "+getRoundedMinutes()+" minutes";

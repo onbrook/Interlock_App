@@ -45,10 +45,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:ems="10"
-            android:hint="search by date (eg. MM/dd/yyyy)"
+            android:hint="search by date (eg. mm/dd/yyyy)"
             android:inputType="number"
             android:visibility="invisible"
-            android:imeOptions="actionDone" />
+            android:imeOptions="actionSearch" />
     </RelativeLayout>
 
     <!-- Side navigation drawer UI -->

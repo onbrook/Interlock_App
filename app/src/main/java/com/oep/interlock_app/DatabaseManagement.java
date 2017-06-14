@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -99,6 +100,7 @@ public class DatabaseManagement extends AppCompatActivity {
             }
         });
 
+        //called when "search" button is pressed on keyboard
         estSearchInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -106,11 +108,14 @@ public class DatabaseManagement extends AppCompatActivity {
                 boolean empty = v.getText().toString().length() == 0;
                 boolean noResults = true;
                 if (valid){
+                    List<List<Object>> tempVisibleData = visibleData;
+                    visibleData = new ArrayList<>();
                     // search for data
-                    visibleData.clear();
                     List<Map<String, String>> data = new ArrayList<>();
-                    for (List<Object> estimation : allData) {
+                    for (int i = 0; i < allData.size(); i++) {
+                        List<Object> estimation = allData.get(i);
                         if(estimation.get(EstimationSheet.COLUMN_DATE).toString().equals(v.getText().toString())) {
+                            System.out.println("match found");
                             visibleData.add(estimation);
                             Map<String, String> datum = new HashMap<>(2);
                             datum.put("date", (String) estimation.get(EstimationSheet.COLUMN_DATE));
@@ -128,6 +133,7 @@ public class DatabaseManagement extends AppCompatActivity {
                                         android.R.id.text2});
                         estDisplay.setAdapter(adapter);
                     } else {
+                        visibleData = tempVisibleData;
                         Toast.makeText(activity, "Date not found.", Toast.LENGTH_SHORT).show();
                     }
                     return false; // keep up keyboard? : false
@@ -300,9 +306,11 @@ public class DatabaseManagement extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_EDIT_DATABASE) {
-            //restart activity
-            finish();
-            startActivity(getIntent());
+            if(resultCode == DatabaseEditor.RESULT_DELETED) {
+                //restart activity
+                finish();
+                startActivity(getIntent());
+            }
         } else {
             estimationSheet.onActivityResult(requestCode, resultCode, data);
         }

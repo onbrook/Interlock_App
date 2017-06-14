@@ -23,7 +23,6 @@
             android:layout_centerHorizontal="true" />
 
         <TextView
-            android:id="@+id/aboutContentTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
@@ -37,7 +36,6 @@
             android:layout_marginRight="16dp"/>
 
         <TextView
-            android:id="@+id/creatorTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/creatorSting"
@@ -52,7 +50,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             app:fabSize="normal"
-            app:srcCompat="@mipmap/add"
+            app:srcCompat="@drawable/add"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"

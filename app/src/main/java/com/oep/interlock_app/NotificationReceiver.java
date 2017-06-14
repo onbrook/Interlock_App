@@ -6,6 +6,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 /**
@@ -20,10 +23,14 @@ public class NotificationReceiver extends BroadcastReceiver {
         intent.putExtra("getTime", true);
         PendingIntent pi = PendingIntent.getActivity(context, 01234, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.mipmap.clock)
                 .setContentTitle("Actual time")
-                .setContentText("At least one job needs to have the actual time entered.")
-                .setAutoCancel(true);
+                .setContentText("Tap to enter the actual time for jobs.")
+                .setAutoCancel(true)
+                .setSmallIcon(R.mipmap.clock)
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("There are pending jobs that need to have the actual time entered" +
+                                " to improve future estimations.\nTap to enter."));
 
         mBuilder.setContentIntent(pi);
         mBuilder.setDefaults(Notification.DEFAULT_SOUND);

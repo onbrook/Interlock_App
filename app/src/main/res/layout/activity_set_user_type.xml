@@ -36,11 +36,9 @@
         android:layout_marginLeft="32dp"
         android:layout_marginStart="32dp"
         android:layout_below="@id/help_tv"
-        android:layout_marginTop="10dp"
-        android:id="@+id/user_type">
+        android:layout_marginTop="10dp">
 
         <RadioButton
-            android:id="@+id/existing_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Use an existing one"

@@ -214,6 +214,13 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
                         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         snackbar.show();
                     }
+                } else {
+                    CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+                    Snackbar snackbar = Snackbar.make(coordinatorLayout, "An estimation could not be made.", Snackbar.LENGTH_INDEFINITE);
+                    View mView = snackbar.getView();
+                    TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
+                    textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    snackbar.show();
                 }
             }
         });
