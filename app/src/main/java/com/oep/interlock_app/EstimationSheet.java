@@ -9,7 +9,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -137,7 +136,7 @@ class EstimationSheet {
     private static final String JOINT_FILL_SHEET_NAME = "joint_fill";
     private static final String INTERLOCK_RELAYING_SHEET_NAME = "interlock_relaying";
 
-    private static final String PREF_ACCOUNT_NAME = "accountName";
+    private static final String ACCOUNT_FILE_NAME = "accountName";
     private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS, DriveScopes.DRIVE_FILE};
 
     /**
@@ -946,9 +945,16 @@ class EstimationSheet {
     private void chooseAccount() {
         if (EasyPermissions.hasPermissions(
                 activity, Manifest.permission.GET_ACCOUNTS)) {
-            String accountName = activity.getPreferences(Context.MODE_PRIVATE)
-                    .getString(PREF_ACCOUNT_NAME, null);
-            System.out.println("accountName == "+accountName);
+            String accountName = null;
+            try {
+                FileInputStream input = activity.openFileInput(ACCOUNT_FILE_NAME);
+                InputStreamReader inputStreamReader = new InputStreamReader(input);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                accountName = bufferedReader.readLine();
+                input.close();
+                inputStreamReader.close();
+                bufferedReader.close();
+            } catch (Exception ignored){}
             if (accountName != null) {
                 googleAccountCredential.setSelectedAccountName(accountName);
                 resumeProcess();
@@ -996,11 +1002,13 @@ class EstimationSheet {
                     String accountName =
                             data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                     if (accountName != null) {
-                        SharedPreferences settings =
-                                activity.getPreferences(Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putString(PREF_ACCOUNT_NAME, accountName);
-                        editor.apply();
+                        try {
+                            FileOutputStream fos = activity.openFileOutput(ACCOUNT_FILE_NAME, Context.MODE_PRIVATE);
+                            fos.write(accountName.getBytes());
+                            fos.close();
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
                         googleAccountCredential.setSelectedAccountName(accountName);
                         resumeProcess();
                     }
