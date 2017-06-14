@@ -153,9 +153,6 @@
             android:name="com.oep.interlock_app.DatabaseEditor"
             android:configChanges="orientation|screenSize"
             android:label="Database Management"/>
-        <activity
-            android:name="com.oep.interlock_app.DatabaseEditor"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

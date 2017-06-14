@@ -948,6 +948,7 @@ class EstimationSheet {
                 activity, Manifest.permission.GET_ACCOUNTS)) {
             String accountName = activity.getPreferences(Context.MODE_PRIVATE)
                     .getString(PREF_ACCOUNT_NAME, null);
+            System.out.println("accountName == "+accountName);
             if (accountName != null) {
                 googleAccountCredential.setSelectedAccountName(accountName);
                 resumeProcess();
