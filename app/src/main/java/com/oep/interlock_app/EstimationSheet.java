@@ -66,8 +66,6 @@ class EstimationSheet {
     private static final int REQUEST_AUTHORIZATION = 1001;
     private static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     private static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
-
-    static final int REQUEST_ADD_PERMISSIONS = 0;
     static final int REQUEST_GET_DATABASE_ID = 1;
 
     private static final int NO_PROCESS = -1;
@@ -86,22 +84,22 @@ class EstimationSheet {
     static final int COLUMN_DATE = 1;
     static final int COLUMN_ESTIMATED_TIME = 2;
     static final int COLUMN_ACTUAL_TIME = 3;
-    static final int COLUMN_ARIA1 = 4;
-    static final int COLUMN_ARIA2 = 5;
+    private static final int COLUMN_ARIA1 = 4;
+    private static final int COLUMN_ARIA2 = 5;
 
     private int currentProcess = NO_PROCESS;
     private int currentHeldProcess = NO_PROCESS;
 
-    static final String DATABASE_TITLE = "Interlock App Database";
+    private static final String DATABASE_TITLE = "Interlock App Database";
 
     static final String DATABASE_ID_FILE_NAME = "database_id";
-    static final String USER_TYPE_FILE_NAME = "user_type";
+    private static final String USER_TYPE_FILE_NAME = "user_type";
 
     static final String USER_TYPE_OWNER = "owner";
-    static final String USER_TYPE_EMPLOYEE = "employee";
+    private static final String USER_TYPE_EMPLOYEE = "employee";
 
-    static final int NO_ERROR = -1;
-    static final int UNKNOWN_ERROR = 0;
+    private static final int NO_ERROR = -1;
+    private static final int UNKNOWN_ERROR = 0;
     static final int NO_GOOGLE_PLAY_SERVICES_ERROR = 1;
 
     private int sheetId;
@@ -149,6 +147,7 @@ class EstimationSheet {
         this.sheetId = sheetId;
         this.activity = activity;
 
+        // get the right sheet name
         switch (sheetId){
             case ID_NOT_APPLICABLE:
                 sheetName = "";
@@ -184,10 +183,18 @@ class EstimationSheet {
                 .setBackOff(new ExponentialBackOff());
     }
 
+
+    /**
+     * Initialize an instance of this class using a pre defined dialog.
+     * @param sheetId the id of the sheet use one of the final integer id in this class
+     * @param activity the activity to use often you can just have 'this'
+     * @param progressDialog the progress dialog that should be used when processing
+     */
     EstimationSheet(int sheetId, Activity activity, ProgressDialog progressDialog){
         this.sheetId = sheetId;
         this.activity = activity;
 
+        // find the right sheet name
         switch (sheetId){
             case ID_NOT_APPLICABLE:
                 sheetName = "";
@@ -223,27 +230,36 @@ class EstimationSheet {
     }
 
     /**
-     * This should only be called when there is no database made yet
+     * Creates a new database
      * @param listener the CreateDatabaseListener that is notified when task is finished.
      */
 
     void startCreatingDatabase(final CreateDatabaseListener listener){
+        // do not run multiple processes at once since the listener needs to be stored as a
+        // global variable for when the account is chosen. If you where to run multiple processes at
+        // once, only the newest listener would be used and it would be used for both processes.
         if(currentProcess != NO_PROCESS && currentProcess != CREATE_DATABASE_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
+        // update variables. These are used to recall this process after an account has been chosen.
         currentProcess = CREATE_DATABASE_PROCESS;
         currentListener = listener;
+
         if (! isGooglePlayServicesAvailable()){
             currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
             listener.whenFinished(false, NO_GOOGLE_PLAY_SERVICES_ERROR);
         }
+
         else if (googleAccountCredential.getSelectedAccountName() == null) {
             chooseAccount();
         }
+
         else if (! isDeviceOnline()) {
             showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to create a database.", RETRY_ACTION);
         }
+
         else{
+            // start the process
             TaskCreateDatabase taskCreateDatabase = new TaskCreateDatabase(new CreateDatabaseListener() {
                 @Override
                 public void whenFinished(boolean success, int errorId) {
@@ -257,8 +273,12 @@ class EstimationSheet {
 
 
     void startAddingPermissions(final List<String> emails, final AddPermissionsListener listener){
+        // do not run multiple processes at once since the listener needs to be stored as a
+        // global variable for when the account is chosen. If you where to run multiple processes at
+        // once, only the newest listener would be used and it would be used for both processes.
         if(currentProcess != NO_PROCESS && currentProcess != ADD_PERMISSIONS_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
+        // update variables. These are used to recall this process after an account has been chosen.
         currentProcess = ADD_PERMISSIONS_PROCESS;
         currentEmails = emails;
         currentListener = listener;
@@ -274,6 +294,7 @@ class EstimationSheet {
             showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to give Google accounts access to the database.", RETRY_ACTION);
         }
         else{
+            //start the process
             TaskAddPermissions taskAddPermissions = new TaskAddPermissions(emails, new AddPermissionsListener() {
                 @Override
                 public void whenFinished(boolean success) {
@@ -287,8 +308,12 @@ class EstimationSheet {
 
 
     void startRemovingPermission(final Permission permission, final RemovePermissionListener listener){
+        // do not run multiple processes at once since the listener needs to be stored as a
+        // global variable for when the account is chosen. If you where to run multiple processes at
+        // once, only the newest listener would be used and it would be used for both processes.
         if(currentProcess != NO_PROCESS && currentProcess != REMOVE_PERMISSIONS_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
+        // update variables. These are used to recall this process after an account has been chosen.
         currentProcess = REMOVE_PERMISSIONS_PROCESS;
         currentPermission = permission;
         currentListener = listener;
@@ -304,6 +329,7 @@ class EstimationSheet {
             showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to remove account access to the database.", RETRY_ACTION);
         }
         else{
+            //start the process
             TaskRemovePermission taskRemovePermission = new TaskRemovePermission(permission, new RemovePermissionListener() {
                 @Override
                 public void whenFinished(boolean success) {
@@ -317,8 +343,12 @@ class EstimationSheet {
 
 
     void startGettingPermissions(final GetPermissionsListener listener){
+        // do not run multiple processes at once since the listener needs to be stored as a
+        // global variable for when the account is chosen. If you where to run multiple processes at
+        // once, only the newest listener would be used and it would be used for both processes.
         if(currentProcess != NO_PROCESS && currentProcess != GET_PERMISSIONS_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
+        // update variables. These are used to recall this process after an account has been chosen.
         currentProcess = GET_PERMISSIONS_PROCESS;
         currentListener = listener;
         if (! isGooglePlayServicesAvailable()){
@@ -333,6 +363,7 @@ class EstimationSheet {
             showErrorDialog("No network connection available. Interlock App requires there to be an internet connection to get the accounts with permission to access the database.", RETRY_ACTION);
         }
         else{
+            // start the process
             TaskGetPermissions taskGetPermissions = new TaskGetPermissions(new GetPermissionsListener() {
                 @Override
                 public void whenFinished(boolean success, List<Permission> permissions) {
@@ -345,8 +376,12 @@ class EstimationSheet {
     }
 
     void startCheckingDatabaseIdValidity(final String databaseId, final CheckDatabaseIdValidityListener listener){
+        // do not run multiple processes at once since the listener needs to be stored as a
+        // global variable for when the account is chosen. If you where to run multiple processes at
+        // once, only the newest listener would be used and it would be used for both processes.
         if(currentProcess != NO_PROCESS && currentProcess != CHECK_DATABASE_ID_VALIDITY_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
+        // update variables. These are used to recall this process after an account has been chosen.
         currentProcess = CHECK_DATABASE_ID_VALIDITY_PROCESS;
         currentListener = listener;
         currentDatabaseId = databaseId;
@@ -362,6 +397,7 @@ class EstimationSheet {
             showErrorDialog("No network connection available. Interlock App requires there to be an internet connection save the database ID.", RETRY_ACTION);
         }
         else{
+            // start the process
             TaskCheckDatabaseIdValidity taskCheckDatabaseIdValidity = new TaskCheckDatabaseIdValidity(databaseId, new CheckDatabaseIdValidityListener() {
                 @Override
                 public void whenFinished(boolean validId, int errorId) {
@@ -379,9 +415,13 @@ class EstimationSheet {
      * @param estimationListener GetDataListener for what to do when finished getting estimation
      */
     void startEstimation(final List<Object> newData, final EstimationListener estimationListener){
+        // do not run multiple processes at once since the listener needs to be stored as a
+        // global variable for when the account is chosen. If you where to run multiple processes at
+        // once, only the newest listener would be used and it would be used for both processes.
         if(currentProcess != NO_PROCESS && currentProcess != GET_ESTIMATED_TIME_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
         try {
+            // get the data first to make estimation
             currentHeldProcess = GET_ESTIMATED_TIME_PROCESS;
             GetDataListener getDataGetDataListener = new GetDataListener() {
                 @Override
@@ -390,13 +430,17 @@ class EstimationSheet {
                     currentProcess = GET_ESTIMATED_TIME_PROCESS;
                     currentHeldProcess = NO_PROCESS;
                     if (success) {
+                        // make estimation
                         EstimationListener estimationListener1 = new EstimationListener() {
                             @Override
                             public void whenFinished(boolean success, boolean accurate, Double estimatedHours) {
                                 currentProcess = NO_PROCESS;
                                 progressDialog.dismiss();
-                                currentEstimatedTime = estimatedHours;
                                 estimationListener.whenFinished(success, accurate, estimatedHours);
+                                if(success)
+                                    currentEstimatedTime = estimatedHours;
+                                else
+                                    currentEstimatedTime = -1.0;
                             }
                         };
                         currentListener = estimationListener1;
@@ -428,12 +472,18 @@ class EstimationSheet {
      * @param data The data which was collected for the estimation
      */
     void startAddingEstimation(List<Object> data,  final AddEstimationListener addEstimationListener){
+        // do not run multiple processes at once since the listener needs to be stored as a
+        // global variable for when the account is chosen. If you where to run multiple processes at
+        // once, only the newest listener would be used and it would be used for both processes.
         if(currentProcess != NO_PROCESS && currentProcess != ADD_ESTIMATION_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
+
+        // update variables. These are used to recall this process after an account has been chosen.
         currentProcess = ADD_ESTIMATION_PROCESS;
 
         currentEstimationData = data;
         currentListener = addEstimationListener;
+
         if (! isGooglePlayServicesAvailable()){
             currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
@@ -457,6 +507,8 @@ class EstimationSheet {
             progressDialog.setMessage("Storing data...");
             List<List<Object>> preparedData = new ArrayList<>();
             preparedData.add(data);
+
+            // start process
             TaskAddEstimation taskAddEstimation = new TaskAddEstimation(preparedData, new AddEstimationListener() {
                 @Override
                 public void whenFinished(boolean success) {
@@ -488,7 +540,14 @@ class EstimationSheet {
         }
     }
 
+    /**
+     * called only from startRemoving estimation
+     */
+
     private void removeEstimation(final int estimationId, List<List<Object>> data, final RemoveEstimationListener removeEstimationListener){
+        // do not run multiple processes at once since the listener needs to be stored as a
+        // global variable for when the account is chosen. If you where to run multiple processes at
+        // once, only the newest listener would be used and it would be used for both processes.
         if(currentProcess != NO_PROCESS && currentProcess != REMOVE_ESTIMATION_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
         currentProcess = REMOVE_ESTIMATION_PROCESS;
@@ -536,7 +595,14 @@ class EstimationSheet {
         }
     }
 
+    /**
+     * called only from startSettingActualTime
+     */
+
     private void setActualTime(int estimationId, double totalHours, List<List<Object>> data, final SetActualTimeListener setActualTimeListener){
+        // do not run multiple processes at once since the listener needs to be stored as a
+        // global variable for when the account is chosen. If you where to run multiple processes at
+        // once, only the newest listener would be used and it would be used for both processes.
         if(currentProcess != NO_PROCESS && currentProcess != SET_TIME_PROCESS)
             throw new IllegalStateException("Cannot be running multiple processes at once. Please do not start this processes until the previous one is done. Was running processes number '"+currentProcess+"'");
         currentProcess = SET_TIME_PROCESS;
@@ -1602,7 +1668,6 @@ class EstimationSheet {
 
                 List<List<Object>> dataSets = new ArrayList<>();
                 for(List<Object> dataSet : dataFromSheets){
-                    System.out.println("Estimation ID: "+dataSet.get(COLUMN_ESTIMATION_ID));
 
                     // only get the data sets with a time entered
                     if(dataSet.get(COLUMN_ACTUAL_TIME).equals(""))
@@ -1628,8 +1693,10 @@ class EstimationSheet {
                 }
 
                 // Return if there is not enough data
-                if(dataSets.size() < 2)
-                    estimationListener.whenFinished(false, false, null);
+                if(dataSets.size() < 2) {
+                    cancel(true);
+                    return null;
+                }
 
                 // get the past estimations that can actually be used
                 List<List<Object>> usableDataSets = getUsableDataSets(newData, dataSets);
@@ -1647,8 +1714,6 @@ class EstimationSheet {
                 int YNum = 0;
                 for(int location1 = 0; location1 <= usableDataSets.size() - 2; location1++)
                     for(int location2 = location1 + 1; location2 <= usableDataSets.size() - 1; location2++){
-                        System.out.println("row1: "+location1);
-                        System.out.println("row2: "+location2);
                         List<Object> dataSet1 = usableDataSets.get(location1);
                         List<Object> dataSet2 = usableDataSets.get(location2);
                         // "Eq" stands for equation which in this case is the same as each set of
@@ -1661,12 +1726,6 @@ class EstimationSheet {
                         double yEq1 = (double) dataSet1.get(COLUMN_ARIA2);
                         double xEq2 = (double) dataSet2.get(COLUMN_ARIA1);
                         double yEq2 = (double) dataSet2.get(COLUMN_ARIA2);
-                        System.out.println("actualTimeEq1: "+actualTimeEq1);
-                        System.out.println("actualTimeEq2: "+actualTimeEq2);
-                        System.out.println("xEq1: "+xEq1);
-                        System.out.println("yEq1: "+yEq1);
-                        System.out.println("xEq2: "+xEq2);
-                        System.out.println("yEq2: "+yEq2);
                         // Here's the fun part; finding X and Y
                         // If you where to have two equations
                         // t1 = x1*X + y1*Y
@@ -1678,8 +1737,6 @@ class EstimationSheet {
                         double Y = (actualTimeEq2 - xEq2 * actualTimeEq1 / xEq1)/
                                 (-1*yEq1 * xEq2 / xEq1 + yEq2);
                         double X = (actualTimeEq1 - yEq1 * Y)/xEq1;
-                        System.out.println("X: "+X);
-                        System.out.println("Y: "+Y);
                         XTotal += X;
                         XNum ++;
                         YTotal += Y;
@@ -1687,9 +1744,7 @@ class EstimationSheet {
                     }
                 // Get the averages for both variables
                 double XAverage = XTotal/XNum;
-                System.out.println("XAverage: "+XAverage);
                 double YAverage = YTotal/YNum;
-                System.out.println("YAverage: "+YAverage);
                 // multiply the variables by their coefficients and add the products of that
                 return ((double) newData.get(0)) * XAverage + ((double) newData.get(1)) * YAverage;
             } catch (Exception e) {
@@ -1717,7 +1772,6 @@ class EstimationSheet {
                 for (int itemNum = dataSet.size() - 1; itemNum > 5; itemNum--) {  // start at the end
                     // if all of the items in this row (data set) are not all equal to the items in the
                     // newDataSet (excluding the two aria variables and actual time), then...
-                    Log.v("EstimationSheet", "row: "+row+"   itemNum: "+itemNum);
                     if (!dataSet.get(itemNum).equals(newDataSet.get(itemNum - 4))) {
                         // This row of data (data set) cannot be used for the estimation while using
                         // this many variables
@@ -2149,6 +2203,20 @@ class EstimationSheet {
     }
 }
 
+
+/*
+Interfaces; used as listeners
+ */
+
+/**
+ * base listener. not used for anything exept so that the other listeners can extend this one
+ * so that there can be one currentListener; not one for each type
+ */
+
+interface Listener {
+
+}
+
 interface CreateDatabaseListener extends Listener {
     /**
      * Called when the currently running process if finished.
@@ -2228,8 +2296,4 @@ interface SetActualTimeListener extends Listener {/**
      * @param success whether the process was successful or not.
      */
     void whenFinished(boolean success);
-}
-
-interface Listener {
-
 }
