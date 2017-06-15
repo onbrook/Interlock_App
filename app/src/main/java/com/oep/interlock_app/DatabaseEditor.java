@@ -54,6 +54,8 @@ public class DatabaseEditor extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+    private ArrayAdapter<String> mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +196,7 @@ public class DatabaseEditor extends AppCompatActivity {
         //code to use the drawer
         mDrawerList = (ListView)findViewById(R.id.navList);
         mActivityTitle = getTitle().toString();
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         addDrawerItems();
         setupDrawer();
@@ -228,6 +231,51 @@ public class DatabaseEditor extends AppCompatActivity {
         });
     }
 
+    //called when the back button in the title bas is pressed
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT))
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
+        else
+            mDrawerLayout.openDrawer(Gravity.LEFT);
+        return true;
+    }
+
+    private void addDrawerItems(){
+        // Only have the "Database Permissions" if the user owns the database
+        EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
+        if(estimationSheet.isUserOwner()) {
+            String[] osArray = {"Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
+            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        } else {
+            String[] osArray = { "Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup" };
+            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        }
+        mDrawerList.setAdapter(mAdapter);
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Navigation!");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerToggle.syncState();
+    }
+
+
+
     @Override
     public void onBackPressed(){
         setResult(RESULT_NA);
@@ -246,7 +294,6 @@ public class DatabaseEditor extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
 
         if(isFabOpen){
 
@@ -359,49 +406,4 @@ public class DatabaseEditor extends AppCompatActivity {
                 return getIntHours()+" hours, "+getRoundedMinutes()+" minutes";
         }
     }
-
-    //called when the back button in the title bas is pressed
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT))
-            mDrawerLayout.closeDrawer(Gravity.LEFT);
-        else
-            mDrawerLayout.openDrawer(Gravity.LEFT);
-        return true;
-    }
-
-    private void addDrawerItems(){
-        // Only have the "Database Permissions" if the user owns the database
-        EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
-        ArrayAdapter<String> mAdapter;
-        if(estimationSheet.isUserOwner()) {
-            String[] osArray = {"Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
-            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
-        } else {
-            String[] osArray = { "Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup" };
-            mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
-        }
-        mDrawerList.setAdapter(mAdapter);
-    }
-
-    private void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation!");
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(mActivityTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-        mDrawerToggle.syncState();
-    }
-
 }
