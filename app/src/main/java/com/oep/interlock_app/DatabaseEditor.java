@@ -158,7 +158,7 @@ public class DatabaseEditor extends AppCompatActivity {
                     case R.id.time_fab:
                         animateFAB();
                         final TextView actualTimeTextView = (TextView) findViewById(R.id.actual_time_output);
-                        CustomTimePickerDialog b = new CustomTimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
+                        CustomTimePickerDialog dialog = new CustomTimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 final double hours = hourOfDay+minute/60.0;
@@ -170,7 +170,7 @@ public class DatabaseEditor extends AppCompatActivity {
                                 });
                             }
                         });
-                        b.show();
+                        dialog.show();
                         break;
                 }
             }

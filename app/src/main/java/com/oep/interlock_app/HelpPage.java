@@ -122,10 +122,16 @@ public class HelpPage extends AppCompatActivity {
         //this is where we add the information
         String commonError, createEstimate, setUpNewDa, useExDa, addPermish, dataMan;
 
-        commonError = "Why does it need access to my contacts \n - It uses the contacts to manage the database in your or your employer's Google Drive." +
+        commonError = "Why does it need access to my contacts \n - It uses the contacts to manage" +
+                " the database in your or your employer's Google Drive." +
                 "\n\nWhy can’t an estimation be made when there is no data on the database? \n - This app uses only the data from the database to get the estimation. There is no other data that it has to use.";
 
-        createEstimate = "To create a new estimate navigate, you will need to navigate to the “New Estimation” page.  From there you will need to then select the job that you are wanting the time estimate for.  Navigate through the pages that follow, and enter the requested data as accurately as possible.  On the final page you will be provided with all the data you added and the estimated time which is projected from the job history.";
+        createEstimate = "To create a new estimate navigate, you will need to navigate to the “New" +
+                " Estimation” page.  From there you will need to then select the job that you are" +
+                " wanting the time estimate for.  Navigate through the pages that follow, and enter" +
+                " the requested data as accurately as possible.  On the final page you will be" +
+                " provided with all the data you added and the estimated time which is projected" +
+                " from the job history.";
 
         setUpNewDa = "To setup a new database, go into “Database Setup” and tap the menu (three dots) in the top left action bar. Then there is an option to " +
                 "“Create a database”, tap on that and, once you give the app permission to access your Google Drive via contacts, the database will be created. You are then taken " +
@@ -137,7 +143,10 @@ public class HelpPage extends AppCompatActivity {
         addPermish = "Adding permissions only applies to the database owner.  To allow others to access your database (which you would want for those in the same company)" +
                 " go to the permissions page and enter in the email for the person you are wanting to invite.  ";
 
-        dataMan = "To either add the actual time to the database, or to delete an estimate, navigate to the database management page  ??";
+        dataMan = "To either add the actual time to the database, or to delete an estimate, navigate to the database management page" +
+                " and select the estimation that you would like to edit. Then you can tap the \"+\" button in the bottom right corner and" +
+                " select the clock to change the actual time that the job took, or select the garbage can to delete the estimation data. Estimations" +
+                " should only ever be deleted when the information on them is incorrect.";
 
         addProduct("Common errors and questions",commonError);
         addProduct("Create an estimate",createEstimate);
