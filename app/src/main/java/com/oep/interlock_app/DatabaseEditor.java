@@ -214,10 +214,10 @@ public class DatabaseEditor extends AppCompatActivity {
                                         public void whenFinished(boolean success) {
                                             actualTimeTextView.setText(new Time(totalTime).toString());
                                             setResult(RESULT_EDITIED);
+                                            Toast.makeText(activity, "Time saved", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                     dialog.hide();
-                                    Toast.makeText(activity, "Time saved", Toast.LENGTH_SHORT).show();
                                 }
 
                             }

@@ -33,21 +33,20 @@
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/help_tv"
         android:layout_marginLeft="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="10dp"
-        android:checkedButton="@+id/use_existing_button">
+        android:layout_below="@id/help_tv"
+        android:layout_marginTop="10dp">
 
         <RadioButton
-            android:id="@+id/use_existing_button"
+            android:id="@+id/existing_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Use an existing one" />
+            android:text="Use an existing one"
+            android:checked="true"/>
 
         <RadioButton
-            android:id="@+id/owner_radio_button"
+            android:id="@+id/new_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

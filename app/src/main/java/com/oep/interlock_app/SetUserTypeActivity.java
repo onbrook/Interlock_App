@@ -25,7 +25,7 @@ public class SetUserTypeActivity extends AppCompatActivity {
         if (! estimationSheet.isGooglePlayServicesAvailable())
             estimationSheet.acquireGooglePlayServices();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.next_fab);
-        final RadioButton ownerRadioButton = (RadioButton) findViewById(R.id.owner_radio_button);
+        final RadioButton ownerRadioButton = (RadioButton) findViewById(R.id.new_radio_button);
         final Activity activity = this;
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
