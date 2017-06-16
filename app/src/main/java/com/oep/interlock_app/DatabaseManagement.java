@@ -20,7 +20,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,7 +36,6 @@ public class DatabaseManagement extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
     EstimationSheet estimationSheet;
-    //string to be used to display information on job on edit page
     private List<List<Object>> allData = new ArrayList<>();
     private List<List<Object>> visibleData = new ArrayList<>();
     private int oldSearchLength = 0;
