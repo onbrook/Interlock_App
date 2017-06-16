@@ -306,7 +306,7 @@ public class DatabaseManagement extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_EDIT_DATABASE) {
-            if(resultCode == DatabaseEditor.RESULT_DELETED) {
+            if(resultCode == DatabaseEditor.RESULT_EDITIED) {
                 //restart activity
                 finish();
                 startActivity(getIntent());

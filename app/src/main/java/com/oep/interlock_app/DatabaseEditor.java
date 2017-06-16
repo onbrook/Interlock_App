@@ -47,8 +47,7 @@ public class DatabaseEditor extends AppCompatActivity {
     private EstimationSheet estimationSheet;
     private int smallEstimationId;
     private boolean userEditedDatabase = false;
-    final static int RESULT_DELETED = 0;
-    final static int RESULT_NA = 1;
+    final static int RESULT_EDITIED = 1;
 
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -152,7 +151,7 @@ public class DatabaseEditor extends AppCompatActivity {
                                         estimationSheet.startRemovingEstimation(smallEstimationId, new RemoveEstimationListener() {
                                             @Override
                                             public void whenFinished(boolean success) {
-                                                setResult(RESULT_DELETED);
+                                                setResult(RESULT_EDITIED);
                                                 finish();
                                             }
                                         });
@@ -180,6 +179,7 @@ public class DatabaseEditor extends AppCompatActivity {
                                     @Override
                                     public void whenFinished(boolean success) {
                                         actualTimeTextView.setText(new Time(hours).toString());
+                                        setResult(RESULT_EDITIED);
                                     }
                                 });
                             }
@@ -272,14 +272,6 @@ public class DatabaseEditor extends AppCompatActivity {
             }
         };
         mDrawerToggle.syncState();
-    }
-
-
-
-    @Override
-    public void onBackPressed(){
-        setResult(RESULT_NA);
-        finish();
     }
 
     public void animateFAB(){

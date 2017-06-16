@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -133,6 +132,11 @@ class EstimationSheet {
     private static final String STEP_REBUILDING_SHEET_NAME = "step_rebuilding";
     private static final String JOINT_FILL_SHEET_NAME = "joint_fill";
     private static final String INTERLOCK_RELAYING_SHEET_NAME = "interlock_relaying";
+    private static final String WALL_REBUILDING_SHORT_FORM = "wr";
+    private static final String CLEANING_SEALING_SHORT_FORM = "cs";
+    private static final String STEP_REBUILDING_SHORT_FORM = "sr";
+    private static final String JOINT_FILL_SHORT_FORM = "jf";
+    private static final String INTERLOCK_RELAYING_SHORT_FORM = "ir";
 
     private static final String ACCOUNT_FILE_NAME = "accountName";
     private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS, DriveScopes.DRIVE_FILE};
@@ -351,6 +355,7 @@ class EstimationSheet {
         // update variables. These are used to recall this process after an account has been chosen.
         currentProcess = GET_PERMISSIONS_PROCESS;
         currentListener = listener;
+
         if (! isGooglePlayServicesAvailable()){
             currentProcess = NO_PROCESS;
             acquireGooglePlayServices();
@@ -385,6 +390,7 @@ class EstimationSheet {
         currentProcess = CHECK_DATABASE_ID_VALIDITY_PROCESS;
         currentListener = listener;
         currentDatabaseId = databaseId;
+
         if (! isGooglePlayServicesAvailable()){
             acquireGooglePlayServices();
             currentProcess = NO_PROCESS;
@@ -497,7 +503,7 @@ class EstimationSheet {
         }
         else{
 
-            // Add estimation id, date, and empty space (for where the actual time will be) to data
+            // Add estimation id, date, estimated time, and empty space (for where the actual time will be) to data
             data.add(0, nextEstimationId);
             data.add(1,new SimpleDateFormat("MM/dd/yyyy").format(Calendar.getInstance(
                     TimeZone.getTimeZone("America/Montreal")).getTime()));
@@ -527,6 +533,7 @@ class EstimationSheet {
      */
     void startRemovingEstimation(final int estimationId, final RemoveEstimationListener removeEstimationListener){
         if(pastEstimationData == null) {
+            //get data first to get the row number that needs to be removed
             GetDataListener getDataListener = new GetDataListener() {
                 @Override
                 public void whenFinished(boolean success, List<List<Object>> output) {
@@ -582,6 +589,7 @@ class EstimationSheet {
      */
     void startSettingActualTime(final int estimationId, final double totalHours, final SetActualTimeListener setActualTimeListener){
         if(pastEstimationData == null) {
+            //get data first to find the row number that needs to be updated
             GetDataListener getDataListener = new GetDataListener() {
                 @Override
                 public void whenFinished(boolean success, List<List<Object>> output) {
@@ -640,6 +648,7 @@ class EstimationSheet {
     void startGettingAllData(final GetDataListener getDataListener){
         final ProgressDialog pd = new ProgressDialog(activity);
         pd.setCanceledOnTouchOutside(false);
+        //get all data from one sheet after another
         new EstimationSheet(WALL_REBUILDING_ID, activity, pd).getData(false, true, new GetDataListener() {
             @Override
             public void whenFinished(final boolean WRSuccess, final List<List<Object>> WROutput) {
@@ -656,37 +665,41 @@ class EstimationSheet {
                                             @Override
                                             public void whenFinished(final boolean IRSuccess, final List<List<Object>> IROutput) {
                                                 List<List<Object>> output = new ArrayList<>();
+                                                // for each sheet that had success, set the full
+                                                // estimation id and add every estimation the final
+                                                // output
                                                 if(WRSuccess){
                                                     for(List<Object> estimation : WROutput){
-                                                        estimation.set(COLUMN_ESTIMATION_ID, WALL_REBUILDING_SHEET_NAME+estimation.get(COLUMN_ESTIMATION_ID));
+                                                        estimation.set(COLUMN_ESTIMATION_ID, WALL_REBUILDING_SHORT_FORM+estimation.get(COLUMN_ESTIMATION_ID));
                                                         output.add(estimation);
                                                     }
                                                 }
                                                 if(CSSuccess){
                                                     for(List<Object> estimation : CSOutput){
-                                                        estimation.set(COLUMN_ESTIMATION_ID, CLEANING_SEALING_SHEET_NAME+estimation.get(COLUMN_ESTIMATION_ID));
+                                                        estimation.set(COLUMN_ESTIMATION_ID, CLEANING_SEALING_SHORT_FORM+estimation.get(COLUMN_ESTIMATION_ID));
                                                         output.add(estimation);
                                                     }
                                                 }
                                                 if(SRSuccess){
                                                     for(List<Object> estimation : SROutput){
-                                                        estimation.set(COLUMN_ESTIMATION_ID, STEP_REBUILDING_SHEET_NAME+estimation.get(COLUMN_ESTIMATION_ID));
+                                                        estimation.set(COLUMN_ESTIMATION_ID, STEP_REBUILDING_SHORT_FORM+estimation.get(COLUMN_ESTIMATION_ID));
                                                         output.add(estimation);
                                                     }
                                                 }
                                                 if(JFSuccess){
                                                     for(List<Object> estimation : JFOutput){
-                                                        estimation.set(COLUMN_ESTIMATION_ID, JOINT_FILL_SHEET_NAME+estimation.get(COLUMN_ESTIMATION_ID));
+                                                        estimation.set(COLUMN_ESTIMATION_ID, JOINT_FILL_SHORT_FORM+estimation.get(COLUMN_ESTIMATION_ID));
                                                         output.add(estimation);
                                                     }
                                                 }
                                                 if(IRSuccess){
                                                     for(List<Object> estimation : IROutput){
-                                                        estimation.set(COLUMN_ESTIMATION_ID, INTERLOCK_RELAYING_SHEET_NAME+estimation.get(COLUMN_ESTIMATION_ID));
+                                                        estimation.set(COLUMN_ESTIMATION_ID, INTERLOCK_RELAYING_SHORT_FORM+estimation.get(COLUMN_ESTIMATION_ID));
                                                         output.add(estimation);
                                                     }
                                                 }
                                                 pd.dismiss();
+                                                // success if any of the sheets where successful
                                                 getDataListener.whenFinished((WRSuccess || CSSuccess || SRSuccess || JFSuccess || IRSuccess), output);
                                             }
                                         });
@@ -701,15 +714,15 @@ class EstimationSheet {
     }
 
     static int getSheetIdFromFullEstimationId(String fullEstimationId){
-        if(fullEstimationId.contains(WALL_REBUILDING_SHEET_NAME)){
+        if(fullEstimationId.contains(WALL_REBUILDING_SHORT_FORM)){
             return WALL_REBUILDING_ID;
-        }else if (fullEstimationId.contains(CLEANING_SEALING_SHEET_NAME)){
+        }else if (fullEstimationId.contains(CLEANING_SEALING_SHORT_FORM)){
             return CLEANING_SEALING_ID;
-        }else if (fullEstimationId.contains(STEP_REBUILDING_SHEET_NAME)){
+        }else if (fullEstimationId.contains(STEP_REBUILDING_SHORT_FORM)){
             return STEP_REBUILDING_ID;
-        }else if (fullEstimationId.contains(JOINT_FILL_SHEET_NAME)){
+        }else if (fullEstimationId.contains(JOINT_FILL_SHORT_FORM)){
             return JOINT_FILL_ID;
-        }else if (fullEstimationId.contains(INTERLOCK_RELAYING_SHEET_NAME)){
+        }else if (fullEstimationId.contains(INTERLOCK_RELAYING_SHORT_FORM)){
             return INTERLOCK_RELAYING_ID;
         }else{
             return ID_NOT_APPLICABLE;
@@ -717,15 +730,15 @@ class EstimationSheet {
     }
 
     static String getProperSheetNameFromFullEstimationId(String fullEstimationId){
-        if(fullEstimationId.contains(WALL_REBUILDING_SHEET_NAME)){
+        if(fullEstimationId.contains(WALL_REBUILDING_SHORT_FORM)){
             return "Wall Rebuilding";
-        }else if (fullEstimationId.contains(CLEANING_SEALING_SHEET_NAME)){
+        }else if (fullEstimationId.contains(CLEANING_SEALING_SHORT_FORM)){
             return "Cleaning and Sealing";
-        }else if (fullEstimationId.contains(STEP_REBUILDING_SHEET_NAME)){
+        }else if (fullEstimationId.contains(STEP_REBUILDING_SHORT_FORM)){
             return "Step Rebuilding";
-        }else if (fullEstimationId.contains(JOINT_FILL_SHEET_NAME)){
+        }else if (fullEstimationId.contains(JOINT_FILL_SHORT_FORM)){
             return "Joint Fill";
-        }else if (fullEstimationId.contains(INTERLOCK_RELAYING_SHEET_NAME)){
+        }else if (fullEstimationId.contains(INTERLOCK_RELAYING_SHORT_FORM)){
             return "Interlock Relaying";
         }else{
             return "";
@@ -733,16 +746,16 @@ class EstimationSheet {
     }
 
     static int getSmallEstimationIdFromFullEstimationId(String fullEstimationId){
-        if(fullEstimationId.contains(WALL_REBUILDING_SHEET_NAME)){
-            return Integer.parseInt(fullEstimationId.replaceFirst(WALL_REBUILDING_SHEET_NAME, ""));
-        }else if (fullEstimationId.contains(CLEANING_SEALING_SHEET_NAME)){
-            return Integer.parseInt(fullEstimationId.replaceFirst(CLEANING_SEALING_SHEET_NAME, ""));
-        }else if (fullEstimationId.contains(STEP_REBUILDING_SHEET_NAME)){
-            return Integer.parseInt(fullEstimationId.replaceFirst(STEP_REBUILDING_SHEET_NAME, ""));
-        }else if (fullEstimationId.contains(JOINT_FILL_SHEET_NAME)){
-            return Integer.parseInt(fullEstimationId.replaceFirst(JOINT_FILL_SHEET_NAME, ""));
-        }else if (fullEstimationId.contains(INTERLOCK_RELAYING_SHEET_NAME)){
-            return Integer.parseInt(fullEstimationId.replaceFirst(INTERLOCK_RELAYING_SHEET_NAME, ""));
+        if(fullEstimationId.contains(WALL_REBUILDING_SHORT_FORM)){
+            return Integer.parseInt(fullEstimationId.replaceFirst(WALL_REBUILDING_SHORT_FORM, ""));
+        }else if (fullEstimationId.contains(CLEANING_SEALING_SHORT_FORM)){
+            return Integer.parseInt(fullEstimationId.replaceFirst(CLEANING_SEALING_SHORT_FORM, ""));
+        }else if (fullEstimationId.contains(STEP_REBUILDING_SHORT_FORM)){
+            return Integer.parseInt(fullEstimationId.replaceFirst(STEP_REBUILDING_SHORT_FORM, ""));
+        }else if (fullEstimationId.contains(JOINT_FILL_SHORT_FORM)){
+            return Integer.parseInt(fullEstimationId.replaceFirst(JOINT_FILL_SHORT_FORM, ""));
+        }else if (fullEstimationId.contains(INTERLOCK_RELAYING_SHORT_FORM)){
+            return Integer.parseInt(fullEstimationId.replaceFirst(INTERLOCK_RELAYING_SHORT_FORM, ""));
         }else{
             return -1;
         }
