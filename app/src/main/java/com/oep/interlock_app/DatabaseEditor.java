@@ -20,6 +20,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -32,6 +35,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static android.R.attr.max;
 
 /**
  * Created by:
@@ -115,7 +120,7 @@ public class DatabaseEditor extends AppCompatActivity {
         String type = EstimationSheet.getProperSheetNameFromFullEstimationId(fullEstimationId);
 
         //fill text views
-        Time time = new Time(actualTime);
+        final Time time = new Time(actualTime);
         actualTimeTextView.setText(time.toString());
         if(estimatedHours == -1.0){
             estimatedTimeTextView.setText("No estimation made.");
@@ -170,21 +175,53 @@ public class DatabaseEditor extends AppCompatActivity {
 
                     case R.id.time_fab:
                         animateFAB();
-                        final TextView actualTimeTextView = (TextView) findViewById(R.id.actual_time_output);
-                        CustomTimePickerDialog dialog = new CustomTimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
+                        AlertDialog.Builder timeBuilder = new AlertDialog.Builder(activity);
+                        View timeView = getLayoutInflater().inflate(R.layout.time_imput, null);
+                        final Button saveTimeBtn = (Button)timeView.findViewById(R.id.saveTimeBtn);
+                        final NumberPicker timeInputPicker = (NumberPicker)timeView.findViewById(R.id.timeInputPicker);
+                        final TextView timeInputText = (TextView)timeView.findViewById(R.id.timeInputText);
+                        timeBuilder.setView(timeView);
+                        final AlertDialog dialog = timeBuilder.create();
+                        timeInputPicker.setMinValue(1);
+                        timeInputPicker.setMaxValue(999);
+                        final double[] minutes = new double[1];
+                        final double[] hours = new double[1];
+                        final NumberPicker.Formatter formatter = new NumberPicker.Formatter() {
+                            public String format(int value) {
+                                int temp = value * 15;
+                                return "" + temp;
+                            }
+                        };
+                        dialog.show();
+                        saveTimeBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                final double hours = hourOfDay+minute/60.0;
-                                estimationSheet.startSettingActualTime(smallEstimationId, hours, new SetActualTimeListener() {
-                                    @Override
-                                    public void whenFinished(boolean success) {
-                                        actualTimeTextView.setText(new Time(hours).toString());
-                                        setResult(RESULT_EDITIED);
-                                    }
-                                });
+                            public void onClick(View v) {
+                                if(timeInputText.getText().equals("Enter hours of total time")){
+                                    //saving hours input and changing input
+                                    hours[0] = timeInputPicker.getValue();
+                                    timeInputText.setText("Enter minutes of total time");
+                                    saveTimeBtn.setText("Save Time");
+
+                                    timeInputPicker.setFormatter(formatter);
+                                    timeInputPicker.setMinValue(0);
+                                    timeInputPicker.setMaxValue(3);
+
+                                }else{
+                                    minutes[0] = timeInputPicker.getValue();
+                                    final double totalTime = hours[0]+(minutes[0]*15)/60.0;
+                                    estimationSheet.startSettingActualTime(smallEstimationId, totalTime, new SetActualTimeListener() {
+                                        @Override
+                                        public void whenFinished(boolean success) {
+                                            actualTimeTextView.setText(new Time(totalTime).toString());
+                                            setResult(RESULT_EDITIED);
+                                        }
+                                    });
+                                    dialog.hide();
+                                    Toast.makeText(activity, "Time saved", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                         });
-                        dialog.show();
                         break;
                 }
             }
@@ -286,6 +323,7 @@ public class DatabaseEditor extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
 
         if(isFabOpen){
 
