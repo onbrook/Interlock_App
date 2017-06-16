@@ -205,7 +205,7 @@ public class DatabaseEditor extends AppCompatActivity {
 
                                     timeInputPicker.setFormatter(formatter);
                                     timeInputPicker.setMinValue(0);
-                                    timeInputPicker.setMaxValue(4);
+                                    timeInputPicker.setMaxValue(3);
 
                                 }else{
                                     minutes[0] = timeInputPicker.getValue();
