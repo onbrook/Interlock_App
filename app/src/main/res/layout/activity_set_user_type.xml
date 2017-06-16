@@ -39,13 +39,14 @@
         android:layout_marginTop="10dp">
 
         <RadioButton
+            android:id="@+id/existing_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Use an existing one"
             android:checked="true"/>
 
         <RadioButton
-            android:id="@+id/owner_radio_button"
+            android:id="@+id/new_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
