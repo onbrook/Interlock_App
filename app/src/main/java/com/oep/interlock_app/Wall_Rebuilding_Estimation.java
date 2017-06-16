@@ -302,7 +302,7 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
 
     private void addDrawerItems(){
         // Only have the "Database Permissions" if the user owns the database
-        EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.ID_NOT_APPLICABLE, this);
+        EstimationSheet estimationSheet = new EstimationSheet(EstimationSheet.WALL_REBUILDING_ID, this);
         if(estimationSheet.isUserOwner()) {
             String[] osArray = {"Home Screen", "Help!",  "New Estimation", "Database Management", "Database Setup", "Database Permissions"};
             mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);

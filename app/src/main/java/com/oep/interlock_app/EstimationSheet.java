@@ -1725,6 +1725,7 @@ class EstimationSheet {
                 int XNum = 0;
                 double YTotal = 0;
                 int YNum = 0;
+                System.out.println("usableDataSets = "+usableDataSets);
                 for(int location1 = 0; location1 <= usableDataSets.size() - 2; location1++)
                     for(int location2 = location1 + 1; location2 <= usableDataSets.size() - 1; location2++){
                         List<Object> dataSet1 = usableDataSets.get(location1);
@@ -1750,16 +1751,22 @@ class EstimationSheet {
                         double Y = (actualTimeEq2 - xEq2 * actualTimeEq1 / xEq1)/
                                 (-1*yEq1 * xEq2 / xEq1 + yEq2);
                         double X = (actualTimeEq1 - yEq1 * Y)/xEq1;
-                        XTotal += X;
-                        XNum ++;
-                        YTotal += Y;
-                        YNum ++;
+
+                        // make sure that the number is real and usable
+                        if(Y != Double.NEGATIVE_INFINITY && X != Double.NEGATIVE_INFINITY
+                                && Y != Double.POSITIVE_INFINITY && X != Double.POSITIVE_INFINITY
+                                && !Double.isNaN(Y) && !Double.isNaN(X)) {
+                            XTotal += X;
+                            XNum++;
+                            YTotal += Y;
+                            YNum++;
+                        }
                     }
                 // Get the averages for both variables
                 double XAverage = XTotal/XNum;
                 double YAverage = YTotal/YNum;
                 // multiply the variables by their coefficients and add the products of that
-                return ((double) newData.get(0)) * XAverage + ((double) newData.get(1)) * YAverage;
+                return ((Double) newData.get(0)) * XAverage + ((Double) newData.get(1)) * YAverage;
             } catch (Exception e) {
                 lastError = e;
                 cancel(true);

@@ -127,10 +127,7 @@ public class Step_Rebuilding4 extends AppCompatActivity {
                         Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+" and " + minute + " minutes.", Snackbar.LENGTH_INDEFINITE);
                         View mView = snackbar.getView();
                         TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                        else
-                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         snackbar.show();
                     } else {
                         if (minute >= 30)
@@ -148,10 +145,7 @@ public class Step_Rebuilding4 extends AppCompatActivity {
                         Snackbar snackbar = Snackbar.make(coordinatorLayout, "Final Estimate: " + hours + " "+hoursStr+".", Snackbar.LENGTH_INDEFINITE);
                         View mView = snackbar.getView();
                         TextView textView = (TextView) mView.findViewById(android.support.design.R.id.snackbar_text);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-                            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                        else
-                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         snackbar.show();
                     }
                 } else {

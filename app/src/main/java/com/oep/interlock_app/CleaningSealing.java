@@ -125,10 +125,7 @@ public class CleaningSealing extends AppCompatActivity {
             //extras--for passing data
             intent.putExtra("height_double", Double.parseDouble(heightEditText.getText().toString()));
             intent.putExtra("length_double", Double.parseDouble(lengthEditText.getText().toString()));
-            if(angleRadioGroup.getCheckedRadioButtonId() == R.id.angle_horizontal_radio_button)
-                intent.putExtra("angle_id", 0);
-            else
-                intent.putExtra("angle_id", 1);
+            intent.putExtra("angle_id", angleRadioGroup.getCheckedRadioButtonId());
             //start activity
             startActivity(intent);
         }else

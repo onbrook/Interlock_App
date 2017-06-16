@@ -24,7 +24,7 @@ public class Step_Rebuilding3 extends AppCompatActivity {
     private View[] views = new View[1];
     private Spinner stepsGluedSp;
     private TextView rootsDisTV;
-    public static String stepsGlueSt, rootsSt, clipsSt, hardLineSt;
+    public static String stepsGlueSt, rootsSt = "Average", clipsSt, hardLineSt;
     private SeekBar rootsSB;
     private CheckBox hardLineCB, clipsCB;
 

@@ -176,8 +176,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/easeTitleTV"
-                    android:layout_toEndOf="@+id/sizeLDisplay"
-                    android:layout_toRightOf="@+id/sizeLDisplay" />
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"/>
 
                 <TextView
                     android:id="@+id/roomManDisplay"

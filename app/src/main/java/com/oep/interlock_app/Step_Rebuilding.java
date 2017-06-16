@@ -31,7 +31,7 @@ public class Step_Rebuilding extends AppCompatActivity {
     //setting up the spinners and the array
     private View[] views = new View[2];
     private RadioButton curvedRB;
-    public static String sizeJobHSt, sizeJobLSt, baseShiftSt, stepsAreSt;
+    public static String sizeJobHSt, sizeJobLSt, baseShiftSt = "Average", stepsAreSt;
     private EditText jobHeight, jobLength;
     private SeekBar baseShift;
     private TextView baseShiftDisTV;

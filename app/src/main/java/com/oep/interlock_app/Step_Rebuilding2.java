@@ -22,7 +22,7 @@ public class Step_Rebuilding2 extends AppCompatActivity {
     //setting up the spinners and the array
     private View[] views = new View[1];
     private Spinner locationSp;
-    public static String locationSt, easeAccSt, roomManSt;
+    public static String locationSt, easeAccSt = "Average", roomManSt = "Average";
     private TextView roomManDisplayTV, easeDisplayTV;
 
     private ListView mDrawerList;
