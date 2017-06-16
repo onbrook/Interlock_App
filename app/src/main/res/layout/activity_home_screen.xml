@@ -16,15 +16,15 @@
 
         <ImageView
             android:id="@+id/iconImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="22dp"
-            app:srcCompat="@drawable/final_icon_scaled" />
+            app:srcCompat="@mipmap/ic_launcher_large" />
 
         <TextView
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iconImage"
             android:layout_centerHorizontal="true"
@@ -41,8 +41,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_margin="16dp"
-            android:id="@+id/textView2" />
+            android:layout_margin="16dp" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/estimatePageBtn"
