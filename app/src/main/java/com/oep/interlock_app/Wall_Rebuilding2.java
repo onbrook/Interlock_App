@@ -152,7 +152,7 @@ public class Wall_Rebuilding2 extends AppCompatActivity {
             //start activity (getIntent to save extras)
             Intent intent = getIntent();
             //update class
-            intent.setClass(getApplicationContext(), Wall_Rebuilding_Estimation.class);
+            intent.setClass(getApplicationContext(), Wall_Rebuilding3.class);
             //this removes the animation
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //extras--for passing data

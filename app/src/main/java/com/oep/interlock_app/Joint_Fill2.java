@@ -205,7 +205,7 @@ public class Joint_Fill2 extends AppCompatActivity {
     public void fabClicked(View view){
         if(ViewValidity.areViewsValid(views)) {
             //getting the values
-            whatArrSt = "Nothing";
+            whatArrSt = "";
             playB = playCB.isChecked();
             deckB = deckCB.isChecked();
             poolB = poolCB.isChecked();
@@ -232,13 +232,13 @@ public class Joint_Fill2 extends AppCompatActivity {
                 else{
                     //its just one
                     if(playB){
-                        whatArrSt = whatArrSt + "Play Structure ";
+                        whatArrSt ="Play Structure ";
                     }
                     else if(deckB){
-                        whatArrSt = whatArrSt + "Deck ";
+                        whatArrSt ="Deck ";
                     }
                     else if(poolB){
-                        whatArrSt = whatArrSt + "Pool";
+                        whatArrSt ="Pool";
                     }
                     else{
                         whatArrSt = "Nothing";

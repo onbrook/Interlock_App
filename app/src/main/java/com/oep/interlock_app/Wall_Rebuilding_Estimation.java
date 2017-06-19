@@ -110,10 +110,10 @@ public class Wall_Rebuilding_Estimation extends AppCompatActivity {
         lengthOut.setText(lengthInput+"ft");
         switch (straightCurvedNum){
             case 0:
-                shapeOut.setText(getString(R.string.curved));
+                shapeOut.setText(getString(R.string.straight));
                 break;
             case 1:
-                shapeOut.setText(getString(R.string.straight));
+                shapeOut.setText(getString(R.string.curved));
                 break;
         }
         if(lineChecked)

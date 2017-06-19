@@ -1725,7 +1725,6 @@ class EstimationSheet {
                 int XNum = 0;
                 double YTotal = 0;
                 int YNum = 0;
-                System.out.println("usableDataSets = "+usableDataSets);
                 for(int location1 = 0; location1 <= usableDataSets.size() - 2; location1++)
                     for(int location2 = location1 + 1; location2 <= usableDataSets.size() - 1; location2++){
                         List<Object> dataSet1 = usableDataSets.get(location1);
@@ -1789,10 +1788,10 @@ class EstimationSheet {
                 List<Object> dataSet = oldDataSets.get(row);
                 boolean dataSetValid = true;  // Flag
 
-                for (int itemNum = dataSet.size() - 1; itemNum > 5; itemNum--) {  // start at the end
+                for (int itemNum = dataSet.size() - 1; itemNum > 6; itemNum--) {  // start at the end
                     // if all of the items in this row (data set) are not all equal to the items in the
                     // newDataSet (excluding the two aria variables and actual time), then...
-                    if (!dataSet.get(itemNum).equals(newDataSet.get(itemNum - 4))) {
+                    if (!dataSet.get(itemNum).equals(newDataSet.get(itemNum - 4))) { // subtract 4 for id, date, estimated time, and actual time
                         // This row of data (data set) cannot be used for the estimation while using
                         // this many variables
                         dataSetValid = false;
@@ -1846,7 +1845,16 @@ class EstimationSheet {
                     lastError.printStackTrace();
                 }
             } else {
-                System.err.println("Request to make estimation was canceled.");
+                final AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                alertDialog.setTitle("Not enough data");
+                alertDialog.setMessage("There is not enough past estimation data that has had the actual time that the job took entered for an estimation to be made.");
+                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog.show();
             }
             estimationListener.whenFinished(false, false, null);
         }

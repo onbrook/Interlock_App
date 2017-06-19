@@ -219,10 +219,10 @@ public class Step_Rebuilding4 extends AppCompatActivity {
 
     //called when the back button in the title bas is pressed
     public boolean onOptionsItemSelected(MenuItem item){
-        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT))
-            mDrawerLayout.closeDrawer(Gravity.LEFT);
+        if(mDrawerLayout.isDrawerOpen(Gravity.START))
+            mDrawerLayout.closeDrawer(Gravity.START);
         else
-            mDrawerLayout.openDrawer(Gravity.LEFT);
+            mDrawerLayout.openDrawer(Gravity.START);
         return true;
     }
 

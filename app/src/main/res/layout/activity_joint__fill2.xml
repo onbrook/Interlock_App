@@ -65,9 +65,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ease of Access"
-                    android:layout_below="@+id/locationSp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
                     android:layout_marginTop="10dp"/>
 
                 <SeekBar
@@ -75,15 +72,10 @@
                     android:layout_width="match_parent"
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/easeTV"
                     android:layout_marginTop="10dp"
                     android:max="2"
                     android:progress="1"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp" />
 
                 <TextView
@@ -101,23 +93,18 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/easeDisplayTV"
                     android:layout_marginTop="10dp"
-                    android:text="Room to Maneuver"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp" />
+                    android:text="Room to Maneuver"/>
 
                 <SeekBar
                     android:id="@+id/roomManSB"
                     android:layout_width="match_parent"
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/easeSB"
-                    android:layout_alignRight="@+id/easeSB"
-                    android:layout_below="@+id/roomManTV"
                     android:layout_marginTop="10dp"
                     android:max="4"
                     android:progress="2"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp" />
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="10dp"  />
 
                 <TextView
                     android:id="@+id/roomDisplayTV"
